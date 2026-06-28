@@ -1,0 +1,218 @@
+{
+    "form": {
+        "steps": {
+            "personal": "व्यक्तिगत",
+            "occupation": "पेशा और बैंक",
+            "policy": "पॉलिसी",
+            "family": "परिवार और चिकित्सा"
+        },
+        "navigation": {
+            "next": "अगला चरण",
+            "previous": "पिछला चरण",
+            "submit": "पीडीएफ बनाएं",
+            "add": "जोड़ें",
+            "remove": "हटाएं"
+        },
+        "validation": {
+            "required": "यह फ़ील्ड आवश्यक है",
+            "invalid_email": "अमान्य ईमेल पता",
+            "file_size_limit": "फ़ाइल का आकार 10MB से अधिक है",
+            "invalid_file_type": "अमान्य फ़ाइल प्रकार। कृपया एक छवि अपलोड करें।"
+        }
+    },
+    "general": {
+        "doc_date": "दस्तावेज़ तिथि",
+        "back_dating_date": "बैक डेटिंग तिथि",
+        "top_policy_number": "पॉलिसी क्रमांक"
+    },
+    "personal": {
+        "title": "I. व्यक्तिगत, संपर्क और KYC विवरण",
+        "photo": "पासपोर्ट आकार का फोटो",
+        "upload_prompt": "अपलोड करने के लिए क्लिक करें",
+        "name": "पूरा नाम",
+        "address": "पता",
+        "father_name": "पिता का नाम",
+        "mother_name": "माता का नाम",
+        "spouse_name": "पति / पत्नी का नाम",
+        "gender": "लिंग",
+        "gender_options": {
+            "Male": "पुरुष",
+            "Female": "महिला",
+            "Other": "अन्य"
+        },
+        "marital_status": "वैवाहिक स्थिति",
+        "status_options": {
+            "single": "अविवाहित",
+            "married": "विवाहित",
+            "divorced": "तलाकशुदा",
+            "widowed": "विधवा"
+        },
+        "qualification": "योग्यता",
+        "dob": "DOB",
+        "age": "आयु",
+        "place_of_birth": "जन्म स्थान",
+        "mobile": "मोबाइल नंबर",
+        "email": "ईमेल",
+        "know_customer_duration": "ग्राहक को जानने की अवधि",
+        "kyc_subheader": "KYC और ID विवरण",
+        "aadhaar_number": "आधार नंबर",
+        "pan_number": "पैन नंबर",
+        "kyc_number": "KYC नंबर",
+        "access_id": "Access ID",
+        "boc_number": "BOC नंबर",
+        "boc_date": "BOC की तारीख",
+        "boc_amount": "BOC राशि"
+    },
+    "occupation": {
+        "title": "II. पेशा और आय विवरण",
+        "occupation_type": "व्यवसाय प्रकार",
+        "occupation_options": {
+            "Service": "नौकरी",
+            "Business": "व्यापार",
+            "Other": "अन्य"
+        },
+        "service_fields": "नौकरी का विवरण",
+        "designation": "पद",
+        "department": "जॉब विभाग / संस्थान",
+        "service_year": "नौकरी में वर्ष",
+        "service_month": "नौकरी में महीने",
+        "years": "वर्ष",
+        "months": "महीने",
+        "business_fields": "व्यापार का विवरण",
+        "business_name": "व्यवसाय का नाम",
+        "type_of_business": "व्यवसाय का प्रकार",
+        "business_year": "व्यवसाय के वर्ष",
+        "business_month": "व्यवसाय में महीने",
+        "yearly_income": "वार्षिक आय",
+        "bank_details_header": "III. बैंक विवरण",
+        "bank_name": "बैंक का नाम",
+        "account_number": "खाता संख्या",
+        "account_type": "खाता प्रकार",
+        "account_type_options": {
+            "Saving": "बचत",
+            "Current": "चालू"
+        },
+        "ifsc_code": "आईएफएससी कोड",
+        "bank_address": "बैंक का पता / शाखा"
+    },
+    "policy": {
+        "title": "IV. प्लान विवरण",
+        "plan_number": "प्लान क्रमांक",
+        "term": "टर्म",
+        "sum_assured": "बीमा राशि",
+        "premium_mode": "प्रीमियम भुगतान मोड",
+        "premium_mode_options": {
+            "Monthly": "मासिक",
+            "Quarterly": "तिमाही",
+            "Half-Yearly": "छमाही",
+            "Yearly": "वार्षिक",
+            "Single": "एकल भुगतान",
+            "SSS/ECS": "SSS/ECS"
+        },
+        "premium_amount": "प्रीमियम राशि",
+        "riders": "राइडर्स",
+        "adb_rider": "ABDB (आकस्मिक + मृत्यु लाभ)",
+        "ab_rider": "AB (आकस्मिक लाभ)",
+        "term_rider": "टर्म राइडर",
+        "cir_rider": "CIR (गंभीर बीमारी राइडर)",
+        "answer_yes": "हाँ",
+        "answer_no": "नहीं",
+        "nominees_section_title": "V. नॉमिनी विवरण",
+        "nominee_name": "नॉमिनी का नाम",
+        "nominee_relation": "संबंध",
+        "nominee_age": "आयु",
+        "nominee_share": "नॉमिनी का हिस्सा %",
+        "add_nominee": "नॉमिनी जोड़ें",
+        "previous_policies_section_title": "VII. पिछली पॉलिसी का विवरण",
+        "policy_name": "प्लान का नाम / टर्म",
+        "policy_number": "पॉलिसी क्रमांक",
+        "policy_sum_assured": "बीमा राशि",
+        "policy_premium_amount": "प्रीमियम राशि",
+        "policy_doc_date": "दस्तावेज़ तिथि",
+        "policy_status": "पॉलिसी चल रही है?",
+        "add_previous_policy": "पॉलिसी जोड़ें"
+    },
+    "family": {
+        "title": "VI. पारिवारिक इतिहास और स्वास्थ्य",
+        "add_family_member": "सदस्य जोड़ें",
+        "relation": "संबंध",
+        "relation_options": {
+            "Father": "पिता",
+            "Mother": "माता",
+            "Spouse": "पति/पत्नी",
+            "Brother": "भाई",
+            "Sister": "बहन",
+            "Son": "पुत्र",
+            "Daughter": "पुत्री"
+        },
+        "status": "जीवित/मृत",
+        "status_options": {
+            "Living": "जीवित",
+            "Dead": "मृत"
+        },
+        "age": "आयु",
+        "health": "स्वास्थ्य स्थिति",
+        "health_options": {
+            "Good": "अच्छा",
+            "Bad": "खराब"
+        },
+        "death_reason": "मृत्यु का कारण",
+        "death_year": "मृत्यु की तिथि/वर्ष",
+        "medical_details_header": "VIII. चिकित्सा और अन्य विवरण",
+        "health_details_subheader": "स्वास्थ्य विवरण",
+        "height": "ऊंचाई",
+        "weight": "वजन",
+        "birth_mark": "जन्मचिह्न",
+        "treatment_details_general": "इलाज का विवरण (यदि कोई हो) [सभी के लिए]",
+        "female_details_subheader": "विवाहित महिला जीवन के लिए",
+        "health_delivery_subheader": "स्वास्थ्य और प्रसव विवरण",
+        "is_pregnant": "क्या गर्भवती हैं?",
+        "delivery_mode": "प्रसव का तरीका",
+        "delivery_mode_options": {
+            "Normal": "सामान्य",
+            "Cesarean": "सिजेरियन"
+        },
+        "last_delivery_date": "अंतिम प्रसव तिथि",
+        "treatment_details": "इलाज का विवरण (केवल महिला संबंधित)",
+        "husband_details_subheader": "पति का विवरण",
+        "husband_name": "पति का नाम",
+        "husband_occupation": "पति का व्यवसाय",
+        "husband_income": "पति की वार्षिक आय",
+        "remarks_header": "IX. अन्य टिप्पणियाँ / रिमार्क",
+        "remarks_label": "यहां कोई भी अतिरिक्त नोट या टिप्पणी दर्ज करें",
+        "references_subheader": "संदर्भ विवरण",
+        "add_reference": "संदर्भ जोड़ें",
+        "ref_name": "संदर्भ व्यक्ति का नाम",
+        "ref_contact": "संपर्क नंबर",
+        "ref_address": "पता"
+    },
+    "pdf": {
+        "generating": "पीडीएफ बना रहा है...",
+        "title": "ग्राहक दस्तावेज़ विवरण फॉर्म",
+        "section": {
+            "personal": "I. व्यक्तिगत, संपर्क, KYC और पॉलिसी विवरण",
+            "occupation": "II. पेशा और आय विवरण",
+            "bank": "III. बैंक विवरण",
+            "plan": "IV. प्लान विवरण",
+            "nominees": "V. नॉमिनी विवरण",
+            "family": "VI. पारिवारिक इतिहास और स्वास्थ्य",
+            "policies": "VII. पिछली पॉलिसी का विवरण",
+            "medical": "VIII. चिकित्सा और अन्य विवरण",
+            "remarks": "IX. अन्य टिप्पणियाँ / रिमार्क",
+            "references": "X. संदर्भ"
+        }
+    },
+    "common": {
+        "select_answer": "चुनें",
+        "yes": "हाँ",
+        "no": "नहीं"
+    },
+    "dialog": {
+        "clear_data": {
+            "title": "क्या आप पूरी तरह निश्चित हैं?",
+            "description": "यह क्रिया पूर्ववत नहीं की जा सकती। यह आपके ब्राउज़र से सभी फ़ॉर्म डेटा को स्थायी रूप से हटा देगा।",
+            "cancel": "रद्द करें",
+            "confirm": "हाँ, डेटा साफ़ करें"
+        }
+    }
+}

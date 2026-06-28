@@ -1,0 +1,218 @@
+{
+    "form": {
+        "steps": {
+            "personal": "Personal",
+            "occupation": "Occupation & Bank",
+            "policy": "Policy",
+            "family": "Family & Medical"
+        },
+        "navigation": {
+            "next": "Next Step",
+            "previous": "Previous Step",
+            "submit": "Generate PDF",
+            "add": "Add",
+            "remove": "Remove"
+        },
+        "validation": {
+            "required": "This field is required",
+            "invalid_email": "Invalid email address",
+            "file_size_limit": "File size exceeds 10MB limit",
+            "invalid_file_type": "Invalid file type. Please upload an image."
+        }
+    },
+    "general": {
+        "doc_date": "Document Date",
+        "back_dating_date": "Back Dating Date",
+        "top_policy_number": "Policy Number"
+    },
+    "personal": {
+        "title": "I. Personal, Contact & KYC Details",
+        "photo": "Passport-size Photo",
+        "upload_prompt": "Click to upload",
+        "name": "Full Name",
+        "address": "Address",
+        "father_name": "Father's Name",
+        "mother_name": "Mother's Name",
+        "spouse_name": "Spouse's Name",
+        "gender": "Gender",
+        "gender_options": {
+            "Male": "Male",
+            "Female": "Female",
+            "Other": "Other"
+        },
+        "marital_status": "Marital Status",
+        "status_options": {
+            "single": "Single",
+            "married": "Married",
+            "divorced": "Divorced",
+            "widowed": "Widowed"
+        },
+        "qualification": "Qualification",
+        "dob": "DOB",
+        "age": "Age",
+        "place_of_birth": "Place of Birth",
+        "mobile": "Mobile Number",
+        "email": "Email",
+        "know_customer_duration": "Duration of knowing customer",
+        "kyc_subheader": "KYC and ID Details",
+        "aadhaar_number": "Aadhaar Number",
+        "pan_number": "PAN Number",
+        "kyc_number": "KYC Number",
+        "access_id": "Access ID",
+        "boc_number": "BOC Number",
+        "boc_date": "BOC Date",
+        "boc_amount": "BOC Amount"
+    },
+    "occupation": {
+        "title": "II. Occupation & Income Details",
+        "occupation_type": "Occupation Type",
+        "occupation_options": {
+            "Service": "Service",
+            "Business": "Business",
+            "Other": "Other"
+        },
+        "service_fields": "Service Details",
+        "designation": "Designation",
+        "department": "Job Department / Institution",
+        "service_year": "Years in Service",
+        "service_month": "Months in Service",
+        "years": "Years",
+        "months": "Months",
+        "business_fields": "Business Details",
+        "business_name": "Business Name",
+        "type_of_business": "Type of Business",
+        "business_year": "Years in Business",
+        "business_month": "Months in Business",
+        "yearly_income": "Annual Income",
+        "bank_details_header": "III. Bank Details",
+        "bank_name": "Bank Name",
+        "account_number": "Account No.",
+        "account_type": "Account Type",
+        "account_type_options": {
+            "Saving": "Saving",
+            "Current": "Current"
+        },
+        "ifsc_code": "IFSC Code",
+        "bank_address": "Bank Address / Branch"
+    },
+    "policy": {
+        "title": "IV. Plan Details",
+        "plan_number": "Plan Number",
+        "term": "Term",
+        "sum_assured": "Sum Assured",
+        "premium_mode": "Premium Payment Mode",
+        "premium_mode_options": {
+            "Monthly": "Monthly",
+            "Quarterly": "Quarterly",
+            "Half-Yearly": "Half-Yearly",
+            "Yearly": "Yearly",
+            "Single": "Single Pay",
+            "SSS/ECS": "SSS/ECS"
+        },
+        "premium_amount": "Premium Amount",
+        "riders": "Riders",
+        "adb_rider": "ABDB (Accidental + Death Benefit)",
+        "ab_rider": "AB (Accidental Benefit)",
+        "term_rider": "Term Rider",
+        "cir_rider": "CIR (Critical Illness Rider)",
+        "answer_yes": "Yes",
+        "answer_no": "No",
+        "nominees_section_title": "V. Nominee Details",
+        "nominee_name": "Nominee Name",
+        "nominee_relation": "Relation",
+        "nominee_age": "Age",
+        "nominee_share": "Nominee Share %",
+        "add_nominee": "Add Nominee",
+        "previous_policies_section_title": "VII. Previous Policy Details",
+        "policy_name": "Plan Name / Term",
+        "policy_number": "Policy Number",
+        "policy_sum_assured": "Sum Assured",
+        "policy_premium_amount": "Premium Amount",
+        "policy_doc_date": "Document Date",
+        "policy_status": "Is policy active?",
+        "add_previous_policy": "Add Policy"
+    },
+    "family": {
+        "title": "VI. Family History & Health",
+        "add_family_member": "Add Member",
+        "relation": "Relation",
+        "relation_options": {
+            "Father": "Father",
+            "Mother": "Mother",
+            "Spouse": "Spouse",
+            "Brother": "Brother",
+            "Sister": "Sister",
+            "Son": "Son",
+            "Daughter": "Daughter"
+        },
+        "status": "Living/Dead",
+        "status_options": {
+            "Living": "Living",
+            "Dead": "Dead"
+        },
+        "age": "Age",
+        "health": "Health Condition",
+        "health_options": {
+            "Good": "Good",
+            "Bad": "Bad"
+        },
+        "death_reason": "Reason for Death",
+        "death_year": "Date/Year of Death",
+        "medical_details_header": "VIII. Medical and Other Details",
+        "health_details_subheader": "Health Details",
+        "height": "Height",
+        "weight": "Weight",
+        "birth_mark": "Birth Mark",
+        "treatment_details_general": "Treatment Details (if any) [For all]",
+        "female_details_subheader": "For Married Woman Life",
+        "health_delivery_subheader": "Health and Delivery Details",
+        "is_pregnant": "Are you pregnant?",
+        "delivery_mode": "Mode of Delivery",
+        "delivery_mode_options": {
+            "Normal": "Normal",
+            "Cesarean": "Cesarean"
+        },
+        "last_delivery_date": "Last Delivery Date",
+        "treatment_details": "Treatment Details (Female related only)",
+        "husband_details_subheader": "Husband's Details",
+        "husband_name": "Husband's Name",
+        "husband_occupation": "Husband's Occupation",
+        "husband_income": "Husband's Annual Income",
+        "remarks_header": "IX. Other Notes / Remarks",
+        "remarks_label": "Enter any additional notes or remarks here",
+        "references_subheader": "Reference Details",
+        "add_reference": "Add Reference",
+        "ref_name": "Reference Person's Name",
+        "ref_contact": "Contact Number",
+        "ref_address": "Address"
+    },
+    "pdf": {
+        "generating": "Generating PDF...",
+        "title": "Customer Document Details Form",
+        "section": {
+            "personal": "I. Personal, Contact, KYC & Policy Details",
+            "occupation": "II. Occupation and Income Details",
+            "bank": "III. Bank Details",
+            "plan": "IV. Plan Details",
+            "nominees": "V. Nominee Details",
+            "family": "VI. Family History and Health",
+            "policies": "VII. Previous Policy Details",
+            "medical": "VIII. Medical and Other Details",
+            "remarks": "IX. Other Notes / Remarks",
+            "references": "X. References"
+        }
+    },
+    "common": {
+        "select_answer": "Select",
+        "yes": "Yes",
+        "no": "No"
+    },
+    "dialog": {
+        "clear_data": {
+            "title": "Are you absolutely sure?",
+            "description": "This action cannot be undone. This will permanently delete all form data from your browser.",
+            "cancel": "Cancel",
+            "confirm": "Yes, clear data"
+        }
+    }
+}
