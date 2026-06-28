@@ -157,7 +157,6 @@ export default function RecordsPage() {
                                         occupation: { ...defaultValues.occupation, ...r.formData?.occupation },
                                         bank: { ...defaultValues.bank, ...r.formData?.bank },
                                         policy: { ...defaultValues.policy, ...r.formData?.policy },
-                                        family: { ...defaultValues.family, ...r.formData?.family },
                                         medical: { ...defaultValues.medical, ...r.formData?.medical }
                                     };
                                     

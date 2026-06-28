@@ -65,17 +65,17 @@ export const defaultValues: InsuranceFormValues = {
     termRider: 'Yes',
     cirRider: 'No',
     nominees: [
-      { name: 'Priya Sharma', relation: 'Wife', age: 32, percentage: 100 }
+      { name: 'Priya Sharma', relation: 'Wife', age: 32, share: 100 }
     ],
     familyMembers: [
-      { name: 'Ramesh Sharma', relation: 'Father', age: 65, health: 'Good' },
-      { name: 'Sunita Sharma', relation: 'Mother', age: 60, health: 'Good' }
+      { relation: 'Father', age: 65, health: 'Good' },
+      { relation: 'Mother', age: 60, health: 'Good' }
     ],
     previousPolicies: [
-      { policyNo: 'LIC-112233', doc: new Date('2015-06-01T00:00:00Z'), sumAssured: 500000 }
+      { policyNumber: 'LIC-112233', docDate: new Date('2015-06-01T00:00:00Z'), sumAssured: 500000 }
     ],
     references: [
-      { name: 'Amit Kumar', mobile: '9988776655' }
+      { name: 'Amit Kumar', contact: '9988776655' }
     ],
   },
   medical: {
