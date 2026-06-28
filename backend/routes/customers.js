@@ -81,6 +81,19 @@ router.get('/unread-count', async (req, res) => {
   }
 });
 
+// Get all unread notifications
+router.get('/notifications', async (req, res) => {
+  try {
+    const notifications = await Customer.find({ status: 'new' })
+      .select('searchable.name createdAt')
+      .sort({ createdAt: -1 })
+      .lean();
+    res.json(notifications);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch notifications' });
+  }
+});
+
 // Get single customer by ID
 router.get('/:id', async (req, res) => {
   try {

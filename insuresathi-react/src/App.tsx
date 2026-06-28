@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "@/pages/LandingPage";
 import RecordsPage from "@/pages/RecordsPage";
 import ClientPage from "@/pages/ClientPage";
+import NotificationsPage from "@/pages/NotificationsPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
                       <Routes>
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/records" element={<RecordsPage />} />
+                        <Route path="/notifications" element={<NotificationsPage />} />
                         <Route path="/register" element={
                           <div className="container mx-auto px-4 py-8 max-w-3xl">
                             <InsuranceForm isClientMode={false} />
