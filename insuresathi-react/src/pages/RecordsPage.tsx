@@ -38,7 +38,7 @@ export default function RecordsPage() {
       if (search) params.append('search', search);
       if (yearFilter) params.append('year', yearFilter);
       
-      const res = await fetch(`http://127.0.0.1:3001/api/customers?${params.toString()}`);
+      const res = await fetch(`https://insuresathi-app.onrender.com/api/customers?${params.toString()}`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setRecords(data);
@@ -54,7 +54,7 @@ export default function RecordsPage() {
     if (!window.confirm("Are you sure you want to completely delete this record? This cannot be undone.")) return;
     
     try {
-      const res = await fetch(`http://127.0.0.1:3001/api/customers/${id}`, { method: 'DELETE' });
+      const res = await fetch(`https://insuresathi-app.onrender.com/api/customers/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error("Failed to delete");
       toast({ title: "Deleted", description: "Record deleted successfully." });
       fetchRecords(); // Refresh the list

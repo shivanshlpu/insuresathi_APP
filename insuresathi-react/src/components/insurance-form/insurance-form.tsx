@@ -53,7 +53,7 @@ export default function InsuranceForm() {
 
   useEffect(() => {
     if (editId) {
-      fetch(`http://127.0.0.1:3001/api/customers/${editId}`)
+      fetch(`https://insuresathi-app.onrender.com/api/customers/${editId}`)
         .then(res => res.json())
         .then(data => {
           if (data && data.formData) {
@@ -87,9 +87,9 @@ export default function InsuranceForm() {
     });
 
     try {
-      const url = editId 
-        ? `http://127.0.0.1:3001/api/customers/${editId}`
-        : 'http://127.0.0.1:3001/api/customers';
+      const url = isEditMode && editId 
+        ? `https://insuresathi-app.onrender.com/api/customers/${editId}`
+        : 'https://insuresathi-app.onrender.com/api/customers';
         
       const response = await fetch(url, {
         method: editId ? 'PUT' : 'POST',
