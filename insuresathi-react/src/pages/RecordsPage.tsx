@@ -134,19 +134,33 @@ export default function RecordsPage() {
                   </thead>
                   <tbody>
                     {records.map((r, i) => (
-                      <tr key={r._id} className="border-b last:border-0 hover:bg-slate-50 transition-colors">
-                        <td className="p-4 font-medium">{r.searchable?.name}</td>
+                      <tr key={r._id} className={`border-b last:border-0 transition-colors ${r.status === 'new' ? 'bg-amber-50 hover:bg-amber-100' : 'hover:bg-slate-50'}`}>
+                        <td className="p-4 font-medium">
+                          {r.searchable?.name}
+                          {r.status === 'new' && (
+                            <span className="ml-2 inline-flex items-center justify-center bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-sm">
+                              NEW
+                            </span>
+                          )}
+                        </td>
                         <td className="p-4">{r.searchable?.policyNumber || 'N/A'}</td>
                         <td className="p-4">{r.searchable?.mobile || 'N/A'}</td>
                         <td className="p-4"><span className="bg-primary/10 text-primary px-2 py-1 rounded-md text-xs font-semibold">{r.financialYear}</span></td>
                         <td className="p-4">{new Date(r.createdAt).toLocaleDateString()}</td>
                         <td className="p-4 text-right">
                             <div className="flex justify-end gap-2">
-                                <Link to={`/register?editId=${r._id}`}>
-                                    <Button size="sm" variant="outline" className="gap-2">
-                                        <Eye className="w-4 h-4" /> View
-                                    </Button>
-                                </Link>
+                                <Button size="sm" variant="outline" className="gap-2" onClick={async () => {
+                                    if (r.status === 'new') {
+                                        try {
+                                            await fetch(`https://insuresathi-app.onrender.com/api/customers/${r._id}/reviewed`, { method: 'PATCH' });
+                                        } catch (e) {
+                                            console.error("Failed to mark as reviewed");
+                                        }
+                                    }
+                                    window.location.href = `/register?editId=${r._id}`;
+                                }}>
+                                    <Eye className="w-4 h-4" /> View
+                                </Button>
                                 <Button size="sm" variant="default" className="gap-2" onClick={async () => {
                                     try {
                                         toast({ title: "Fetching details..." });

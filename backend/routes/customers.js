@@ -18,10 +18,15 @@ router.post('/', async (req, res) => {
     const year = today.getFullYear();
     const financialYear = month >= 4 ? `${year}-${year + 1}` : `${year - 1}-${year}`;
 
+    const source = req.body.source === 'client' ? 'client' : 'agent';
+    const status = source === 'client' ? 'new' : 'reviewed';
+
     const newCustomer = new Customer({
       financialYear,
       searchable: { name, policyNumber, mobile },
-      formData
+      formData,
+      source,
+      status
     });
 
     const savedCustomer = await newCustomer.save();
@@ -64,6 +69,16 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get count of unread (new) client submissions
+router.get('/unread-count', async (req, res) => {
+  try {
+    const count = await Customer.countDocuments({ status: 'new' });
+    res.json({ count });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch unread count' });
+  }
+});
+
 // Get single customer by ID
 router.get('/:id', async (req, res) => {
   try {
@@ -89,7 +104,8 @@ router.put('/:id', async (req, res) => {
       req.params.id,
       {
         searchable: { name, policyNumber, mobile },
-        formData
+        formData,
+        status: 'reviewed' // Always mark as reviewed when updated by agent
       },
       { new: true } // Return updated document
     );
@@ -99,6 +115,16 @@ router.put('/:id', async (req, res) => {
   } catch (error) {
     console.error('Error updating customer:', error);
     res.status(500).json({ error: 'Failed to update customer' });
+  }
+});
+
+// Mark as reviewed
+router.patch('/:id/reviewed', async (req, res) => {
+  try {
+    await Customer.findByIdAndUpdate(req.params.id, { status: 'reviewed' });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update status' });
   }
 });
 

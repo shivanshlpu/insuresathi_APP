@@ -34,7 +34,11 @@ const FormSkeleton = () => (
   </Card>
 );
 
-export default function InsuranceForm() {
+interface InsuranceFormProps {
+  isClientMode?: boolean;
+}
+
+export default function InsuranceForm({ isClientMode = false }: InsuranceFormProps) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const editId = searchParams.get('editId');
@@ -94,11 +98,21 @@ export default function InsuranceForm() {
       const response = await fetch(url, {
         method: editId ? 'PUT' : 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ formData: values })
+        body: JSON.stringify({ formData: values, source: isClientMode ? 'client' : 'agent' })
       });
 
       if (!response.ok) {
         throw new Error('Failed to save to database');
+      }
+
+      if (isClientMode) {
+        toast({
+          title: "Success",
+          description: "Thank you! Your details have been securely sent to your agent.",
+        });
+        setIsGeneratingPdf(false);
+        form.reset();
+        return;
       }
 
       toast({
@@ -135,11 +149,13 @@ export default function InsuranceForm() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button variant="outline" size="icon" onClick={handleBack}>
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
+          {!isClientMode && (
+            <Button variant="outline" size="icon" onClick={handleBack}>
+              <ArrowLeft className="h-4 w-4" />
+            </Button>
+          )}
           <h1 className="text-3xl font-bold text-slate-900">
-            {editId ? "Customer Record" : "New Registration"}
+            {isClientMode ? "Customer Information Form" : (editId ? "Customer Record" : "New Registration")}
           </h1>
         </div>
         {editId && !isEditMode && (
@@ -151,7 +167,7 @@ export default function InsuranceForm() {
       <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <fieldset disabled={!isEditMode} className="space-y-8">
-          <Step1PersonalDetails form={form} />
+          <Step1PersonalDetails form={form} isClientMode={isClientMode} />
           <Step2OccupationAndBank form={form} />
           <Step3PolicyDetails form={form} />
           <Step4FamilyAndMedical form={form} />
@@ -164,7 +180,7 @@ export default function InsuranceForm() {
             </Button>
           ) : (
             <Button type="submit" disabled={isGeneratingPdf} className="w-full sm:w-auto text-lg py-6 px-12">
-              {isGeneratingPdf ? t('pdf.generating') : (editId ? "Update Record & Save PDF" : "Generate PDF & Save")}
+              {isGeneratingPdf ? t('pdf.generating') : (isClientMode ? "Submit to Agent" : (editId ? "Update Record & Save PDF" : "Generate PDF & Save"))}
             </Button>
           )}
         </div>

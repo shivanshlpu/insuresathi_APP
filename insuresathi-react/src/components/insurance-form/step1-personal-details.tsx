@@ -27,6 +27,7 @@ import { Separator } from "../ui/separator";
 
 interface Step1Props {
   form: UseFormReturn<InsuranceFormValues>;
+  isClientMode?: boolean;
 }
 
 const DateField = ({ name, label, form, yearSelect=false }: { name: any, label: string, form: UseFormReturn<InsuranceFormValues>, yearSelect?: boolean }) => (
@@ -74,7 +75,7 @@ const DateField = ({ name, label, form, yearSelect=false }: { name: any, label: 
 );
 
 
-export default function Step1PersonalDetails({ form }: Step1Props) {
+export default function Step1PersonalDetails({ form, isClientMode = false }: Step1Props) {
   const { t } = useTranslation();
   const watchedMaritalStatus = form.watch("personal.maritalStatus");
 
@@ -116,13 +117,15 @@ export default function Step1PersonalDetails({ form }: Step1Props) {
                 </FormItem>
             )}
             />
-            <div className="grid sm:grid-cols-3 gap-4 w-full">
-                <DateField name="personal.docDate" label={t('general.doc_date')} form={form} />
-                <DateField name="personal.backDatingDate" label={t('general.back_dating_date')} form={form} />
-                <FormField control={form.control} name="personal.topPolicyNumber" render={({ field }) => (
-                    <FormItem><FormLabel>{t("general.top_policy_number")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-                )} />
-            </div>
+            {!isClientMode && (
+                <div className="grid sm:grid-cols-3 gap-4 w-full">
+                    <DateField name="personal.docDate" label={t('general.doc_date')} form={form} />
+                    <DateField name="personal.backDatingDate" label={t('general.back_dating_date')} form={form} />
+                    <FormField control={form.control} name="personal.topPolicyNumber" render={({ field }) => (
+                        <FormItem><FormLabel>{t("general.top_policy_number")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                    )} />
+                </div>
+            )}
         </div>
 
         <Separator />
@@ -197,9 +200,11 @@ export default function Step1PersonalDetails({ form }: Step1Props) {
             <FormField control={form.control} name="personal.email" render={({ field }) => (
                 <FormItem><FormLabel>{t("personal.email")}</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
-            <FormField control={form.control} name="personal.knowCustomerDuration" render={({ field }) => (
-                <FormItem><FormLabel>{t("personal.know_customer_duration")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
+            {!isClientMode && (
+                <FormField control={form.control} name="personal.knowCustomerDuration" render={({ field }) => (
+                    <FormItem><FormLabel>{t("personal.know_customer_duration")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                )} />
+            )}
         </div>
         
         <Separator />

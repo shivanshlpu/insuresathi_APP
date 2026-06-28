@@ -14,6 +14,16 @@ const customerSchema = new mongoose.Schema({
   formData: {
     type: Object, // We can store the entire complex nested JSON here
     required: true
+  },
+  source: {
+    type: String,
+    enum: ['agent', 'client'],
+    default: 'agent'
+  },
+  status: {
+    type: String,
+    enum: ['new', 'reviewed'],
+    default: 'reviewed'
   }
 }, { timestamps: true });
 
