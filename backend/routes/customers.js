@@ -52,8 +52,11 @@ router.get('/', async (req, res) => {
       ];
     }
 
-    // Sort by newest first
-    const customers = await Customer.find(query).sort({ createdAt: -1 });
+    // Sort by newest first, exclude heavy base64 photo, limit to 500 records
+    const customers = await Customer.find(query)
+      .select('-formData.personal.photo')
+      .limit(500)
+      .sort({ createdAt: -1 });
     res.json(customers);
   } catch (error) {
     console.error('Error fetching customers:', error);

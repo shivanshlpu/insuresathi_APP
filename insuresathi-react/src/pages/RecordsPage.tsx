@@ -147,24 +147,32 @@ export default function RecordsPage() {
                                         <Eye className="w-4 h-4" /> View
                                     </Button>
                                 </Link>
-                                <Button size="sm" variant="default" className="gap-2" onClick={() => {
-                                    // Merge missing nested properties with defaultValues to prevent PDF crashes
-                                    const safeData = {
-                                        ...defaultValues,
-                                        ...r.formData,
-                                        personal: { ...defaultValues.personal, ...r.formData?.personal },
-                                        kyc: { ...defaultValues.kyc, ...r.formData?.kyc },
-                                        occupation: { ...defaultValues.occupation, ...r.formData?.occupation },
-                                        bank: { ...defaultValues.bank, ...r.formData?.bank },
-                                        policy: { ...defaultValues.policy, ...r.formData?.policy },
-                                        medical: { ...defaultValues.medical, ...r.formData?.medical }
-                                    };
-                                    
-                                    setPrintData(safeData);
-                                    toast({ title: "Generating PDF..." });
-                                    setTimeout(() => {
-                                        handlePrint();
-                                    }, 500);
+                                <Button size="sm" variant="default" className="gap-2" onClick={async () => {
+                                    try {
+                                        toast({ title: "Fetching details..." });
+                                        const res = await fetch(`https://insuresathi-app.onrender.com/api/customers/${r._id}`);
+                                        if (!res.ok) throw new Error("Failed to fetch full record");
+                                        const fullRecord = await res.json();
+
+                                        // Merge missing nested properties with defaultValues to prevent PDF crashes
+                                        const safeData = {
+                                            ...defaultValues,
+                                            ...fullRecord.formData,
+                                            personal: { ...defaultValues.personal, ...fullRecord.formData?.personal },
+                                            kyc: { ...defaultValues.kyc, ...fullRecord.formData?.kyc },
+                                            occupation: { ...defaultValues.occupation, ...fullRecord.formData?.occupation },
+                                            bank: { ...defaultValues.bank, ...fullRecord.formData?.bank },
+                                            policy: { ...defaultValues.policy, ...fullRecord.formData?.policy },
+                                            medical: { ...defaultValues.medical, ...fullRecord.formData?.medical }
+                                        };
+                                        
+                                        setPrintData(safeData);
+                                        setTimeout(() => {
+                                            handlePrint();
+                                        }, 100);
+                                    } catch (error) {
+                                        toast({ title: "Error", description: "Could not load complete record for printing.", variant: "destructive" });
+                                    }
                                 }}>
                                     <Printer className="w-4 h-4" /> Print
                                 </Button>
