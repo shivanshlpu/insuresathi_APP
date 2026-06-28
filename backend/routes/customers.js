@@ -72,8 +72,10 @@ router.get('/', async (req, res) => {
 // Get count of unread (new) client submissions
 router.get('/unread-count', async (req, res) => {
   try {
-    const count = await Customer.countDocuments({ status: 'new' });
-    res.json({ count });
+    const unreadRecords = await Customer.find({ status: 'new' }).select('searchable.name').lean();
+    const count = unreadRecords.length;
+    const names = unreadRecords.map(r => r.searchable?.name || 'Unknown');
+    res.json({ count, names });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch unread count' });
   }

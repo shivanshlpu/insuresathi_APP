@@ -15,6 +15,13 @@ export default function LandingPage() {
       .then(data => {
         if (data && typeof data.count === 'number') {
           setUnreadCount(data.count);
+          if (data.count > 0 && data.names && data.names.length > 0) {
+            toast({
+              title: "New Submissions!",
+              description: `${data.names.join(', ')} filled and sent the details.`,
+              duration: 10000,
+            });
+          }
         }
       })
       .catch(err => console.error("Failed to fetch unread count", err));
