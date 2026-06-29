@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -12,7 +13,7 @@ export default function NotificationsPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetch('https://insuresathi-app.onrender.com/api/customers/notifications')
+    fetchWithAuth('https://insuresathi-app.onrender.com/api/customers/notifications')
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -28,7 +29,7 @@ export default function NotificationsPage() {
 
   const handleMarkReviewed = async (id: string) => {
     try {
-      await fetch(`https://insuresathi-app.onrender.com/api/customers/${id}/reviewed`, { method: 'PATCH' });
+      await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${id}/reviewed`, { method: 'PATCH' });
       window.location.href = `/register?editId=${id}`;
     } catch (e) {
       console.error("Failed to mark as reviewed", e);

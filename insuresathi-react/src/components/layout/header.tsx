@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { useLanguage } from "@/contexts/language-context";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Moon, Sun, Trash2, Bell } from "lucide-react";
+import { Moon, Sun, Trash2, Bell, LogOut } from "lucide-react";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "../ui/button";
 import { ClearDataDialog } from "./clear-data-dialog";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 export default function Header() {
   const { language, setLanguage } = useLanguage();
@@ -15,7 +16,7 @@ export default function Header() {
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
-    fetch('https://insuresathi-app.onrender.com/api/customers/unread-count')
+    fetchWithAuth('https://insuresathi-app.onrender.com/api/customers/unread-count')
       .then(res => res.json())
       .then(data => {
         if (data && typeof data.count === 'number') {

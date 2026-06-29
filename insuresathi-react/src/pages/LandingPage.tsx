@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 export default function LandingPage() {
   const [unreadCount, setUnreadCount] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
-    fetch('https://insuresathi-app.onrender.com/api/customers/unread-count')
+    fetchWithAuth('https://insuresathi-app.onrender.com/api/customers/unread-count')
       .then(res => res.json())
       .then(data => {
         if (data && typeof data.count === 'number') {

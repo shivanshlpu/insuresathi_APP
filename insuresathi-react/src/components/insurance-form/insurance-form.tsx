@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 import Step1PersonalDetails from "./step1-personal-details";
 import Step2OccupationAndBank from "./step2-occupation-and-bank";
@@ -57,7 +58,7 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
 
   useEffect(() => {
     if (editId) {
-      fetch(`https://insuresathi-app.onrender.com/api/customers/${editId}`)
+      fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${editId}`)
         .then(res => res.json())
         .then(data => {
           if (data && data.formData) {
@@ -91,13 +92,15 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
     });
 
     try {
-      const url = isEditMode && editId 
-        ? `https://insuresathi-app.onrender.com/api/customers/${editId}`
+      const url = editId 
+        ? `https://insuresathi-app.onrender.com/api/customers/${editId}` 
         : 'https://insuresathi-app.onrender.com/api/customers';
         
-      const response = await fetch(url, {
+      const response = await fetchWithAuth(url, {
         method: editId ? 'PUT' : 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({ formData: values, source: isClientMode ? 'client' : 'agent' })
       });
 

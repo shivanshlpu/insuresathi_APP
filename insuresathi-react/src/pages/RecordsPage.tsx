@@ -10,6 +10,7 @@ import { useReactToPrint } from "react-to-print";
 import { useTranslation } from "@/hooks/use-translation";
 import PdfDocument from "@/components/insurance-form/pdf-document";
 import { defaultValues } from "@/hooks/use-local-storage-form";
+import { fetchWithAuth } from "@/lib/fetchWithAuth";
 
 export default function RecordsPage() {
   const [records, setRecords] = useState<any[]>([]);
@@ -38,7 +39,7 @@ export default function RecordsPage() {
       if (search) params.append('search', search);
       if (yearFilter) params.append('year', yearFilter);
       
-      const res = await fetch(`https://insuresathi-app.onrender.com/api/customers?${params.toString()}`);
+      const res = await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers?${params.toString()}`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setRecords(data);
@@ -54,7 +55,7 @@ export default function RecordsPage() {
     if (!window.confirm("Are you sure you want to completely delete this record? This cannot be undone.")) return;
     
     try {
-      const res = await fetch(`https://insuresathi-app.onrender.com/api/customers/${id}`, { method: 'DELETE' });
+      const res = await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error("Failed to delete");
       toast({ title: "Deleted", description: "Record deleted successfully." });
       fetchRecords(); // Refresh the list
@@ -152,7 +153,7 @@ export default function RecordsPage() {
                                 <Button size="sm" variant="outline" className="gap-2" onClick={async () => {
                                     if (r.status === 'new') {
                                         try {
-                                            await fetch(`https://insuresathi-app.onrender.com/api/customers/${r._id}/reviewed`, { method: 'PATCH' });
+                                            await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${r._id}/reviewed`, { method: 'PATCH' });
                                         } catch (e) {
                                             console.error("Failed to mark as reviewed");
                                         }
@@ -164,7 +165,7 @@ export default function RecordsPage() {
                                 <Button size="sm" variant="default" className="gap-2" onClick={async () => {
                                     try {
                                         toast({ title: "Fetching details..." });
-                                        const res = await fetch(`https://insuresathi-app.onrender.com/api/customers/${r._id}`);
+                                        const res = await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${r._id}`);
                                         if (!res.ok) throw new Error("Failed to fetch full record");
                                         const fullRecord = await res.json();
 

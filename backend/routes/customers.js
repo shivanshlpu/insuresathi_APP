@@ -1,9 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const Customer = require('../models/Customer');
+const authMiddleware = require('../middleware/auth');
+const rateLimit = require('express-rate-limit');
 
-// Create a new customer record
-router.post('/', async (req, res) => {
+// Rate limiter for form submissions (max 10 per hour per IP)
+const submitLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 10,
+  message: { error: 'Too many submissions from this IP, please try again after an hour' }
+});
+
+// Create a new customer record (Public with rate limit)
+router.post('/', submitLimiter, async (req, res) => {
   try {
     const { formData } = req.body;
     
@@ -36,6 +45,9 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: 'Failed to save customer' });
   }
 });
+
+// === PROTECTED ROUTES BELOW ===
+router.use(authMiddleware);
 
 // Get all customers (with optional search/filter)
 router.get('/', async (req, res) => {
