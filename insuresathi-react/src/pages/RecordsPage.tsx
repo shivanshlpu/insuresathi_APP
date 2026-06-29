@@ -18,6 +18,7 @@ export default function RecordsPage() {
   const [search, setSearch] = useState("");
   const [yearFilter, setYearFilter] = useState("");
   const [printData, setPrintData] = useState<any>(null);
+  const [shouldPrint, setShouldPrint] = useState(false);
   const { toast } = useToast();
   const { t } = useTranslation();
 
@@ -26,6 +27,17 @@ export default function RecordsPage() {
     contentRef: componentRef,
     documentTitle: "InsureSathi-Record",
   });
+
+  // Guarantee that the component has rendered before printing
+  useEffect(() => {
+    if (shouldPrint && printData) {
+      const timer = setTimeout(() => {
+        handlePrint();
+        setShouldPrint(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [shouldPrint, printData, handlePrint]);
 
   useEffect(() => {
     fetchRecords();
@@ -182,9 +194,7 @@ export default function RecordsPage() {
                                         };
                                         
                                         setPrintData(safeData);
-                                        setTimeout(() => {
-                                            handlePrint();
-                                        }, 100);
+                                        setShouldPrint(true);
                                     } catch (error) {
                                         toast({ title: "Error", description: "Could not load complete record for printing.", variant: "destructive" });
                                     }

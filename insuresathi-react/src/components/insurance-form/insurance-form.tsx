@@ -46,6 +46,7 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
   const [isEditMode, setIsEditMode] = useState(!editId);
   const [form, isInitialized] = useLocalStorageForm();
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
+  const [shouldPrint, setShouldPrint] = useState(false);
   const { t } = useTranslation();
   const { toast } = useToast();
 
@@ -55,6 +56,17 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
     documentTitle: "InsureSathi-Application",
     onAfterPrint: () => setIsGeneratingPdf(false),
   });
+
+  // Guarantee that the component has rendered latest values before printing
+  useEffect(() => {
+    if (shouldPrint) {
+      const timer = setTimeout(() => {
+        handlePrint();
+        setShouldPrint(false);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [shouldPrint, handlePrint]);
 
   useEffect(() => {
     if (editId) {
@@ -124,9 +136,7 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
       });
 
       // Allow state to flush so hidden component renders with latest values before printing
-      setTimeout(() => {
-          handlePrint();
-      }, 500);
+      setShouldPrint(true);
     } catch (error) {
       console.error(error);
       toast({
@@ -178,7 +188,7 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
         
         <div className="flex justify-end pt-4 gap-4">
           {editId && !isEditMode ? (
-            <Button type="button" onClick={handlePrint} disabled={isGeneratingPdf} className="w-full sm:w-auto text-lg py-6 px-12">
+            <Button type="button" onClick={() => setShouldPrint(true)} disabled={isGeneratingPdf} className="w-full sm:w-auto text-lg py-6 px-12">
               {isGeneratingPdf ? t('pdf.generating') : "Generate PDF"}
             </Button>
           ) : (
