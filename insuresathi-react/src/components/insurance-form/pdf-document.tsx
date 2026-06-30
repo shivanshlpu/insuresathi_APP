@@ -125,7 +125,7 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                         <Cell label={t('personal.marital_status')} value={data.personal.maritalStatus} span={3} />
                         <Cell label={t('personal.spouse_name')} value={data.personal.maritalStatus === 'married' ? data.personal.spouseName : 'N/A'} span={3} />
                         <Cell label={t('personal.gender')} value={data.personal.gender} span={3} />
-                        <Cell label={t('personal.qualification')} value={data.personal.qualification} span={3} />
+                        <Cell label={t('personal.qualification')} value={data.personal.qualification ? `${data.personal.qualification}${data.personal.qualificationClass ? ` (${data.personal.qualificationClass})` : ''}` : 'N/A'} span={3} />
                         
                         <Cell label={t('personal.place_of_birth')} value={data.personal.placeOfBirth} span={4} />
                         <Cell label={t('personal.mobile')} value={data.personal.mobile} span={4} />

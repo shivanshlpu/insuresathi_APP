@@ -17,6 +17,7 @@ export const defaultValues: InsuranceFormValues = {
     motherName: '',
     gender: '',
     qualification: '',
+    qualificationClass: '',
     age: undefined,
     placeOfBirth: '',
     knowCustomerDuration: '',

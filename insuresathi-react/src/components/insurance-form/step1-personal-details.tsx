@@ -136,9 +136,27 @@ export default function Step1PersonalDetails({ form, isClientMode = false }: Ste
                 </FormControl>
                 <FormMessage /></FormItem>
             )} />
-            <FormField control={form.control} name="personal.qualification" render={({ field }) => (
-                <FormItem><FormLabel>{t("personal.qualification")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
+            <div className="flex flex-col gap-4">
+                <FormField control={form.control} name="personal.qualification" render={({ field }) => (
+                    <FormItem><FormLabel>{t("personal.qualification")}</FormLabel>
+                    <FormControl>
+                        <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                            <option value="" disabled>Select Qualification</option>
+                            <option value="Post-graduate">Post-graduate</option>
+                            <option value="Graduate">Graduate</option>
+                            <option value="Matric">Matric</option>
+                            <option value="High school">High school</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </FormControl>
+                    <FormMessage /></FormItem>
+                )} />
+                {form.watch("personal.qualification") && (
+                    <FormField control={form.control} name="personal.qualificationClass" render={({ field }) => (
+                        <FormItem><FormLabel>Class/Degree Studied</FormLabel><FormControl><Input {...field} placeholder="Specify class/degree" /></FormControl><FormMessage /></FormItem>
+                    )} />
+                )}
+            </div>
         </div>
 
         <div className="grid sm:grid-cols-3 gap-4">

@@ -54,6 +54,7 @@ export const insuranceFormSchema = z.object({
         gender: z.string().optional(),
         maritalStatus: z.string().optional(),
         qualification: z.string().optional(),
+        qualificationClass: z.string().optional(),
         dob: z.date().optional(),
         age: z.coerce.number().optional(),
         placeOfBirth: z.string().optional(),

@@ -1,4 +1,5 @@
-import { format } from "date-fns";
+import { useState, useEffect } from "react";
+import { format, parse, isValid } from "date-fns";
 import { UseFormReturn } from "react-hook-form";
 import {
   FormControl,
@@ -31,11 +32,43 @@ export function DateField({ name, label, form, yearSelect = false }: DateFieldPr
       name={name}
       render={({ field }) => {
         const dateValue = field.value ? new Date(field.value) : undefined;
-        // Format for the text input (YYYY-MM-DD for native date input)
-        const dateString =
+        
+        const [inputValue, setInputValue] = useState(
           dateValue && !isNaN(dateValue.getTime())
-            ? format(dateValue, "yyyy-MM-dd")
-            : "";
+            ? format(dateValue, "dd-MM-yyyy")
+            : ""
+        );
+
+        // Sync input when field value changes externally (e.g., from the calendar)
+        useEffect(() => {
+          if (field.value) {
+             const d = new Date(field.value);
+             if (!isNaN(d.getTime())) {
+                 const formatted = format(d, "dd-MM-yyyy");
+                 if (inputValue !== formatted) {
+                     setInputValue(formatted);
+                 }
+             }
+          } else {
+             setInputValue("");
+          }
+        }, [field.value]);
+
+        const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+          const val = e.target.value;
+          setInputValue(val);
+          
+          if (!val) {
+             field.onChange(undefined);
+             return;
+          }
+
+          // Very simple parser for DD-MM-YYYY
+          const parsedDate = parse(val, "dd-MM-yyyy", new Date());
+          if (isValid(parsedDate) && val.length === 10) {
+             field.onChange(parsedDate);
+          }
+        };
 
         return (
           <FormItem className="flex flex-col">
@@ -43,17 +76,11 @@ export function DateField({ name, label, form, yearSelect = false }: DateFieldPr
             <div className="flex gap-2">
               <FormControl>
                 <Input
-                  type="date"
+                  type="text"
+                  placeholder="DD-MM-YYYY"
                   className="flex-1"
-                  value={dateString}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    if (val) {
-                      field.onChange(new Date(val));
-                    } else {
-                      field.onChange(undefined);
-                    }
-                  }}
+                  value={inputValue}
+                  onChange={handleInputChange}
                 />
               </FormControl>
               <Popover>
