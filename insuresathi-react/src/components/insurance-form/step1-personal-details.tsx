@@ -151,7 +151,7 @@ export default function Step1PersonalDetails({ form, isClientMode = false }: Ste
                     </FormControl>
                     <FormMessage /></FormItem>
                 )} />
-                {form.watch("personal.qualification") && (
+                {form.watch("personal.qualification") === "Other" && (
                     <FormField control={form.control} name="personal.qualificationClass" render={({ field }) => (
                         <FormItem><FormLabel>Class/Degree Studied</FormLabel><FormControl><Input {...field} placeholder="Specify class/degree" /></FormControl><FormMessage /></FormItem>
                     )} />
