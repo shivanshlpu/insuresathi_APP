@@ -55,18 +55,33 @@ export function DateField({ name, label, form, yearSelect = false }: DateFieldPr
         }, [field.value]);
 
         const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-          const val = e.target.value;
-          setInputValue(val);
+          let val = e.target.value;
           
-          if (!val) {
-             field.onChange(undefined);
-             return;
+          if (inputValue.endsWith('-') && val.length === inputValue.length - 1) {
+            val = val.slice(0, -1);
           }
 
-          // Very simple parser for DD-MM-YYYY
-          const parsedDate = parse(val, "dd-MM-yyyy", new Date());
-          if (isValid(parsedDate) && val.length === 10) {
-             field.onChange(parsedDate);
+          let digits = val.replace(/\D/g, '');
+          if (digits.length > 8) digits = digits.slice(0, 8);
+
+          let formatted = digits;
+          if (digits.length > 4) {
+            formatted = `${digits.slice(0, 2)}-${digits.slice(2, 4)}-${digits.slice(4)}`;
+          } else if (digits.length > 2) {
+            formatted = `${digits.slice(0, 2)}-${digits.slice(2)}`;
+          }
+
+          setInputValue(formatted);
+          
+          if (formatted.length === 10) {
+            const parsedDate = parse(formatted, "dd-MM-yyyy", new Date());
+            if (isValid(parsedDate)) {
+               field.onChange(parsedDate);
+            } else {
+               field.onChange(undefined);
+            }
+          } else {
+             field.onChange(undefined);
           }
         };
 
@@ -97,9 +112,9 @@ export function DateField({ name, label, form, yearSelect = false }: DateFieldPr
                       field.onChange(date);
                     }}
                     initialFocus
-                    captionLayout={yearSelect ? "dropdown-buttons" : "buttons"}
-                    fromYear={yearSelect ? 1900 : undefined}
-                    toYear={yearSelect ? new Date().getFullYear() : undefined}
+                    captionLayout="dropdown-buttons"
+                    fromYear={1900}
+                    toYear={new Date().getFullYear() + 10}
                   />
                 </PopoverContent>
               </Popover>

@@ -54,11 +54,13 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
       <FormField control={control} name={`policy.familyMembers.${index}.age`} render={({ field }) => (
         <FormItem><FormLabel>{t('family.age')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
       )} />
-      <FormField control={control} name={`policy.familyMembers.${index}.health`} render={({ field }) => (
-        <FormItem><FormLabel>{t('family.health')}</FormLabel>
-          <FormControl><Input {...field} placeholder={t('family.health')} /></FormControl>
-        <FormMessage /></FormItem>
-      )} />
+      {watchFamilyMemberStatus(index) !== 'Deceased' && (
+        <FormField control={control} name={`policy.familyMembers.${index}.health`} render={({ field }) => (
+          <FormItem><FormLabel>{t('family.health')}</FormLabel>
+            <FormControl><Input {...field} placeholder={t('family.health')} /></FormControl>
+          <FormMessage /></FormItem>
+        )} />
+      )}
       {watchFamilyMemberStatus(index) === 'Deceased' && (
         <>
           <FormField control={control} name={`policy.familyMembers.${index}.deathReason`} render={({ field }) => (
