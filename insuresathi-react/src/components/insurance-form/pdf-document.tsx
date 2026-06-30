@@ -164,9 +164,10 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                         )}
                         {data.occupation.occupationType === 'Business' && (
                             <>
-                                <Cell label={t('occupation.business_name')} value={data.occupation.businessName} span={4} />
-                                <Cell label={t('occupation.type_of_business')} value={data.occupation.typeOfBusiness} span={4} />
-                                <Cell label={t('occupation.business_year')} value={businessLength} span={4} />
+                                <Cell label={t('occupation.business_name')} value={data.occupation.businessName} span={3} />
+                                <Cell label={t('occupation.type_of_business')} value={data.occupation.typeOfBusiness} span={3} />
+                                <Cell label={t('occupation.gst_number') || 'GST Number'} value={data.occupation.gstNumber} span={3} />
+                                <Cell label={t('occupation.business_year')} value={businessLength} span={3} />
                             </>
                         )}
                         
@@ -197,13 +198,16 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
 
                 {data.policy.nominees && data.policy.nominees.length > 0 && (
                     <Section title={t('pdf.section.nominees')}>
-                        <Table headers={[t('policy.nominee_name'), t('policy.nominee_relation'), t('policy.nominee_age'), t('policy.nominee_share')]}>
+                        <Table headers={[t('policy.nominee_name'), t('policy.nominee_relation'), t('policy.nominee_age'), t('policy.nominee_share'), 'Appointee']}>
                             {data.policy.nominees.map((n, i) => (
                                 <tr key={i} className="break-inside-avoid border-b border-gray-200">
                                     <td className="border-r border-gray-300 p-1">{n.name}</td>
                                     <td className="border-r border-gray-300 p-1">{n.relation}</td>
                                     <td className="border-r border-gray-300 p-1">{n.age}</td>
-                                    <td className="p-1">{n.share}%</td>
+                                    <td className="border-r border-gray-300 p-1">{n.share}%</td>
+                                    <td className="p-1">
+                                        {n.age !== undefined && n.age < 18 ? `${n.appointeeName || 'N/A'} (${n.appointeeRelation || 'N/A'}, Age: ${n.appointeeAge || 'N/A'})` : 'N/A'}
+                                    </td>
                                 </tr>
                             ))}
                         </Table>
@@ -229,14 +233,14 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
 
                 {data.policy.previousPolicies && data.policy.previousPolicies.length > 0 && (
                     <Section title={t('pdf.section.policies')}>
-                        <Table headers={[t('policy.policy_name'), t('policy.policy_number'), t('policy.policy_sum_assured'), t('policy.policy_premium_amount'), t('policy.policy_doc_date'), t('policy.policy_status')]}>
+                        <Table headers={[t('policy.policy_name'), t('policy.policy_number'), t('policy.policy_sum_assured'), t('policy.policy_term') || 'Term', t('policy.policy_premium_term') || 'PPT', t('policy.policy_status')]}>
                             {data.policy.previousPolicies.map((p, i) => (
                                 <tr key={i} className="break-inside-avoid border-b border-gray-200">
                                     <td className="border-r border-gray-300 p-1">{p.policyName}</td>
                                     <td className="border-r border-gray-300 p-1">{p.policyNumber}</td>
                                     <td className="border-r border-gray-300 p-1">{p.sumAssured ? `Rs. ${p.sumAssured.toLocaleString('en-IN')}` : 'N/A'}</td>
-                                    <td className="border-r border-gray-300 p-1">{p.premiumAmount ? `Rs. ${p.premiumAmount.toLocaleString('en-IN')}` : 'N/A'}</td>
-                                    <td className="border-r border-gray-300 p-1">{p.docDate ? format(new Date(p.docDate), 'PPP') : 'N/A'}</td>
+                                    <td className="border-r border-gray-300 p-1">{p.term || 'N/A'}</td>
+                                    <td className="border-r border-gray-300 p-1">{p.premiumPayingTerm || 'N/A'}</td>
                                     <td className="p-1">{p.status}</td>
                                 </tr>
                             ))}

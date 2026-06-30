@@ -15,12 +15,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { CalendarIcon, Users, BookUser, HeartPulse } from "lucide-react";
+import { DateField } from "@/components/ui/date-field";
 import DynamicFieldArray from "./dynamic-field-array";
 import { InsuranceFormValues } from "@/lib/schema";
 import { useTranslation } from "@/hooks/use-translation";
@@ -47,7 +43,12 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
       )} />
       <FormField control={control} name={`policy.familyMembers.${index}.status`} render={({ field }) => (
         <FormItem><FormLabel>{t('family.status')}</FormLabel>
-          <FormControl><Input {...field} placeholder={t('family.status')} /></FormControl>
+          <FormControl>
+              <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                  <option value="Living">Living</option>
+                  <option value="Deceased">Deceased</option>
+              </select>
+          </FormControl>
         <FormMessage /></FormItem>
       )} />
       <FormField control={control} name={`policy.familyMembers.${index}.age`} render={({ field }) => (
@@ -58,7 +59,7 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
           <FormControl><Input {...field} placeholder={t('family.health')} /></FormControl>
         <FormMessage /></FormItem>
       )} />
-      {watchFamilyMemberStatus(index) === 'Dead' && (
+      {watchFamilyMemberStatus(index) === 'Deceased' && (
         <>
           <FormField control={control} name={`policy.familyMembers.${index}.deathReason`} render={({ field }) => (
             <FormItem className="sm:col-span-2"><FormLabel>{t('family.death_reason')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
@@ -161,18 +162,7 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
                                          </FormControl>
                                     <FormMessage /></FormItem>
                                 )} />
-                                <FormField control={control} name="medical.lastDeliveryDate" render={({ field }) => (
-                                    <FormItem className="flex flex-col"><FormLabel>{t('family.last_delivery_date')}</FormLabel>
-                                        <Popover><PopoverTrigger asChild><FormControl>
-                                        <Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-                                            {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
-                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                        </Button>
-                                        </FormControl></PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0" align="start"><Calendar mode="single" selected={field.value ? new Date(field.value) : undefined} onSelect={field.onChange} /></PopoverContent></Popover>
-                                        <FormMessage />
-                                    </FormItem>
-                                )} />
+                                <DateField name="medical.lastDeliveryDate" label={t('family.last_delivery_date')} form={form} yearSelect={true} />
                             </div>
                             <FormField control={control} name="medical.treatmentDetails" render={({ field }) => (
                                 <FormItem><FormLabel>{t('family.treatment_details')}</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>

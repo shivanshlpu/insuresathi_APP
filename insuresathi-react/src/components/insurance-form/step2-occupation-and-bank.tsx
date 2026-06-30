@@ -34,7 +34,15 @@ export default function Step2OccupationAndBank({ form }: Step2Props) {
                 <FormItem>
                     <FormLabel>{t("occupation.occupation_type")}</FormLabel>
                     <FormControl>
-                        <Input {...field} placeholder={t("occupation.occupation_type")} />
+                        <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                            <option value="">Select Occupation</option>
+                            <option value="Service">Service</option>
+                            <option value="Business">Business</option>
+                            <option value="Agriculture">Agriculture</option>
+                            <option value="Student">Student</option>
+                            <option value="Housewife">Housewife</option>
+                            <option value="Other">Other</option>
+                        </select>
                     </FormControl>
                     <FormMessage />
                 </FormItem>
@@ -79,12 +87,15 @@ export default function Step2OccupationAndBank({ form }: Step2Props) {
         {watchedOccupationType === "Business" && (
           <div className="p-4 border rounded-md space-y-4">
             <h3 className="font-medium">{t('occupation.business_fields')}</h3>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-3 gap-4">
               <FormField control={form.control} name="occupation.businessName" render={({ field }) => (
                   <FormItem><FormLabel>{t("occupation.business_name")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="occupation.typeOfBusiness" render={({ field }) => (
                   <FormItem><FormLabel>{t("occupation.type_of_business")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="occupation.gstNumber" render={({ field }) => (
+                  <FormItem><FormLabel>{t("occupation.gst_number") || "GST Number"}</FormLabel><FormControl><Input {...field} placeholder="Optional" /></FormControl><FormMessage /></FormItem>
               )} />
             </div>
             <div className="grid sm:grid-cols-2 gap-4">

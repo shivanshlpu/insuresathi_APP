@@ -43,6 +43,7 @@ export const defaultValues: InsuranceFormValues = {
       serviceMonths: undefined,
       businessName: '',
       typeOfBusiness: '',
+      gstNumber: '',
       businessYear: undefined,
       businessMonths: undefined,
       annualIncome: undefined,

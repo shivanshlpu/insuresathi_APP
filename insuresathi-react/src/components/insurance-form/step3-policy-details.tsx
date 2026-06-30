@@ -36,7 +36,9 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
   const { t } = useTranslation();
   const { control, formState: { errors } } = form;
 
-  const renderNomineeFields = (index: number) => (
+  const renderNomineeFields = (index: number) => {
+    const nomineeAge = form.watch(`policy.nominees.${index}.age`);
+    return (
     <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
       <FormField control={control} name={`policy.nominees.${index}.name`} render={({ field }) => (
           <FormItem><FormLabel>{t('policy.nominee_name')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
@@ -50,8 +52,21 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
       <FormField control={control} name={`policy.nominees.${index}.share`} render={({ field }) => (
           <FormItem><FormLabel>{t('policy.nominee_share')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
       )} />
+      {nomineeAge !== undefined && nomineeAge < 18 && (
+        <>
+            <FormField control={control} name={`policy.nominees.${index}.appointeeName`} render={({ field }) => (
+                <FormItem className="sm:col-span-2"><FormLabel>{t('policy.appointee_name') || 'Appointee Name'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+            )} />
+            <FormField control={control} name={`policy.nominees.${index}.appointeeRelation`} render={({ field }) => (
+                <FormItem><FormLabel>{t('policy.appointee_relation') || 'Appointee Relation'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+            )} />
+            <FormField control={control} name={`policy.nominees.${index}.appointeeAge`} render={({ field }) => (
+                <FormItem><FormLabel>{t('policy.appointee_age') || 'Appointee Age'}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+            )} />
+        </>
+      )}
     </div>
-  );
+  )};
 
   const renderPreviousPolicyFields = (index: number) => (
     <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-4 items-end">
@@ -64,27 +79,12 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
       <FormField control={control} name={`policy.previousPolicies.${index}.sumAssured`} render={({ field }) => (
           <FormItem><FormLabel>{t('policy.policy_sum_assured')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
       )} />
-      <FormField control={control} name={`policy.previousPolicies.${index}.premiumAmount`} render={({ field }) => (
-          <FormItem><FormLabel>{t('policy.policy_premium_amount')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+      <FormField control={control} name={`policy.previousPolicies.${index}.term`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.policy_term') || 'Term'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
       )} />
-       <FormField
-        control={control}
-        name={`policy.previousPolicies.${index}.docDate`}
-        render={({ field }) => (
-          <FormItem className="flex flex-col"><FormLabel>{t('policy.policy_doc_date')}</FormLabel>
-            <Popover><PopoverTrigger asChild><FormControl>
-              <Button variant="outline" className={cn("pl-3 text-left font-normal", !field.value && "text-muted-foreground")}>
-                {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-              </Button>
-            </FormControl></PopoverTrigger>
-            <PopoverContent className="w-auto p-0" align="start">
-              <Calendar mode="single" selected={field.value} onSelect={field.onChange} initialFocus />
-            </PopoverContent></Popover>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
+      <FormField control={control} name={`policy.previousPolicies.${index}.premiumPayingTerm`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.policy_premium_term') || 'Premium Paying Term'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+      )} />
       <FormField control={control} name={`policy.previousPolicies.${index}.status`} render={({ field }) => (
           <FormItem><FormLabel>{t('policy.policy_status')}</FormLabel>
             <FormControl><Input {...field} placeholder={t('policy.policy_status')} /></FormControl>

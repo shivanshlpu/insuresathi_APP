@@ -30,49 +30,7 @@ interface Step1Props {
   isClientMode?: boolean;
 }
 
-const DateField = ({ name, label, form, yearSelect=false }: { name: any, label: string, form: UseFormReturn<InsuranceFormValues>, yearSelect?: boolean }) => (
-    <FormField
-        control={form.control}
-        name={name}
-        render={({ field }) => (
-            <FormItem className="flex flex-col">
-            <FormLabel>{label}</FormLabel>
-            <Popover>
-                <PopoverTrigger asChild>
-                <FormControl>
-                    <Button
-                    variant={"outline"}
-                    className={cn(
-                        "w-full pl-3 text-left font-normal",
-                        !field.value && "text-muted-foreground"
-                    )}
-                    >
-                    {field.value ? (
-                        format(new Date(field.value), "PPP")
-                    ) : (
-                        <span>Pick a date</span>
-                    )}
-                    <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                    </Button>
-                </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                    mode="single"
-                    selected={field.value ? new Date(field.value) : undefined}
-                    onSelect={field.onChange}
-                    initialFocus
-                    captionLayout={yearSelect ? "dropdown-buttons" : "buttons"}
-                    fromYear={yearSelect ? 1900 : undefined}
-                    toYear={yearSelect ? new Date().getFullYear() : undefined}
-                />
-                </PopoverContent>
-            </Popover>
-            <FormMessage />
-            </FormItem>
-        )}
-    />
-);
+import { DateField } from "@/components/ui/date-field";
 
 
 export default function Step1PersonalDetails({ form, isClientMode = false }: Step1Props) {

@@ -12,6 +12,9 @@ export const nomineeSchema = z.object({
     relation: z.string().optional(),
     age: z.coerce.number().optional(),
     share: z.coerce.number().optional(),
+    appointeeName: z.string().optional(),
+    appointeeRelation: z.string().optional(),
+    appointeeAge: z.coerce.number().optional(),
 });
 
 export const familyMemberSchema = z.object({
@@ -27,8 +30,8 @@ export const previousPolicySchema = z.object({
     policyName: z.string().optional(),
     policyNumber: z.string().optional(),
     sumAssured: z.coerce.number().optional(),
-    premiumAmount: z.coerce.number().optional(),
-    docDate: z.date().optional(),
+    term: z.string().optional(),
+    premiumPayingTerm: z.string().optional(),
     status: z.string().optional(),
 });
 
@@ -76,6 +79,7 @@ export const insuranceFormSchema = z.object({
         serviceMonths: z.coerce.number().optional(),
         businessName: z.string().optional(),
         typeOfBusiness: z.string().optional(),
+        gstNumber: z.string().optional(),
         businessYear: z.coerce.number().optional(),
         businessMonths: z.coerce.number().optional(),
         annualIncome: z.coerce.number().optional(),
