@@ -7,6 +7,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
   FormControl,
@@ -34,45 +35,64 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
   const watchMaritalStatus = watch("personal.maritalStatus");
   const isMarriedFemale = watchGender === 'Female' && watchMaritalStatus === 'married';
 
-  const renderFamilyMemberFields = (index: number) => (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-start">
-      <FormField control={control} name={`policy.familyMembers.${index}.relation`} render={({ field }) => (
-        <FormItem><FormLabel>{t('family.relation')}</FormLabel>
-          <FormControl><Input {...field} placeholder={t('family.relation')} /></FormControl>
-        <FormMessage /></FormItem>
-      )} />
-      <FormField control={control} name={`policy.familyMembers.${index}.status`} render={({ field }) => (
-        <FormItem><FormLabel>{t('family.status')}</FormLabel>
-          <FormControl>
-              <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
-                  <option value="Living">Living</option>
-                  <option value="Deceased">Deceased</option>
-              </select>
-          </FormControl>
-        <FormMessage /></FormItem>
-      )} />
-      <FormField control={control} name={`policy.familyMembers.${index}.age`} render={({ field }) => (
-        <FormItem><FormLabel>{t('family.age')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
-      )} />
-      {watchFamilyMemberStatus(index) !== 'Deceased' && (
-        <FormField control={control} name={`policy.familyMembers.${index}.health`} render={({ field }) => (
-          <FormItem><FormLabel>{t('family.health')}</FormLabel>
-            <FormControl><Input {...field} placeholder={t('family.health')} /></FormControl>
+  const renderFamilyMemberFields = (index: number) => {
+    const relation = watch(`policy.familyMembers.${index}.relation`) || '';
+    const isMultipleRole = ['Brothers', 'Sisters', 'Sons', 'Daughters'].includes(relation);
+
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 items-start">
+        <FormField control={control} name={`policy.familyMembers.${index}.relation`} render={({ field }) => (
+          <FormItem><FormLabel>{t('family.relation')}</FormLabel>
+            <FormControl>
+              <Input {...field} placeholder="e.g. Father, Sons, Brothers" />
+            </FormControl>
           <FormMessage /></FormItem>
         )} />
-      )}
-      {watchFamilyMemberStatus(index) === 'Deceased' && (
-        <>
-          <FormField control={control} name={`policy.familyMembers.${index}.deathReason`} render={({ field }) => (
-            <FormItem className="sm:col-span-2"><FormLabel>{t('family.death_reason')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+        <FormField control={control} name={`policy.familyMembers.${index}.status`} render={({ field }) => (
+          <FormItem><FormLabel>{t('family.status')}</FormLabel>
+            <FormControl>
+                <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                    <option value="Living">Living</option>
+                    <option value="Deceased">Deceased</option>
+                </select>
+            </FormControl>
+          <FormMessage /></FormItem>
+        )} />
+        {isMultipleRole && (
+          <FormField control={control} name={`policy.familyMembers.${index}.count`} render={({ field }) => (
+            <FormItem><FormLabel>Count / Qty</FormLabel>
+              <FormControl><Input type="number" min={1} placeholder="e.g. 3" {...field} /></FormControl>
+            <FormMessage /></FormItem>
           )} />
-          <FormField control={control} name={`policy.familyMembers.${index}.deathYear`} render={({ field }) => (
-            <FormItem className="sm:col-span-2"><FormLabel>{t('family.death_year')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+        )}
+        <FormField control={control} name={`policy.familyMembers.${index}.age`} render={({ field }) => (
+          <FormItem className={isMultipleRole ? "" : "sm:col-span-2 md:col-span-1"}>
+            <FormLabel>{isMultipleRole ? "Age(s) (Comma separated)" : t('family.age')}</FormLabel>
+            <FormControl>
+              <Input placeholder={isMultipleRole ? "e.g. 12, 10, 5" : "Age"} {...field} />
+            </FormControl>
+          <FormMessage /></FormItem>
+        )} />
+        {watchFamilyMemberStatus(index) !== 'Deceased' && (
+          <FormField control={control} name={`policy.familyMembers.${index}.health`} render={({ field }) => (
+            <FormItem><FormLabel>{t('family.health')}</FormLabel>
+              <FormControl><Input {...field} placeholder="Good" /></FormControl>
+            <FormMessage /></FormItem>
           )} />
-        </>
-      )}
-    </div>
-  );
+        )}
+        {watchFamilyMemberStatus(index) === 'Deceased' && (
+          <>
+            <FormField control={control} name={`policy.familyMembers.${index}.deathReason`} render={({ field }) => (
+              <FormItem><FormLabel>{t('family.death_reason')}</FormLabel><FormControl><Input placeholder="Cause of death" {...field} /></FormControl><FormMessage /></FormItem>
+            )} />
+            <FormField control={control} name={`policy.familyMembers.${index}.deathYear`} render={({ field }) => (
+              <FormItem><FormLabel>{t('family.death_year')}</FormLabel><FormControl><Input placeholder="Year" {...field} /></FormControl><FormMessage /></FormItem>
+            )} />
+          </>
+        )}
+      </div>
+    );
+  };
 
   const renderReferenceFields = (index: number) => (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -88,6 +108,19 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
     </div>
   );
 
+  const loadStandardMatrix = () => {
+    const standardRoles = [
+      { relation: 'Father', status: 'Living', age: '', health: 'Good', count: 1 },
+      { relation: 'Mother', status: 'Living', age: '', health: 'Good', count: 1 },
+      { relation: 'Spouse', status: 'Living', age: '', health: 'Good', count: 1 },
+      { relation: 'Brothers', status: 'Living', age: '', health: 'Good', count: 0 },
+      { relation: 'Sisters', status: 'Living', age: '', health: 'Good', count: 0 },
+      { relation: 'Sons', status: 'Living', age: '', health: 'Good', count: 0 },
+      { relation: 'Daughters', status: 'Living', age: '', health: 'Good', count: 0 },
+    ];
+    form.setValue('policy.familyMembers', standardRoles, { shouldDirty: true });
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -98,15 +131,21 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
           <AccordionItem value="family">
             <AccordionTrigger><div className="flex items-center gap-2"><Users className="h-5 w-5" /> {t('family.title')}</div></AccordionTrigger>
             <AccordionContent>
+              <div className="mb-4">
+                <Button type="button" variant="secondary" size="sm" onClick={loadStandardMatrix}>
+                  Load Standard LIC Family Matrix (Father, Mother, Spouse, Brothers, Sisters, Sons, Daughters)
+                </Button>
+              </div>
               <DynamicFieldArray
                 name="policy.familyMembers"
                 title={t('family.add_family_member')}
                 form={form}
                 renderFields={renderFamilyMemberFields}
                 defaultValues={{ 
-                  relation: 'Father', 
+                  relation: 'Sons', 
                   status: 'Living', 
-                  age: 0, 
+                  count: 1,
+                  age: '', 
                   health: 'Good',
                   deathReason: '',
                   deathYear: '',

@@ -20,7 +20,8 @@ export const nomineeSchema = z.object({
 export const familyMemberSchema = z.object({
     relation: z.string().optional(),
     status: z.string().optional(),
-    age: z.coerce.number().optional(),
+    count: z.coerce.number().optional(),
+    age: z.union([z.string(), z.number()]).optional(),
     health: z.string().optional(),
     deathReason: z.string().optional(),
     deathYear: z.string().optional(),

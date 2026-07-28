@@ -217,14 +217,18 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                  {data.policy.familyMembers && data.policy.familyMembers.length > 0 && (
                     <Section title={t('pdf.section.family')}>
                         <Table headers={[t('family.relation'), t('family.status'), t('family.age'), t('family.health'), t('family.death_reason'), t('family.death_year')]}>
-                            {data.policy.familyMembers.map((n, i) => (
+                            {data.policy.familyMembers
+                                .filter(n => n.relation && (n.age || (n.count && n.count > 0) || n.deathReason))
+                                .map((n, i) => (
                                 <tr key={i} className="break-inside-avoid border-b border-gray-200">
-                                    <td className="border-r border-gray-300 p-1 font-bold text-gray-700">{n.relation}</td>
-                                    <td className="border-r border-gray-300 p-1">{n.status}</td>
-                                    <td className="border-r border-gray-300 p-1">{n.age}</td>
-                                    <td className="border-r border-gray-300 p-1">{n.health}</td>
-                                    <td className="border-r border-gray-300 p-1">{n.deathReason}</td>
-                                    <td className="p-1">{n.deathYear}</td>
+                                    <td className="border-r border-gray-300 p-1 font-bold text-gray-700">
+                                        {n.relation}{n.count && n.count > 1 ? ` (${n.count})` : ''}
+                                    </td>
+                                    <td className="border-r border-gray-300 p-1">{n.status || 'Living'}</td>
+                                    <td className="border-r border-gray-300 p-1">{n.age || 'N/A'}</td>
+                                    <td className="border-r border-gray-300 p-1">{n.status === 'Deceased' ? 'N/A' : (n.health || 'Good')}</td>
+                                    <td className="border-r border-gray-300 p-1">{n.status === 'Deceased' ? (n.deathReason || 'N/A') : 'N/A'}</td>
+                                    <td className="p-1">{n.status === 'Deceased' ? (n.deathYear || 'N/A') : 'N/A'}</td>
                                 </tr>
                             ))}
                         </Table>
