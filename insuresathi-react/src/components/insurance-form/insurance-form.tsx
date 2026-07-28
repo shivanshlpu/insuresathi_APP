@@ -48,6 +48,7 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
   const [form, isInitialized] = useLocalStorageForm();
   const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
   const [shouldPrint, setShouldPrint] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const { t } = useTranslation();
   const { toast } = useToast();
 
@@ -85,8 +86,6 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
   if (!isInitialized) {
     return <FormSkeleton />;
   }
-
-  const [isSaving, setIsSaving] = useState(false);
 
   const saveRecordToDb = async (values: any) => {
     setIsSaving(true);
