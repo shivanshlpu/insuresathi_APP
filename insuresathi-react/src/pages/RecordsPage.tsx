@@ -86,14 +86,14 @@ export default function RecordsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div className="min-h-screen bg-slate-50/50 dark:bg-background p-3 sm:p-6 md:p-8">
+      <div className="w-full max-w-5xl mx-auto space-y-6">
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Link to="/">
-            <Button variant="outline" size="icon"><ArrowLeft className="h-4 w-4" /></Button>
+            <Button variant="outline" size="icon" className="h-9 w-9"><ArrowLeft className="h-4 w-4" /></Button>
           </Link>
-          <h1 className="text-3xl font-bold text-slate-900">Customer Records</h1>
+          <h1 className="text-xl sm:text-3xl font-bold text-foreground">Customer Records</h1>
         </div>
 
         <Card>

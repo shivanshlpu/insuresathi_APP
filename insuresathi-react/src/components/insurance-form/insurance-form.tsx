@@ -187,60 +187,60 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+      <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center gap-3">
           {!isClientMode && (
-            <Button variant="outline" size="icon" onClick={handleBack}>
+            <Button variant="outline" size="icon" className="h-9 w-9 shrink-0" onClick={handleBack}>
               <ArrowLeft className="h-4 w-4" />
             </Button>
           )}
-          <h1 className="text-3xl font-bold text-slate-900">
+          <h1 className="text-xl sm:text-3xl font-bold text-foreground">
             {isClientMode ? "Customer Information Form" : (editId ? "Customer Record" : "New Registration")}
           </h1>
         </div>
         {editId && !isEditMode && (
-          <Button variant="secondary" onClick={() => setIsEditMode(true)}>
+          <Button variant="secondary" size="sm" onClick={() => setIsEditMode(true)}>
             Edit Record
           </Button>
         )}
       </div>
       <Form {...form}>
-      <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
-        <fieldset disabled={!isEditMode} className="space-y-8">
+      <form onSubmit={(e) => e.preventDefault()} className="space-y-6 sm:space-y-8">
+        <fieldset disabled={!isEditMode} className="space-y-6 sm:space-y-8">
           <Step1PersonalDetails form={form} isClientMode={isClientMode} />
           <Step2OccupationAndBank form={form} />
           <Step3PolicyDetails form={form} />
           <Step4FamilyAndMedical form={form} />
         </fieldset>
         
-        <div className="flex flex-wrap justify-end pt-4 gap-4">
+        <div className="flex flex-col sm:flex-row justify-end pt-4 gap-3 sm:gap-4">
           {editId && !isEditMode ? (
             <>
-              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} className="gap-2 text-lg py-6 px-8">
+              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} className="w-full sm:w-auto gap-2 text-base sm:text-lg py-3 sm:py-6 px-6 sm:px-8">
                 <Printer className="w-5 h-5" /> Print Record
               </Button>
-              <Button type="button" onClick={handleDownloadPdf} disabled={isGeneratingPdf} variant="outline" className="gap-2 text-lg py-6 px-8">
+              <Button type="button" onClick={handleDownloadPdf} disabled={isGeneratingPdf} variant="outline" className="w-full sm:w-auto gap-2 text-base sm:text-lg py-3 sm:py-6 px-6 sm:px-8">
                 <Download className="w-5 h-5" /> Download PDF
               </Button>
             </>
           ) : isClientMode ? (
             <>
-              <Button type="button" onClick={handleSaveOnly} disabled={isSaving} className="gap-2 text-lg py-6 px-8">
+              <Button type="button" onClick={handleSaveOnly} disabled={isSaving} className="w-full sm:w-auto gap-2 text-base sm:text-lg py-3 sm:py-6 px-6 sm:px-8">
                 <Save className="w-5 h-5" /> {isSaving ? "Submitting..." : "Submit to Agent"}
               </Button>
-              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} variant="outline" className="gap-2 text-lg py-6 px-8">
+              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} variant="outline" className="w-full sm:w-auto gap-2 text-base sm:text-lg py-3 sm:py-6 px-6 sm:px-8">
                 <Printer className="w-5 h-5" /> Print Copy
               </Button>
             </>
           ) : (
             <>
-              <Button type="button" onClick={handleSaveOnly} disabled={isSaving} className="gap-2 text-lg py-6 px-8">
+              <Button type="button" onClick={handleSaveOnly} disabled={isSaving} className="w-full sm:w-auto gap-2 text-base sm:text-lg py-3 sm:py-6 px-6 sm:px-8">
                 <Save className="w-5 h-5" /> {isSaving ? "Saving..." : (editId ? "Update Record" : "Save Record")}
               </Button>
-              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} variant="secondary" className="gap-2 text-lg py-6 px-8">
+              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} variant="secondary" className="w-full sm:w-auto gap-2 text-base sm:text-lg py-3 sm:py-6 px-6 sm:px-8">
                 <Printer className="w-5 h-5" /> Print Record
               </Button>
-              <Button type="button" onClick={handleDownloadPdf} disabled={isGeneratingPdf} variant="outline" className="gap-2 text-lg py-6 px-8">
+              <Button type="button" onClick={handleDownloadPdf} disabled={isGeneratingPdf} variant="outline" className="w-full sm:w-auto gap-2 text-base sm:text-lg py-3 sm:py-6 px-6 sm:px-8">
                 <Download className="w-5 h-5" /> Download PDF
               </Button>
             </>

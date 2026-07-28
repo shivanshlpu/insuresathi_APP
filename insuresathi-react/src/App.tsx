@@ -29,7 +29,7 @@ function App() {
                           <Route path="/records" element={<RecordsPage />} />
                         <Route path="/notifications" element={<NotificationsPage />} />
                         <Route path="/register" element={
-                          <div className="container mx-auto px-4 py-8 max-w-3xl">
+                          <div className="w-full max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-8">
                             <InsuranceForm isClientMode={false} />
                           </div>
                         } />

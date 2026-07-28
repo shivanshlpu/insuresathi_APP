@@ -37,14 +37,14 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 w-full border-b bg-card shadow-sm">
-        <div className="container mx-auto flex flex-col items-center justify-between p-2 max-w-3xl sm:flex-row sm:p-4 sm:py-3">
-          <div className="flex flex-col items-center sm:items-start">
+      <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-md shadow-sm">
+        <div className="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-3 py-2.5 sm:px-6 sm:py-3">
+          <div className="flex items-center gap-3">
             <Link to="/">
-              <div className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                <div className="p-2 bg-primary rounded-md">
+              <div className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+                <div className="p-2 bg-primary text-primary-foreground rounded-lg shadow-sm">
                   <svg
-                    className="h-6 w-6 text-primary-foreground"
+                    className="h-5 w-5 sm:h-6 sm:w-6"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="none"
@@ -57,20 +57,21 @@ export default function Header() {
                     <path d="m9 12 2 2 4-4"></path>
                   </svg>
                 </div>
-                <h1 className="text-xl font-headline font-bold text-foreground">
-                  UMESH PRASAD TIWARI
-                </h1>
+                <div>
+                  <h1 className="text-base sm:text-lg font-headline font-bold text-foreground leading-tight">
+                    UMESH PRASAD TIWARI
+                  </h1>
+                  <p className="text-[10px] sm:text-xs text-muted-foreground font-medium hidden sm:block">
+                    LIFE INSURANCE CORPORATION OF INDIA | CLIA/ZM CLUB MEMBER
+                  </p>
+                </div>
               </div>
             </Link>
-            <div className="text-xs text-muted-foreground text-center sm:text-left sm:pl-10">
-              <p>LIFE INSURANCE CORPORATION OF INDIA</p>
-              <p>CLIA/ZM CLUB MEMBER | AGENCY CODE: 05916370</p>
-            </div>
           </div>
-          <div className="flex items-center space-x-2 mt-2 sm:mt-0">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <Link to="/notifications" className="relative">
-              <Button variant="ghost" size="icon" aria-label="Notifications">
-                <Bell className="h-5 w-5 text-slate-600 dark:text-slate-300" />
+              <Button variant="ghost" size="icon" className="h-9 w-9" aria-label="Notifications">
+                <Bell className="h-4 w-4 text-slate-600 dark:text-slate-300" />
                 {unreadCount > 0 && (
                   <span className="absolute top-1 right-1 bg-red-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center">
                     {unreadCount > 9 ? '9+' : unreadCount}
@@ -82,23 +83,26 @@ export default function Header() {
             <Button
               variant="ghost"
               size="icon"
+              className="h-9 w-9"
               onClick={() => setIsClearDialogOpen(true)}
               aria-label="Clear all data"
             >
-              <Trash2 className="h-5 w-5 text-destructive" />
+              <Trash2 className="h-4 w-4 text-destructive" />
             </Button>
 
             <Button
               variant="ghost"
               size="icon"
+              className="h-9 w-9"
               onClick={() => setTheme(theme === "light" ? "dark" : "light")}
               aria-label="Toggle theme"
             >
-              <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
             </Button>
-            <div className="flex items-center space-x-2">
-              <Label htmlFor="language-toggle" className="font-bold text-sm">
+
+            <div className="flex items-center space-x-1.5 pl-1 border-l">
+              <Label htmlFor="language-toggle" className="font-bold text-xs">
                 {language === "en" ? "EN" : "हि"}
               </Label>
               <Switch
