@@ -5,6 +5,10 @@ export async function downloadPdf(element: HTMLElement, filename: string = 'Insu
   if (!element) return;
 
   try {
+    const parentContainer = element.closest('.printable-area') || element;
+    parentContainer.classList.add('exporting-pdf');
+    await new Promise(r => setTimeout(r, 60));
+
     const canvas = await html2canvas(element, {
       scale: 2,
       useCORS: true,
@@ -12,6 +16,8 @@ export async function downloadPdf(element: HTMLElement, filename: string = 'Insu
       backgroundColor: '#ffffff',
       windowWidth: 1200,
     });
+
+    parentContainer.classList.remove('exporting-pdf');
 
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
     const pdf = new jsPDF({
@@ -42,5 +48,8 @@ export async function downloadPdf(element: HTMLElement, filename: string = 'Insu
   } catch (error) {
     console.error('Error generating PDF download:', error);
     throw error;
+  } finally {
+    const parentContainer = element.closest('.printable-area') || element;
+    parentContainer.classList.remove('exporting-pdf');
   }
 }
