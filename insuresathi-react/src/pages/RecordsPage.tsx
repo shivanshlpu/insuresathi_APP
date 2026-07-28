@@ -251,7 +251,7 @@ export default function RecordsPage() {
 
       </div>
       {/* Hidden PDF Document for printing directly from table */}
-      <div className="printable-area absolute left-[-9999px] top-[-9999px]">
+      <div className="printable-area">
           <div ref={componentRef}>
               {printData && <PdfDocument data={printData} t={t} />}
           </div>

@@ -69,25 +69,20 @@ body {
 
 /* Screen Styles for Hidden Printable Container */
 @media screen {
-  .printable-area:not(.exporting-pdf) {
+  .printable-area {
+    display: none !important;
+  }
+  .printable-area.exporting-pdf {
+    display: block !important;
     position: fixed !important;
     left: -9999px !important;
-    top: -9999px !important;
-    width: 0 !important;
-    height: 0 !important;
-    overflow: hidden !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
+    top: 0 !important;
+    width: 210mm !important;
+    height: auto !important;
+    overflow: visible !important;
+    visibility: visible !important;
+    z-index: -1;
   }
-}
-
-.printable-area.exporting-pdf {
-  position: absolute !important;
-  left: -9999px !important;
-  top: 0 !important;
-  width: 210mm !important;
-  height: auto !important;
-  visibility: visible !important;
 }
 
 @media print {

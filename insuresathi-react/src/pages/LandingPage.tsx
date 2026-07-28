@@ -38,17 +38,17 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="flex-grow flex flex-col items-center justify-center p-4 py-12">
-      <div className="max-w-4xl w-full space-y-8 text-center">
-        <div className="space-y-4">
-          <HeartPulse className="w-16 h-16 text-primary mx-auto" />
-          <h1 className="text-4xl md:text-6xl font-bold text-slate-900 tracking-tight">InsureSathi</h1>
-          <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+    <div className="flex-grow flex flex-col items-center justify-center px-4 py-8 sm:py-12">
+      <div className="w-full max-w-5xl space-y-6 sm:space-y-8 text-center">
+        <div className="space-y-3 sm:space-y-4">
+          <HeartPulse className="w-12 h-12 sm:w-16 sm:h-16 text-primary mx-auto" />
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-foreground tracking-tight">InsureSathi</h1>
+          <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto">
             Manage your customer insurance registrations and old records securely in one place.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6 mt-12 max-w-3xl mx-auto text-left">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-8 sm:mt-12 w-full max-w-3xl mx-auto text-left">
           <Card className="hover:shadow-lg transition-shadow border-t-4 border-t-primary">
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">

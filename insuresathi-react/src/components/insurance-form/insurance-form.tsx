@@ -249,7 +249,7 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
       </form>
       
       {/* Hidden PDF Document for printing */}
-      <div className="printable-area absolute left-[-9999px] top-[-9999px]">
+      <div className="printable-area">
           <div ref={componentRef}>
               <PdfDocument data={form.getValues()} t={t} />
           </div>
