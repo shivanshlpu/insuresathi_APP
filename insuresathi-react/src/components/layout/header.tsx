@@ -39,10 +39,10 @@ export default function Header() {
     <>
       <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur-md shadow-sm">
         <div className="w-full max-w-5xl mx-auto flex flex-row items-center justify-between px-3 py-2.5 sm:px-6 sm:py-3">
-          <div className="flex items-center gap-3">
-            <Link to="/">
-              <div className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-                <div className="p-2 bg-primary text-primary-foreground rounded-lg shadow-sm">
+          <div className="flex items-center gap-3 min-w-0">
+            <Link to="/" className="min-w-0">
+              <div className="flex items-center gap-2 hover:opacity-90 transition-opacity min-w-0">
+                <div className="p-2 bg-primary text-primary-foreground rounded-lg shadow-sm shrink-0">
                   <svg
                     className="h-5 w-5 sm:h-6 sm:w-6"
                     xmlns="http://www.w3.org/2000/svg"
@@ -57,11 +57,11 @@ export default function Header() {
                     <path d="m9 12 2 2 4-4"></path>
                   </svg>
                 </div>
-                <div>
-                  <h1 className="text-base sm:text-lg font-headline font-bold text-foreground leading-tight">
+                <div className="min-w-0">
+                  <h1 className="text-base sm:text-lg font-headline font-bold text-foreground leading-tight truncate">
                     UMESH PRASAD TIWARI
                   </h1>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground font-medium hidden sm:block">
+                  <p className="text-[10px] sm:text-xs text-muted-foreground font-medium hidden sm:block truncate">
                     LIFE INSURANCE CORPORATION OF INDIA | CLIA/ZM CLUB MEMBER
                   </p>
                 </div>

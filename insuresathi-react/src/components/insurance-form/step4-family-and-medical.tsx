@@ -132,7 +132,7 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
             <AccordionTrigger><div className="flex items-center gap-2"><Users className="h-5 w-5" /> {t('family.title')}</div></AccordionTrigger>
             <AccordionContent>
               <div className="mb-4">
-                <Button type="button" variant="secondary" size="sm" onClick={loadStandardMatrix}>
+                <Button type="button" variant="secondary" size="sm" onClick={loadStandardMatrix} className="whitespace-normal h-auto text-left py-2">
                   Load Standard LIC Family Matrix (Father, Mother, Spouse, Brothers, Sisters, Sons, Daughters)
                 </Button>
               </div>
