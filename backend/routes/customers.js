@@ -21,10 +21,13 @@ router.post('/', submitLimiter, async (req, res) => {
     const policyNumber = formData?.personal?.topPolicyNumber || formData?.policy?.policyNumber || '';
     const mobile = formData?.personal?.mobile || '';
     
-    // Determine financial year based on current date
-    const today = new Date();
-    const month = today.getMonth() + 1; // 1-12
-    const year = today.getFullYear();
+    // Determine financial year based on document date (fallback to current date)
+    const docDateStr = formData?.personal?.docDate;
+    const targetDate = (docDateStr && !isNaN(new Date(docDateStr).getTime())) 
+      ? new Date(docDateStr) 
+      : new Date();
+    const month = targetDate.getMonth() + 1; // 1-12
+    const year = targetDate.getFullYear();
     const financialYear = month >= 4 ? `${year}-${year + 1}` : `${year - 1}-${year}`;
 
     const source = req.body.source === 'client' ? 'client' : 'agent';
@@ -122,14 +125,19 @@ router.put('/:id', async (req, res) => {
   try {
     const { formData } = req.body;
     
-    // Extract searchable fields
-    const name = formData?.personal?.name || 'Unknown';
-    const policyNumber = formData?.personal?.topPolicyNumber || formData?.policy?.policyNumber || '';
-    const mobile = formData?.personal?.mobile || '';
+    // Determine financial year based on document date (fallback to current date)
+    const docDateStr = formData?.personal?.docDate;
+    const targetDate = (docDateStr && !isNaN(new Date(docDateStr).getTime())) 
+      ? new Date(docDateStr) 
+      : new Date();
+    const month = targetDate.getMonth() + 1; // 1-12
+    const year = targetDate.getFullYear();
+    const financialYear = month >= 4 ? `${year}-${year + 1}` : `${year - 1}-${year}`;
 
     const updatedCustomer = await Customer.findByIdAndUpdate(
       req.params.id,
       {
+        financialYear,
         searchable: { name, policyNumber, mobile },
         formData,
         status: 'reviewed' // Always mark as reviewed when updated by agent

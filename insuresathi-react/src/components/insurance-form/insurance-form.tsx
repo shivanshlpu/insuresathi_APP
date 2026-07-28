@@ -9,8 +9,9 @@ import { useTranslation } from "@/hooks/use-translation";
 import { useToast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Printer, Download, Save } from "lucide-react";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { downloadPdf } from "@/lib/pdf-export";
 
 import Step1PersonalDetails from "./step1-personal-details";
 import Step2OccupationAndBank from "./step2-occupation-and-bank";
@@ -85,19 +86,10 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
     return <FormSkeleton />;
   }
 
-  const onSubmit = async (values: any) => {
-    const isValid = await form.trigger();
-    if (!isValid) {
-      const errorFields = Object.keys(form.formState.errors);
-      toast({
-        title: "Validation Error",
-        description: `Please fill all required fields correctly before generating the PDF. Errors in: ${errorFields.join(', ')}`,
-        variant: "destructive"
-      });
-      return;
-    }
+  const [isSaving, setIsSaving] = useState(false);
 
-    setIsGeneratingPdf(true);
+  const saveRecordToDb = async (values: any) => {
+    setIsSaving(true);
     toast({
       title: "Saving to Database...",
       description: "Please wait while we secure your record.",
@@ -125,18 +117,17 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
           title: "Success",
           description: "Thank you! Your details have been securely sent to your agent.",
         });
-        setIsGeneratingPdf(false);
+        setIsSaving(false);
         form.reset();
-        return;
+        return true;
       }
 
       toast({
         title: "Success",
-        description: "Record saved successfully! Opening print dialog...",
+        description: "Record saved successfully!",
       });
-
-      // Allow state to flush so hidden component renders with latest values before printing
-      setShouldPrint(true);
+      setIsSaving(false);
+      return true;
     } catch (error) {
       console.error(error);
       toast({
@@ -144,6 +135,43 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
         description: "Could not save to MongoDB. Is the backend running?",
         variant: "destructive"
       });
+      setIsSaving(false);
+      return false;
+    }
+  };
+
+  const handleSaveOnly = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const isValid = await form.trigger();
+    if (!isValid) {
+      const errorFields = Object.keys(form.formState.errors);
+      toast({
+        title: "Validation Error",
+        description: `Please fill all required fields correctly before saving. Errors in: ${errorFields.join(', ')}`,
+        variant: "destructive"
+      });
+      return;
+    }
+    await saveRecordToDb(form.getValues());
+  };
+
+  const handlePrintOnly = () => {
+    setShouldPrint(true);
+  };
+
+  const handleDownloadPdf = async () => {
+    if (!componentRef.current) return;
+    try {
+      setIsGeneratingPdf(true);
+      toast({ title: "Generating PDF...", description: "Preparing your PDF file for download." });
+      const name = form.getValues().personal?.name || 'Customer';
+      const filename = `InsureSathi_${name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+      await downloadPdf(componentRef.current, filename);
+      toast({ title: "Downloaded", description: "PDF downloaded successfully!" });
+    } catch (err) {
+      console.error(err);
+      toast({ title: "Error", description: "Failed to download PDF.", variant: "destructive" });
+    } finally {
       setIsGeneratingPdf(false);
     }
   };
@@ -178,7 +206,7 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
         )}
       </div>
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={(e) => e.preventDefault()} className="space-y-8">
         <fieldset disabled={!isEditMode} className="space-y-8">
           <Step1PersonalDetails form={form} isClientMode={isClientMode} />
           <Step2OccupationAndBank form={form} />
@@ -186,21 +214,43 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
           <Step4FamilyAndMedical form={form} />
         </fieldset>
         
-        <div className="flex justify-end pt-4 gap-4">
+        <div className="flex flex-wrap justify-end pt-4 gap-4">
           {editId && !isEditMode ? (
-            <Button type="button" onClick={() => setShouldPrint(true)} disabled={isGeneratingPdf} className="w-full sm:w-auto text-lg py-6 px-12">
-              {isGeneratingPdf ? t('pdf.generating') : "Generate PDF"}
-            </Button>
+            <>
+              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} className="gap-2 text-lg py-6 px-8">
+                <Printer className="w-5 h-5" /> Print Record
+              </Button>
+              <Button type="button" onClick={handleDownloadPdf} disabled={isGeneratingPdf} variant="outline" className="gap-2 text-lg py-6 px-8">
+                <Download className="w-5 h-5" /> Download PDF
+              </Button>
+            </>
+          ) : isClientMode ? (
+            <>
+              <Button type="button" onClick={handleSaveOnly} disabled={isSaving} className="gap-2 text-lg py-6 px-8">
+                <Save className="w-5 h-5" /> {isSaving ? "Submitting..." : "Submit to Agent"}
+              </Button>
+              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} variant="outline" className="gap-2 text-lg py-6 px-8">
+                <Printer className="w-5 h-5" /> Print Copy
+              </Button>
+            </>
           ) : (
-            <Button type="submit" disabled={isGeneratingPdf} className="w-full sm:w-auto text-lg py-6 px-12">
-              {isGeneratingPdf ? t('pdf.generating') : (isClientMode ? "Submit to Agent" : (editId ? "Update Record & Save PDF" : "Generate PDF & Save"))}
-            </Button>
+            <>
+              <Button type="button" onClick={handleSaveOnly} disabled={isSaving} className="gap-2 text-lg py-6 px-8">
+                <Save className="w-5 h-5" /> {isSaving ? "Saving..." : (editId ? "Update Record" : "Save Record")}
+              </Button>
+              <Button type="button" onClick={handlePrintOnly} disabled={isGeneratingPdf} variant="secondary" className="gap-2 text-lg py-6 px-8">
+                <Printer className="w-5 h-5" /> Print Record
+              </Button>
+              <Button type="button" onClick={handleDownloadPdf} disabled={isGeneratingPdf} variant="outline" className="gap-2 text-lg py-6 px-8">
+                <Download className="w-5 h-5" /> Download PDF
+              </Button>
+            </>
           )}
         </div>
       </form>
       
       {/* Hidden PDF Document for printing */}
-      <div className="absolute left-[-9999px] top-[-9999px]">
+      <div className="printable-area absolute left-[-9999px] top-[-9999px]">
           <div ref={componentRef}>
               <PdfDocument data={form.getValues()} t={t} />
           </div>

@@ -66,3 +66,44 @@ body {
     break-before: page;
   }
 }
+
+@media print {
+  /* Hide all screen UI elements by default */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Force printable area and all of its descendants to be visible */
+  .printable-area,
+  .printable-area * {
+    visibility: visible !important;
+  }
+
+  /* Reset printable area to full printable canvas at top-left of page */
+  .printable-area {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 210mm !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+    color: black !important;
+    z-index: 999999 !important;
+    box-shadow: none !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 8mm;
+  }
+
+  .break-inside-avoid,
+  tr,
+  td,
+  th {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}

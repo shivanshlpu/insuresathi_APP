@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Search, Eye, Printer, Calendar, Trash2 } from "lucide-react";
+import { ArrowLeft, Search, Eye, Printer, Download, Calendar, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,7 @@ import { useTranslation } from "@/hooks/use-translation";
 import PdfDocument from "@/components/insurance-form/pdf-document";
 import { defaultValues } from "@/hooks/use-local-storage-form";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { downloadPdf } from "@/lib/pdf-export";
 
 export default function RecordsPage() {
   const [records, setRecords] = useState<any[]>([]);
@@ -159,7 +160,11 @@ export default function RecordsPage() {
                         <td className="p-4">{r.searchable?.policyNumber || 'N/A'}</td>
                         <td className="p-4">{r.searchable?.mobile || 'N/A'}</td>
                         <td className="p-4"><span className="bg-primary/10 text-primary px-2 py-1 rounded-md text-xs font-semibold">{r.financialYear}</span></td>
-                        <td className="p-4">{new Date(r.createdAt).toLocaleDateString()}</td>
+                        <td className="p-4">
+                          {r.formData?.personal?.docDate 
+                            ? new Date(r.formData.personal.docDate).toLocaleDateString() 
+                            : new Date(r.createdAt).toLocaleDateString()}
+                        </td>
                         <td className="p-4 text-right">
                             <div className="flex justify-end gap-2">
                                 <Button size="sm" variant="outline" className="gap-2" onClick={async () => {
@@ -181,7 +186,6 @@ export default function RecordsPage() {
                                         if (!res.ok) throw new Error("Failed to fetch full record");
                                         const fullRecord = await res.json();
 
-                                        // Merge missing nested properties with defaultValues to prevent PDF crashes
                                         const safeData = {
                                             ...defaultValues,
                                             ...fullRecord.formData,
@@ -201,6 +205,36 @@ export default function RecordsPage() {
                                 }}>
                                     <Printer className="w-4 h-4" /> Print
                                 </Button>
+                                <Button size="sm" variant="outline" className="gap-2" onClick={async () => {
+                                    try {
+                                        toast({ title: "Preparing PDF..." });
+                                        const res = await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${r._id}`);
+                                        if (!res.ok) throw new Error("Failed to fetch record");
+                                        const fullRecord = await res.json();
+                                        const safeData = {
+                                            ...defaultValues,
+                                            ...fullRecord.formData,
+                                            personal: { ...defaultValues.personal, ...fullRecord.formData?.personal },
+                                            kyc: { ...defaultValues.kyc, ...fullRecord.formData?.kyc },
+                                            occupation: { ...defaultValues.occupation, ...fullRecord.formData?.occupation },
+                                            bank: { ...defaultValues.bank, ...fullRecord.formData?.bank },
+                                            policy: { ...defaultValues.policy, ...fullRecord.formData?.policy },
+                                            medical: { ...defaultValues.medical, ...fullRecord.formData?.medical }
+                                        };
+                                        setPrintData(safeData);
+                                        setTimeout(async () => {
+                                            if (componentRef.current) {
+                                                const name = safeData.personal?.name || 'Record';
+                                                await downloadPdf(componentRef.current, `InsureSathi_${name.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`);
+                                                toast({ title: "Downloaded", description: "PDF downloaded successfully!" });
+                                            }
+                                        }, 300);
+                                    } catch (error) {
+                                        toast({ title: "Error", description: "Could not download PDF.", variant: "destructive" });
+                                    }
+                                }}>
+                                    <Download className="w-4 h-4" /> Download PDF
+                                </Button>
                                 <Button size="sm" variant="destructive" className="gap-2" onClick={() => handleDelete(r._id)}>
                                     <Trash2 className="w-4 h-4" /> Delete
                                 </Button>
@@ -217,7 +251,7 @@ export default function RecordsPage() {
 
       </div>
       {/* Hidden PDF Document for printing directly from table */}
-      <div className="absolute left-[-9999px] top-[-9999px]">
+      <div className="printable-area absolute left-[-9999px] top-[-9999px]">
           <div ref={componentRef}>
               {printData && <PdfDocument data={printData} t={t} />}
           </div>
