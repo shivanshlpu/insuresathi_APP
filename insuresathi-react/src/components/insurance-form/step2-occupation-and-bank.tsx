@@ -55,7 +55,7 @@ export default function Step2OccupationAndBank({ form }: Step2Props) {
                     <FormItem>
                     <FormLabel>{t("occupation.yearly_income")}</FormLabel>
                     <FormControl>
-                        <Input type="number" placeholder="500000" {...field} />
+                        <Input type="text" placeholder="500000" {...field} />
                     </FormControl>
                     <FormMessage />
                     </FormItem>
@@ -76,10 +76,10 @@ export default function Step2OccupationAndBank({ form }: Step2Props) {
             </div>
              <div className="grid sm:grid-cols-2 gap-4">
                 <FormField control={form.control} name="occupation.serviceYears" render={({ field }) => (
-                  <FormItem><FormLabel>{t("occupation.service_year")}</FormLabel><FormControl><Input type="number" placeholder={t('occupation.years')} {...field} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel>{t("occupation.service_year")}</FormLabel><FormControl><Input type="text" placeholder={t('occupation.years')} {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="occupation.serviceMonths" render={({ field }) => (
-                    <FormItem><FormLabel>{t("occupation.service_month")}</FormLabel><FormControl><Input type="number" placeholder={t('occupation.months')} {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>{t("occupation.service_month")}</FormLabel><FormControl><Input type="text" placeholder={t('occupation.months')} {...field} /></FormControl><FormMessage /></FormItem>
                 )} />
               </div>
           </div>
@@ -100,10 +100,10 @@ export default function Step2OccupationAndBank({ form }: Step2Props) {
             </div>
             <div className="grid sm:grid-cols-2 gap-4">
                <FormField control={form.control} name="occupation.businessYear" render={({ field }) => (
-                  <FormItem><FormLabel>{t("occupation.business_year")}</FormLabel><FormControl><Input type="number" placeholder={t('occupation.years')} {...field} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel>{t("occupation.business_year")}</FormLabel><FormControl><Input type="text" placeholder={t('occupation.years')} {...field} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="occupation.businessMonths" render={({ field }) => (
-                  <FormItem><FormLabel>{t("occupation.business_month")}</FormLabel><FormControl><Input type="number" placeholder={t('occupation.months')} {...field} /></FormControl><FormMessage /></FormItem>
+                  <FormItem><FormLabel>{t("occupation.business_month")}</FormLabel><FormControl><Input type="text" placeholder={t('occupation.months')} {...field} /></FormControl><FormMessage /></FormItem>
               )} />
             </div>
           </div>

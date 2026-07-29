@@ -91,9 +91,11 @@ body {
     visibility: hidden !important;
   }
 
-  /* Force printable area and all of its descendants to be visible */
+  /* Force printable area, pdf-page and all of their descendants to be visible */
   .printable-area,
-  .printable-area * {
+  .printable-area *,
+  .pdf-page,
+  .pdf-page * {
     visibility: visible !important;
   }
 

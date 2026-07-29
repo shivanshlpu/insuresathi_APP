@@ -19,6 +19,21 @@ import Step3PolicyDetails from "./step3-policy-details";
 import Step4FamilyAndMedical from "./step4-family-and-medical";
 import PdfDocument from "./pdf-document";
 
+const sanitizeNulls = (obj: any): any => {
+  if (obj === null) return "";
+  if (typeof obj === 'object' && !Array.isArray(obj)) {
+    const newObj: any = {};
+    for (const key in obj) {
+      newObj[key] = sanitizeNulls(obj[key]);
+    }
+    return newObj;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map(sanitizeNulls);
+  }
+  return obj;
+};
+
 const FormSkeleton = () => (
   <Card>
     <CardContent className="p-6 space-y-6">
@@ -72,11 +87,11 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
 
   useEffect(() => {
     if (editId) {
-      fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${editId}`)
+      fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${editId}`)
         .then(res => res.json())
         .then(data => {
           if (data && data.formData) {
-            form.reset(data.formData);
+            form.reset(sanitizeNulls(data.formData));
           }
         })
         .catch(err => console.error("Error fetching record:", err));
@@ -96,8 +111,8 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
 
     try {
       const url = editId 
-        ? `https://insuresathi-app.onrender.com/api/customers/${editId}` 
-        : 'https://insuresathi-app.onrender.com/api/customers';
+        ? `${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${editId}` 
+        : `${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers`;
         
       const response = await fetchWithAuth(url, {
         method: editId ? 'PUT' : 'POST',
@@ -249,10 +264,8 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
       </form>
       
       {/* Hidden PDF Document for printing */}
-      <div className="printable-area">
-          <div ref={componentRef}>
-              <PdfDocument data={form.getValues()} t={t} />
-          </div>
+      <div className="printable-area" ref={componentRef}>
+          <PdfDocument data={form.getValues()} t={t} />
       </div>
     </Form>
     </div>

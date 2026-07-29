@@ -10,22 +10,25 @@ interface PdfDocumentProps {
 }
 
 const PdfPage: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className }) => (
-    <div className={cn("bg-white text-[14px] text-gray-900 font-[_PT_Sans,'sans-serif'] pdf-page w-[210mm]", className)} style={{ fontFamily: "'PT Sans', sans-serif" }}>
-        <div className="p-4">
+    <div className={cn("bg-white text-[12.5px] text-gray-900 font-[_PT_Sans,'sans-serif'] pdf-page w-[210mm]", className)} style={{ fontFamily: "'PT Sans', sans-serif" }}>
+        <div className="p-3">
             {children}
         </div>
     </div>
 );
 
 const Section: React.FC<{ title: string; children: React.ReactNode, className?: string }> = ({ title, children, className }) => (
-    <div className={cn("mb-3 break-inside-avoid", className)}>
-        <h2 className="text-base font-bold bg-gray-100 border border-gray-300 px-2 py-1 mb-1 text-gray-800 uppercase tracking-wider">{title}</h2>
+    <div className={cn("mb-2 break-inside-auto", className)}>
+        <h2 className="text-[13.5px] font-bold bg-gray-100 border border-gray-300 px-2 py-0.5 mb-1 text-gray-800 uppercase tracking-wider break-after-avoid">{title}</h2>
         {children}
     </div>
 );
 
 const Grid: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-    <div className="grid grid-cols-12 border-t border-l border-gray-300">{children}</div>
+    <div className="border-t border-l border-gray-300 break-inside-auto block">
+        {children}
+        <div className="clear-both"></div>
+    </div>
 );
 
 interface CellProps {
@@ -37,21 +40,21 @@ interface CellProps {
 
 const Cell: React.FC<CellProps> = ({ label, value, span = 12, className }) => {
     const spanClasses = {
-        3: 'col-span-3',
-        4: 'col-span-4',
-        6: 'col-span-6',
-        8: 'col-span-8',
-        9: 'col-span-9',
-        12: 'col-span-12'
+        3: 'w-1/4',
+        4: 'w-1/3',
+        6: 'w-1/2',
+        8: 'w-2/3',
+        9: 'w-3/4',
+        12: 'w-full'
     };
 
     return (
         <div className={cn(
-            "border-r border-b border-gray-300 p-1 flex items-baseline gap-1 break-inside-avoid min-h-[18px]",
+            "border-r border-b border-gray-300 p-1 break-inside-avoid min-h-[18px] float-left",
             spanClasses[span],
             className
         )}>
-            <span className="font-bold text-gray-600 shrink-0">{label}:</span>
+            <span className="font-bold text-gray-600 mr-1">{label}:</span>
             <span className="text-gray-900 break-words font-medium whitespace-pre-wrap">{value || 'N/A'}</span>
         </div>
     );
@@ -75,14 +78,14 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
     const photoSrc = data.personal.photo || defaultAvatar;
 
     const PdfHeader = () => (
-        <header className="flex items-start justify-between mb-3 pb-2 border-b border-gray-300">
+        <header className="flex items-start justify-between mb-2 pb-1.5 border-b border-gray-300">
             <div>
-                 <h1 className="text-xl font-bold text-gray-800 uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif"}}>UMESH PRASAD TIWARI</h1>
-                <div className="text-[14px] text-gray-600 font-semibold leading-tight mt-0.5">
+                 <h1 className="text-lg font-bold text-gray-800 uppercase tracking-wide" style={{ fontFamily: "'Poppins', sans-serif"}}>UMESH PRASAD TIWARI</h1>
+                <div className="text-[12.5px] text-gray-600 font-semibold leading-tight mt-0.5">
                     <p>LIFE INSURANCE CORPORATION OF INDIA</p>
                     <p>CLIA/ZM CLUB MEMBER | AGENCY CODE: 05916370</p>
                 </div>
-                <div className="flex space-x-4 text-[12px] mt-2 text-gray-700">
+                <div className="flex space-x-4 text-[11px] mt-1 text-gray-700">
                     <p><span className="font-bold">{t('general.doc_date')}:</span> {data.personal.docDate ? format(new Date(data.personal.docDate), 'PPP') : 'N/A'}</p>
                     <p><span className="font-bold">{t('general.back_dating_date')}:</span> {data.personal.backDatingDate ? format(new Date(data.personal.backDatingDate), 'PPP') : 'N/A'}</p>
                     <p><span className="font-bold">{t('general.top_policy_number')}:</span> {data.personal.topPolicyNumber || 'N/A'}</p>
@@ -90,7 +93,7 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
             </div>
             {photoSrc && (
                 <div className="border border-gray-300 p-0.5 bg-white shrink-0">
-                    <img src={photoSrc} alt="Applicant Photo" width={55} height={55} className="object-cover" crossOrigin="anonymous" />
+                    <img src={photoSrc} alt="Applicant Photo" width={50} height={50} className="object-cover" crossOrigin="anonymous" />
                 </div>
             )}
         </header>
@@ -134,7 +137,7 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                         <Cell label={t('personal.email')} value={data.personal.email} span={12} />
                         
                         {/* KYC Subheader */}
-                        <div className="col-span-12 bg-gray-50 border-r border-b border-gray-300 px-2 py-0.5 font-bold text-gray-700 tracking-wider text-[12px] uppercase">
+                        <div className="w-full bg-gray-50 border-r border-b border-gray-300 px-2 py-0.5 font-bold text-gray-700 tracking-wider text-[12px] uppercase break-after-avoid float-left">
                             {t('personal.kyc_subheader')}
                         </div>
                         
@@ -262,7 +265,7 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                         
                         {data.personal.gender === 'Female' && data.personal.maritalStatus === 'married' && (
                             <>
-                                <div className="col-span-12 bg-gray-50 border-r border-b border-gray-300 px-2 py-0.5 font-bold text-gray-700 tracking-wider text-[12px] uppercase">
+                                <div className="w-full bg-gray-50 border-r border-b border-gray-300 px-2 py-0.5 font-bold text-gray-700 tracking-wider text-[12px] uppercase break-after-avoid float-left">
                                     {t('family.female_details_subheader')}
                                 </div>
                                 <Cell label={t('family.is_pregnant')} value={data.medical.isPregnant} span={4} />
@@ -271,7 +274,7 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                                 
                                 <Cell label={t('family.treatment_details')} value={data.medical.treatmentDetails} span={12} />
                                 
-                                <div className="col-span-12 bg-gray-50 border-r border-b border-gray-300 px-2 py-0.5 font-bold text-gray-700 tracking-wider text-[12px] uppercase">
+                                <div className="w-full bg-gray-50 border-r border-b border-gray-300 px-2 py-0.5 font-bold text-gray-700 tracking-wider text-[12px] uppercase break-after-avoid float-left">
                                     {t('family.husband_details_subheader')}
                                 </div>
                                 <Cell label={t('family.husband_name')} value={data.medical.husbandName_mw} span={4} />

@@ -134,6 +134,11 @@ router.put('/:id', async (req, res) => {
     const year = targetDate.getFullYear();
     const financialYear = month >= 4 ? `${year}-${year + 1}` : `${year - 1}-${year}`;
 
+    // Extract searchable fields
+    const name = formData?.personal?.name || 'Unknown';
+    const policyNumber = formData?.personal?.topPolicyNumber || formData?.policy?.policyNumber || '';
+    const mobile = formData?.personal?.mobile || '';
+
     const updatedCustomer = await Customer.findByIdAndUpdate(
       req.params.id,
       {

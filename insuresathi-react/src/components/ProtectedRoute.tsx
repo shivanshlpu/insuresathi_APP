@@ -13,7 +13,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
       }
 
       try {
-        const res = await fetch("https://insuresathi-app.onrender.com/api/auth/verify", {
+        const res = await fetch(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/auth/verify`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {

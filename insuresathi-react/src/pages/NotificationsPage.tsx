@@ -13,7 +13,7 @@ export default function NotificationsPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchWithAuth('https://insuresathi-app.onrender.com/api/customers/notifications')
+    fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/notifications`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -29,7 +29,7 @@ export default function NotificationsPage() {
 
   const handleMarkReviewed = async (id: string) => {
     try {
-      await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${id}/reviewed`, { method: 'PATCH' });
+      await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${id}/reviewed`, { method: 'PATCH' });
       window.location.href = `/register?editId=${id}`;
     } catch (e) {
       console.error("Failed to mark as reviewed", e);

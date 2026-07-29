@@ -61,7 +61,7 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
         {isMultipleRole && (
           <FormField control={control} name={`policy.familyMembers.${index}.count`} render={({ field }) => (
             <FormItem><FormLabel>Count / Qty</FormLabel>
-              <FormControl><Input type="number" min={1} placeholder="e.g. 3" {...field} /></FormControl>
+              <FormControl><Input type="text" min={1} placeholder="e.g. 3" {...field} /></FormControl>
             <FormMessage /></FormItem>
           )} />
         )}
@@ -100,7 +100,7 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
         <FormItem><FormLabel>{t('family.ref_name')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
       )} />
       <FormField control={control} name={`policy.references.${index}.contact`} render={({ field }) => (
-        <FormItem><FormLabel>{t('family.ref_contact')}</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>
+        <FormItem><FormLabel>{t('family.ref_contact')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
       )} />
       <FormField control={control} name={`policy.references.${index}.address`} render={({ field }) => (
         <FormItem><FormLabel>{t('family.ref_address')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
@@ -165,7 +165,7 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
                         <FormItem><FormLabel>{t('family.height')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={control} name="medical.weight" render={({ field }) => (
-                        <FormItem><FormLabel>{t('family.weight')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                        <FormItem><FormLabel>{t('family.weight')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                 </div>
                 <FormField control={control} name="medical.birthMark" render={({ field }) => (
@@ -219,7 +219,7 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
                                     <FormItem><FormLabel>{t('family.husband_occupation')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
                                 )} />
                                 <FormField control={control} name="medical.husbandIncome_mw" render={({ field }) => (
-                                    <FormItem><FormLabel>{t('family.husband_income')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                                    <FormItem><FormLabel>{t('family.husband_income')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
                                 )} />
                              </div>
                         </div>

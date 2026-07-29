@@ -162,7 +162,7 @@ export default function Step1PersonalDetails({ form, isClientMode = false }: Ste
         <div className="grid sm:grid-cols-3 gap-4">
             <DateField name="personal.dob" label={t('personal.dob')} form={form} yearSelect={true} />
             <FormField control={form.control} name="personal.age" render={({ field }) => (
-                <FormItem><FormLabel>{t("personal.age")}</FormLabel><FormControl><Input type="number" {...field} readOnly /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{t("personal.age")}</FormLabel><FormControl><Input type="text" {...field} readOnly /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="personal.placeOfBirth" render={({ field }) => (
                 <FormItem><FormLabel>{t("personal.place_of_birth")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
@@ -171,10 +171,10 @@ export default function Step1PersonalDetails({ form, isClientMode = false }: Ste
         
         <div className="grid sm:grid-cols-3 gap-4">
             <FormField control={form.control} name="personal.mobile" render={({ field }) => (
-                <FormItem><FormLabel>{t("personal.mobile")}</FormLabel><FormControl><Input type="tel" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{t("personal.mobile")}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={form.control} name="personal.email" render={({ field }) => (
-                <FormItem><FormLabel>{t("personal.email")}</FormLabel><FormControl><Input type="email" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{t("personal.email")}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             {!isClientMode && (
                 <FormField control={form.control} name="personal.knowCustomerDuration" render={({ field }) => (
@@ -208,7 +208,7 @@ export default function Step1PersonalDetails({ form, isClientMode = false }: Ste
             )} />
             <DateField name="kyc.bocDate" label={t('personal.boc_date')} form={form} />
              <FormField control={form.control} name="kyc.bocAmount" render={({ field }) => (
-                <FormItem><FormLabel>{t("personal.boc_amount")}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{t("personal.boc_amount")}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
         </div>
       </CardContent>

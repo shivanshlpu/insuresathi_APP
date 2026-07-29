@@ -11,7 +11,7 @@ export default function LandingPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchWithAuth('https://insuresathi-app.onrender.com/api/customers/unread-count')
+    fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/unread-count`)
       .then(res => res.json())
       .then(data => {
         if (data && typeof data.count === 'number') {

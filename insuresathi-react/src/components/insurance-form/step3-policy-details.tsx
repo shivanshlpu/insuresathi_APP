@@ -47,10 +47,10 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
           <FormItem><FormLabel>{t('policy.nominee_relation')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
       )} />
        <FormField control={control} name={`policy.nominees.${index}.age`} render={({ field }) => (
-          <FormItem><FormLabel>{t('policy.nominee_age')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+          <FormItem><FormLabel>{t('policy.nominee_age')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
       )} />
       <FormField control={control} name={`policy.nominees.${index}.share`} render={({ field }) => (
-          <FormItem><FormLabel>{t('policy.nominee_share')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+          <FormItem><FormLabel>{t('policy.nominee_share')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
       )} />
       {nomineeAge !== undefined && nomineeAge < 18 && (
         <>
@@ -61,7 +61,7 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
                 <FormItem><FormLabel>{t('policy.appointee_relation') || 'Appointee Relation'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={control} name={`policy.nominees.${index}.appointeeAge`} render={({ field }) => (
-                <FormItem><FormLabel>{t('policy.appointee_age') || 'Appointee Age'}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{t('policy.appointee_age') || 'Appointee Age'}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
         </>
       )}
@@ -77,7 +77,7 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
           <FormItem><FormLabel>{t('policy.policy_number')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
       )} />
       <FormField control={control} name={`policy.previousPolicies.${index}.sumAssured`} render={({ field }) => (
-          <FormItem><FormLabel>{t('policy.policy_sum_assured')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+          <FormItem><FormLabel>{t('policy.policy_sum_assured')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
       )} />
       <FormField control={control} name={`policy.previousPolicies.${index}.term`} render={({ field }) => (
           <FormItem><FormLabel>{t('policy.policy_term') || 'Term'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
@@ -107,7 +107,7 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
                 <FormItem><FormLabel>{t('policy.term')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={control} name="policy.sumAssured" render={({ field }) => (
-                <FormItem><FormLabel>{t('policy.sum_assured')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{t('policy.sum_assured')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
         </div>
         <div className="grid sm:grid-cols-2 gap-4">
@@ -117,7 +117,7 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
                 <FormMessage /></FormItem>
             )} />
              <FormField control={control} name="policy.premiumAmount" render={({ field }) => (
-                <FormItem><FormLabel>{t('policy.premium_amount')}</FormLabel><FormControl><Input type="number" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem><FormLabel>{t('policy.premium_amount')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
         </div>
          <div className="space-y-3 p-4 border rounded-md">

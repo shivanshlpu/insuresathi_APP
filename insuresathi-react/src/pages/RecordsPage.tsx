@@ -52,7 +52,7 @@ export default function RecordsPage() {
       if (search) params.append('search', search);
       if (yearFilter) params.append('year', yearFilter);
       
-      const res = await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers?${params.toString()}`);
+      const res = await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers?${params.toString()}`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setRecords(data);
@@ -68,7 +68,7 @@ export default function RecordsPage() {
     if (!window.confirm("Are you sure you want to completely delete this record? This cannot be undone.")) return;
     
     try {
-      const res = await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${id}`, { method: 'DELETE' });
+      const res = await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error("Failed to delete");
       toast({ title: "Deleted", description: "Record deleted successfully." });
       fetchRecords(); // Refresh the list
@@ -170,7 +170,7 @@ export default function RecordsPage() {
                                 <Button size="sm" variant="outline" className="gap-2" onClick={async () => {
                                     if (r.status === 'new') {
                                         try {
-                                            await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${r._id}/reviewed`, { method: 'PATCH' });
+                                            await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${r._id}/reviewed`, { method: 'PATCH' });
                                         } catch (e) {
                                             console.error("Failed to mark as reviewed");
                                         }
@@ -182,7 +182,7 @@ export default function RecordsPage() {
                                 <Button size="sm" variant="default" className="gap-2" onClick={async () => {
                                     try {
                                         toast({ title: "Fetching details..." });
-                                        const res = await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${r._id}`);
+                                        const res = await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${r._id}`);
                                         if (!res.ok) throw new Error("Failed to fetch full record");
                                         const fullRecord = await res.json();
 
@@ -208,7 +208,7 @@ export default function RecordsPage() {
                                 <Button size="sm" variant="outline" className="gap-2" onClick={async () => {
                                     try {
                                         toast({ title: "Preparing PDF..." });
-                                        const res = await fetchWithAuth(`https://insuresathi-app.onrender.com/api/customers/${r._id}`);
+                                        const res = await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${r._id}`);
                                         if (!res.ok) throw new Error("Failed to fetch record");
                                         const fullRecord = await res.json();
                                         const safeData = {
@@ -251,10 +251,8 @@ export default function RecordsPage() {
 
       </div>
       {/* Hidden PDF Document for printing directly from table */}
-      <div className="printable-area">
-          <div ref={componentRef}>
-              {printData && <PdfDocument data={printData} t={t} />}
-          </div>
+      <div className="printable-area" ref={componentRef}>
+          {printData && <PdfDocument data={printData} t={t} />}
       </div>
     </div>
   );

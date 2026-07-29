@@ -38,7 +38,7 @@ export async function downloadPdf(element: HTMLElement, filename: string = 'Insu
     heightLeft -= pdfHeight;
 
     while (heightLeft > 0) {
-      position = heightLeft - pdfHeight;
+      position -= pdfHeight;
       pdf.addPage();
       pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
       heightLeft -= pdfHeight;
