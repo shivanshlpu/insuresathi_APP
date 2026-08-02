@@ -35,11 +35,12 @@ interface Step3Props {
 export default function Step3PolicyDetails({ form }: Step3Props) {
   const { t } = useTranslation();
   const { control, formState: { errors } } = form;
+  const watchedHasPreviousPolicy = form.watch("policy.hasPreviousPolicy");
 
   const renderNomineeFields = (index: number) => {
     const nomineeAge = form.watch(`policy.nominees.${index}.age`);
     return (
-    <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4">
       <FormField control={control} name={`policy.nominees.${index}.name`} render={({ field }) => (
           <FormItem><FormLabel>{t('policy.nominee_name')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
       )} />
@@ -52,16 +53,22 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
       <FormField control={control} name={`policy.nominees.${index}.share`} render={({ field }) => (
           <FormItem><FormLabel>{t('policy.nominee_share')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
       )} />
+      <FormField control={control} name={`policy.nominees.${index}.email`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.nominee_email')}</FormLabel><FormControl><Input type="email" placeholder="Mail ID" {...field} /></FormControl><FormMessage /></FormItem>
+      )} />
+      <FormField control={control} name={`policy.nominees.${index}.mobile`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.nominee_mobile')}</FormLabel><FormControl><Input type="text" placeholder="Mobile No." {...field} /></FormControl><FormMessage /></FormItem>
+      )} />
       {nomineeAge !== undefined && nomineeAge < 18 && (
         <>
             <FormField control={control} name={`policy.nominees.${index}.appointeeName`} render={({ field }) => (
                 <FormItem className="sm:col-span-2"><FormLabel>{t('policy.appointee_name') || 'Appointee Name'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={control} name={`policy.nominees.${index}.appointeeRelation`} render={({ field }) => (
-                <FormItem><FormLabel>{t('policy.appointee_relation') || 'Appointee Relation'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem className="sm:col-span-2"><FormLabel>{t('policy.appointee_relation') || 'Appointee Relation'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
             )} />
             <FormField control={control} name={`policy.nominees.${index}.appointeeAge`} render={({ field }) => (
-                <FormItem><FormLabel>{t('policy.appointee_age') || 'Appointee Age'}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
+                <FormItem className="sm:col-span-2"><FormLabel>{t('policy.appointee_age') || 'Appointee Age'}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
             )} />
         </>
       )}
@@ -94,7 +101,7 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
   );
 
   return (
-    <Card>
+    <Card id="step-policy">
       <CardHeader>
         <CardTitle className="font-headline">{t("policy.title")}</CardTitle>
       </CardHeader>
@@ -122,7 +129,7 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
         </div>
          <div className="space-y-3 p-4 border rounded-md">
             <h3 className="font-medium">{t('policy.riders')}</h3>
-            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-4">
                 <FormField control={control} name="policy.adbRider" render={({ field }) => (
                     <FormItem><FormLabel>{t('policy.adb_rider')}</FormLabel>
                         <FormControl><Input {...field} /></FormControl>
@@ -143,10 +150,15 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
                         <FormControl><Input {...field} /></FormControl>
                     <FormMessage /></FormItem>
                 )} />
+                <FormField control={control} name="policy.pwbRider" render={({ field }) => (
+                    <FormItem><FormLabel>{t('policy.pwb_rider')}</FormLabel>
+                        <FormControl><Input {...field} placeholder="PWB Details" /></FormControl>
+                    <FormMessage /></FormItem>
+                )} />
             </div>
          </div>
         
-        <Accordion type="multiple" defaultValue={["nominees"]} className="w-full">
+        <Accordion type="multiple" defaultValue={["nominees", "policies"]} className="w-full">
           <AccordionItem value="nominees">
             <AccordionTrigger>
               <div className="flex items-center gap-2">
@@ -155,13 +167,40 @@ export default function Step3PolicyDetails({ form }: Step3Props) {
               </div>
             </AccordionTrigger>
             <AccordionContent>
-              <DynamicFieldArray name="policy.nominees" title={t('policy.add_nominee')} form={form} renderFields={renderNomineeFields} defaultValues={{ name: '', relation: '', age: 0, share: 100 }} />
+              <DynamicFieldArray name="policy.nominees" title={t('policy.add_nominee')} form={form} renderFields={renderNomineeFields} defaultValues={{ name: '', relation: '', age: 0, share: 100, email: '', mobile: '' }} />
             </AccordionContent>
           </AccordionItem>
+
           <AccordionItem value="policies">
-            <AccordionTrigger><div className="flex items-center gap-2"><FileText className="h-5 w-5" /> {t('policy.previous_policies_section_title')}</div></AccordionTrigger>
-            <AccordionContent>
-              <DynamicFieldArray name="policy.previousPolicies" title={t('policy.add_previous_policy')} form={form} renderFields={renderPreviousPolicyFields} defaultValues={{ policyName: '', policyNumber: '', sumAssured: 0, premiumAmount: 0, status: 'Yes' }} />
+            <AccordionTrigger>
+              <div className="flex items-center gap-2">
+                <FileText className="h-5 w-5" /> {t('policy.previous_policies_section_title')}
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="space-y-4 pt-2">
+              <FormField control={control} name="policy.hasPreviousPolicy" render={({ field }) => (
+                <FormItem className="max-w-md">
+                  <FormLabel>{t('policy.has_previous_policy')}</FormLabel>
+                  <FormControl>
+                    <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                      <option value="">Select Option</option>
+                      <option value="First Policy">{t('policy.first_policy')} (No Previous Policies)</option>
+                      <option value="Yes">{t('policy.answer_yes')} (Have Previous Policies)</option>
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )} />
+
+              {watchedHasPreviousPolicy === "First Policy" && (
+                <div className="p-4 bg-muted rounded-md text-sm text-muted-foreground">
+                  First policy selected — previous policy details are not applicable.
+                </div>
+              )}
+
+              {watchedHasPreviousPolicy === "Yes" && (
+                <DynamicFieldArray name="policy.previousPolicies" title={t('policy.add_previous_policy')} form={form} renderFields={renderPreviousPolicyFields} defaultValues={{ policyName: '', policyNumber: '', sumAssured: 0, premiumAmount: 0, status: 'Yes' }} />
+              )}
             </AccordionContent>
           </AccordionItem>
         </Accordion>

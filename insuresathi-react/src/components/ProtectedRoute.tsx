@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -13,7 +14,7 @@ export default function ProtectedRoute({ children }: { children: React.ReactNode
       }
 
       try {
-        const res = await fetch(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/auth/verify`, {
+        const res = await fetch(`${API_BASE_URL}/api/auth/verify`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {

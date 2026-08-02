@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Skeleton } from "@/components/ui/skeleton";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -13,7 +14,7 @@ export default function NotificationsPage() {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/notifications`)
+    fetchWithAuth(`${API_BASE_URL}/api/customers/notifications`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) {
@@ -29,7 +30,7 @@ export default function NotificationsPage() {
 
   const handleMarkReviewed = async (id: string) => {
     try {
-      await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${id}/reviewed`, { method: 'PATCH' });
+      await fetchWithAuth(`${API_BASE_URL}/api/customers/${id}/reviewed`, { method: 'PATCH' });
       window.location.href = `/register?editId=${id}`;
     } catch (e) {
       console.error("Failed to mark as reviewed", e);

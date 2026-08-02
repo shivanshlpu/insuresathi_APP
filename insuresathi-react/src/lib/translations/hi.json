@@ -85,6 +85,7 @@
         "business_month": "व्यवसाय में महीने",
         "yearly_income": "वार्षिक आय",
         "bank_details_header": "III. बैंक विवरण",
+        "bank_mode": "भुगतान / मैंडेट मोड",
         "bank_name": "बैंक का नाम",
         "account_number": "खाता संख्या",
         "account_type": "खाता प्रकार",
@@ -93,7 +94,9 @@
             "Current": "चालू"
         },
         "ifsc_code": "आईएफएससी कोड",
-        "bank_address": "बैंक का पता / शाखा"
+        "bank_address": "बैंक का पता / शाखा",
+        "bank1_title": "प्राथमिक बैंक खाता विवरण (बैंक 1)",
+        "bank2_title": "द्वितीयक बैंक खाता विवरण (बैंक 2)"
     },
     "policy": {
         "title": "IV. प्लान विवरण",
@@ -115,6 +118,7 @@
         "ab_rider": "AB (आकस्मिक लाभ)",
         "term_rider": "टर्म राइडर",
         "cir_rider": "CIR (गंभीर बीमारी राइडर)",
+        "pwb_rider": "PWB (प्रीमियम छूट लाभ)",
         "answer_yes": "हाँ",
         "answer_no": "नहीं",
         "nominees_section_title": "V. नॉमिनी विवरण",
@@ -122,11 +126,17 @@
         "nominee_relation": "संबंध",
         "nominee_age": "आयु",
         "nominee_share": "नॉमिनी का हिस्सा %",
+        "nominee_email": "ईमेल / मेल आईडी",
+        "nominee_mobile": "मोबाइल नंबर",
         "add_nominee": "नॉमिनी जोड़ें",
+        "has_previous_policy": "पिछली पॉलिसी स्थिति",
+        "first_policy": "प्रथम पॉलिसी (पहला बीमा)",
         "previous_policies_section_title": "VII. पिछली पॉलिसी का विवरण",
         "policy_name": "प्लान का नाम / टर्म",
         "policy_number": "पॉलिसी क्रमांक",
         "policy_sum_assured": "बीमा राशि",
+        "policy_term": "टर्म",
+        "policy_premium_term": "प्रीमियम भुगतान अवधि",
         "policy_premium_amount": "प्रीमियम राशि",
         "policy_doc_date": "दस्तावेज़ तिथि",
         "policy_status": "पॉलिसी चल रही है?",
@@ -170,7 +180,8 @@
         "delivery_mode": "प्रसव का तरीका",
         "delivery_mode_options": {
             "Normal": "सामान्य",
-            "Cesarean": "सिजेरियन"
+            "Cesarean": "सिजेरियन",
+            "No": "नहीं / लागू नहीं"
         },
         "last_delivery_date": "अंतिम प्रसव तिथि",
         "treatment_details": "इलाज का विवरण (केवल महिला संबंधित)",
@@ -178,6 +189,9 @@
         "husband_name": "पति का नाम",
         "husband_occupation": "पति का व्यवसाय",
         "husband_income": "पति की वार्षिक आय",
+        "husband_policy_details": "पति की पॉलिसी का विवरण (यदि कोई हो)",
+        "husband_has_policy": "क्या पति के पास पूर्व/मौजूदा पॉलिसियां हैं?",
+        "add_husband_policy": "पति की पॉलिसी जोड़ें",
         "remarks_header": "IX. अन्य टिप्पणियाँ / रिमार्क",
         "remarks_label": "यहां कोई भी अतिरिक्त नोट या टिप्पणी दर्ज करें",
         "references_subheader": "संदर्भ विवरण",

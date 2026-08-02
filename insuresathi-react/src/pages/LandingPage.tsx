@@ -5,13 +5,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function LandingPage() {
   const [unreadCount, setUnreadCount] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/unread-count`)
+    fetchWithAuth(`${API_BASE_URL}/api/customers/unread-count`)
       .then(res => res.json())
       .then(data => {
         if (data && typeof data.count === 'number') {

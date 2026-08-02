@@ -53,7 +53,7 @@ export default function Step1PersonalDetails({ form, isClientMode = false }: Ste
 
 
   return (
-    <Card>
+    <Card id="step-personal">
       <CardHeader>
         <CardTitle className="font-headline">{t("personal.title")}</CardTitle>
       </CardHeader>

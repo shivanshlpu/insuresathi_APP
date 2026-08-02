@@ -21,7 +21,7 @@ export default function Step2OccupationAndBank({ form }: Step2Props) {
   const watchedOccupationType = form.watch("occupation.occupationType");
 
   return (
-    <Card>
+    <Card id="step-bank">
       <CardHeader>
         <CardTitle className="font-headline">{t("occupation.title")}</CardTitle>
       </CardHeader>
@@ -156,28 +156,82 @@ export default function Step2OccupationAndBank({ form }: Step2Props) {
         )}
 
         <Separator />
-        <h3 className="text-lg font-medium">{t('occupation.bank_details_header')}</h3>
+        <div id="bank-details-section" className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h3 className="text-lg font-medium">{t('occupation.bank_details_header')}</h3>
+            <div className="w-full sm:w-64">
+              <FormField
+                control={form.control}
+                name="bank.bankMode"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>{t('occupation.bank_mode')}</FormLabel>
+                    <FormControl>
+                      <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                        <option value="NEFT">NEFT (Single Account)</option>
+                        <option value="NACH">NACH (2 Accounts Required)</option>
+                        <option value="E-NACH">E-NACH (2 Accounts Required)</option>
+                      </select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          </div>
 
-        <div className="grid sm:grid-cols-3 gap-4">
-            <FormField control={form.control} name="bank.bankName" render={({ field }) => (
-                <FormItem><FormLabel>{t("occupation.bank_name")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
-            <FormField control={form.control} name="bank.accountNumber" render={({ field }) => (
-                <FormItem><FormLabel>{t("occupation.account_number")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
-            <FormField control={form.control} name="bank.accountType" render={({ field }) => (
-                <FormItem><FormLabel>{t("occupation.account_type")}</FormLabel>
-                 <FormControl><Input {...field} placeholder={t("occupation.account_type")} /></FormControl>
-                <FormMessage /></FormItem>
-            )} />
-        </div>
-        <div className="grid sm:grid-cols-2 gap-4">
-            <FormField control={form.control} name="bank.ifscCode" render={({ field }) => (
-                <FormItem><FormLabel>{t("occupation.ifsc_code")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
-            <FormField control={form.control} name="bank.bankAddress" render={({ field }) => (
-                <FormItem><FormLabel>{t("occupation.bank_address")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
-            )} />
+          {(form.watch("bank.bankMode") === "NACH" || form.watch("bank.bankMode") === "E-NACH") && (
+            <h4 className="text-sm font-semibold text-primary">{t('occupation.bank1_title')}</h4>
+          )}
+
+          <div className="grid sm:grid-cols-3 gap-4">
+              <FormField control={form.control} name="bank.bankName" render={({ field }) => (
+                  <FormItem><FormLabel>{t("occupation.bank_name")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="bank.accountNumber" render={({ field }) => (
+                  <FormItem><FormLabel>{t("occupation.account_number")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="bank.accountType" render={({ field }) => (
+                  <FormItem><FormLabel>{t("occupation.account_type")}</FormLabel>
+                   <FormControl><Input {...field} placeholder={t("occupation.account_type")} /></FormControl>
+                  <FormMessage /></FormItem>
+              )} />
+          </div>
+          <div className="grid sm:grid-cols-2 gap-4">
+              <FormField control={form.control} name="bank.ifscCode" render={({ field }) => (
+                  <FormItem><FormLabel>{t("occupation.ifsc_code")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="bank.bankAddress" render={({ field }) => (
+                  <FormItem><FormLabel>{t("occupation.bank_address")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+          </div>
+
+          {(form.watch("bank.bankMode") === "NACH" || form.watch("bank.bankMode") === "E-NACH") && (
+            <div className="pt-4 border-t space-y-4">
+              <h4 className="text-sm font-semibold text-primary">{t('occupation.bank2_title')}</h4>
+              <div className="grid sm:grid-cols-3 gap-4">
+                  <FormField control={form.control} name="bank.bankName2" render={({ field }) => (
+                      <FormItem><FormLabel>{t("occupation.bank_name")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="bank.accountNumber2" render={({ field }) => (
+                      <FormItem><FormLabel>{t("occupation.account_number")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="bank.accountType2" render={({ field }) => (
+                      <FormItem><FormLabel>{t("occupation.account_type")}</FormLabel>
+                       <FormControl><Input {...field} placeholder={t("occupation.account_type")} /></FormControl>
+                      <FormMessage /></FormItem>
+                  )} />
+              </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                  <FormField control={form.control} name="bank.ifscCode2" render={({ field }) => (
+                      <FormItem><FormLabel>{t("occupation.ifsc_code")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="bank.bankAddress2" render={({ field }) => (
+                      <FormItem><FormLabel>{t("occupation.bank_address")}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+                  )} />
+              </div>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

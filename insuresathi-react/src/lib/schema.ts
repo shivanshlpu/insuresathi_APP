@@ -12,6 +12,8 @@ export const nomineeSchema = z.object({
     relation: z.string().optional(),
     age: z.any().optional(),
     share: z.any().optional(),
+    email: z.string().optional(),
+    mobile: z.string().optional(),
     appointeeName: z.string().optional(),
     appointeeRelation: z.string().optional(),
     appointeeAge: z.any().optional(),
@@ -28,6 +30,15 @@ export const familyMemberSchema = z.object({
 });
 
 export const previousPolicySchema = z.object({
+    policyName: z.string().optional(),
+    policyNumber: z.string().optional(),
+    sumAssured: z.any().optional(),
+    term: z.string().optional(),
+    premiumPayingTerm: z.string().optional(),
+    status: z.string().optional(),
+});
+
+export const husbandPolicySchema = z.object({
     policyName: z.string().optional(),
     policyNumber: z.string().optional(),
     sumAssured: z.any().optional(),
@@ -87,11 +98,17 @@ export const insuranceFormSchema = z.object({
         annualIncome: z.any().optional(),
     }),
     bank: z.object({
+        bankMode: z.string().optional(),
         bankName: z.string().optional(),
         accountNumber: z.string().optional(),
         accountType: z.string().optional(),
         ifscCode: z.string().optional(),
         bankAddress: z.string().optional(),
+        bankName2: z.string().optional(),
+        accountNumber2: z.string().optional(),
+        accountType2: z.string().optional(),
+        ifscCode2: z.string().optional(),
+        bankAddress2: z.string().optional(),
     }),
     policy: z.object({
         planNumber: z.string().optional(),
@@ -103,6 +120,8 @@ export const insuranceFormSchema = z.object({
         abRider: z.string().optional(),
         termRider: z.string().optional(),
         cirRider: z.string().optional(),
+        pwbRider: z.string().optional(),
+        hasPreviousPolicy: z.string().optional(),
         nominees: z.array(nomineeSchema).optional(),
         familyMembers: z.array(familyMemberSchema).optional(),
         previousPolicies: z.array(previousPolicySchema).optional(),
@@ -120,6 +139,9 @@ export const insuranceFormSchema = z.object({
         husbandName_mw: z.string().optional(),
         husbandOccupation_mw: z.string().optional(),
         husbandIncome_mw: z.any().optional(),
+        husbandPolicyDetails_mw: z.string().optional(),
+        husbandHasPolicy_mw: z.string().optional(),
+        husbandPolicies_mw: z.array(husbandPolicySchema).optional(),
     }),
     remarks: z.string().optional(),
 });

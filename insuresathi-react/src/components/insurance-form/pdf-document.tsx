@@ -180,12 +180,31 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                             </>
                         )}
                         
+                        <div className="w-full bg-gray-50 border-r border-b border-gray-300 px-2 py-0.5 font-bold text-gray-700 tracking-wider text-[12px] uppercase break-after-avoid float-left">
+                            {t('occupation.bank_details_header')} (Mode: {data.bank.bankMode || 'NEFT'})
+                        </div>
+
                         <Cell label={t('occupation.bank_name')} value={data.bank.bankName} span={3} />
                         <Cell label={t('occupation.account_number')} value={data.bank.accountNumber} span={3} />
                         <Cell label={t('occupation.account_type')} value={data.bank.accountType} span={3} />
                         <Cell label={t('occupation.ifsc_code')} value={data.bank.ifscCode} span={3} />
                         
                         <Cell label={t('occupation.bank_address')} value={data.bank.bankAddress} span={12} />
+
+                        {(data.bank.bankMode === 'NACH' || data.bank.bankMode === 'E-NACH') && (
+                            <>
+                                <div className="w-full bg-gray-50 border-r border-b border-gray-300 px-2 py-0.5 font-bold text-gray-700 tracking-wider text-[12px] uppercase break-after-avoid float-left">
+                                    {t('occupation.bank2_title')}
+                                </div>
+
+                                <Cell label={t('occupation.bank_name')} value={data.bank.bankName2} span={3} />
+                                <Cell label={t('occupation.account_number')} value={data.bank.accountNumber2} span={3} />
+                                <Cell label={t('occupation.account_type')} value={data.bank.accountType2} span={3} />
+                                <Cell label={t('occupation.ifsc_code')} value={data.bank.ifscCode2} span={3} />
+                                
+                                <Cell label={t('occupation.bank_address')} value={data.bank.bankAddress2} span={12} />
+                            </>
+                        )}
                     </Grid>
                 </Section>
 
@@ -198,22 +217,25 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                         <Cell label={t('policy.premium_amount')} value={data.policy.premiumAmount ? `Rs. ${data.policy.premiumAmount.toLocaleString('en-IN')}` : 'N/A'} span={6} />
                         <Cell label={t('policy.premium_mode')} value={data.policy.premiumMode} span={6} />
                         
-                        <Cell label={t('policy.adb_rider')} value={data.policy.adbRider} span={6} />
-                        <Cell label={t('policy.ab_rider')} value={data.policy.abRider} span={6} />
-                        <Cell label={t('policy.term_rider')} value={data.policy.termRider} span={6} />
+                        <Cell label={t('policy.adb_rider')} value={data.policy.adbRider} span={4} />
+                        <Cell label={t('policy.ab_rider')} value={data.policy.abRider} span={4} />
+                        <Cell label={t('policy.term_rider')} value={data.policy.termRider} span={4} />
                         <Cell label={t('policy.cir_rider')} value={data.policy.cirRider} span={6} />
+                        <Cell label={t('policy.pwb_rider')} value={data.policy.pwbRider} span={6} />
                     </Grid>
                 </Section>
 
                 {data.policy.nominees && data.policy.nominees.length > 0 && (
                     <Section title={t('pdf.section.nominees')}>
-                        <Table headers={[t('policy.nominee_name'), t('policy.nominee_relation'), t('policy.nominee_age'), t('policy.nominee_share'), 'Appointee']}>
+                        <Table headers={[t('policy.nominee_name'), t('policy.nominee_relation'), t('policy.nominee_age'), t('policy.nominee_share'), 'Mail ID', 'Mobile', 'Appointee']}>
                             {data.policy.nominees.map((n, i) => (
                                 <tr key={i} className="break-inside-avoid border-b border-gray-200">
-                                    <td className="border-r border-gray-300 p-1">{n.name}</td>
+                                    <td className="border-r border-gray-300 p-1 font-semibold">{n.name}</td>
                                     <td className="border-r border-gray-300 p-1">{n.relation}</td>
                                     <td className="border-r border-gray-300 p-1">{n.age}</td>
                                     <td className="border-r border-gray-300 p-1">{n.share}%</td>
+                                    <td className="border-r border-gray-300 p-1">{n.email || 'N/A'}</td>
+                                    <td className="border-r border-gray-300 p-1">{n.mobile || 'N/A'}</td>
                                     <td className="p-1">
                                         {n.age !== undefined && n.age < 18 ? `${n.appointeeName || 'N/A'} (${n.appointeeRelation || 'N/A'}, Age: ${n.appointeeAge || 'N/A'})` : 'N/A'}
                                     </td>
@@ -244,8 +266,12 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                     </Section>
                  )}
 
-                {data.policy.previousPolicies && data.policy.previousPolicies.length > 0 && (
-                    <Section title={t('pdf.section.policies')}>
+                <Section title={t('pdf.section.policies')}>
+                    {data.policy.hasPreviousPolicy === "First Policy" ? (
+                        <div className="border border-gray-300 p-1.5 text-gray-700 font-medium bg-gray-50 text-[12px]">
+                            Status: First Policy (No Previous Policy History)
+                        </div>
+                    ) : data.policy.previousPolicies && data.policy.previousPolicies.length > 0 ? (
                         <Table headers={[t('policy.policy_name'), t('policy.policy_number'), t('policy.policy_sum_assured'), t('policy.policy_term') || 'Term', t('policy.policy_premium_term') || 'PPT', t('policy.policy_status')]}>
                             {data.policy.previousPolicies.map((p, i) => (
                                 <tr key={i} className="break-inside-avoid border-b border-gray-200">
@@ -258,8 +284,12 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                                 </tr>
                             ))}
                         </Table>
-                    </Section>
-                )}
+                    ) : (
+                        <div className="border border-gray-300 p-1.5 text-gray-700 font-medium bg-gray-50 text-[12px]">
+                            No previous policies listed
+                        </div>
+                    )}
+                </Section>
 
                 <Section title={t('pdf.section.medical')}>
                     <Grid>
@@ -275,7 +305,7 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                                     {t('family.female_details_subheader')}
                                 </div>
                                 <Cell label={t('family.is_pregnant')} value={data.medical.isPregnant} span={4} />
-                                <Cell label={t('family.delivery_mode')} value={data.medical.isPregnant === 'Yes' ? data.medical.deliveryMode : 'N/A'} span={4} />
+                                <Cell label={t('family.delivery_mode')} value={data.medical.deliveryMode || 'N/A'} span={4} />
                                 <Cell label={t('family.last_delivery_date')} value={data.medical.lastDeliveryDate ? format(new Date(data.medical.lastDeliveryDate), 'PPP') : 'N/A'} span={4} />
                                 
                                 <Cell label={t('family.treatment_details')} value={data.medical.treatmentDetails} span={12} />
@@ -286,6 +316,24 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                                 <Cell label={t('family.husband_name')} value={data.medical.husbandName_mw} span={4} />
                                 <Cell label={t('family.husband_occupation')} value={data.medical.husbandOccupation_mw} span={4} />
                                 <Cell label={t('family.husband_income')} value={data.medical.husbandIncome_mw ? `Rs. ${data.medical.husbandIncome_mw.toLocaleString('en-IN')}` : 'N/A'} span={4} />
+                                
+                                {data.medical.husbandHasPolicy_mw === "Yes" && data.medical.husbandPolicies_mw && data.medical.husbandPolicies_mw.length > 0 && (
+                                    <div className="w-full float-left p-1 border-b border-gray-300">
+                                        <div className="font-bold text-gray-700 mb-1 text-[11.5px] uppercase">Husband's Previous Policy Details:</div>
+                                        <Table headers={[t('policy.policy_name'), t('policy.policy_number'), t('policy.policy_sum_assured'), t('policy.policy_term') || 'Term', t('policy.policy_premium_term') || 'PPT', t('policy.policy_status')]}>
+                                            {data.medical.husbandPolicies_mw.map((hp, i) => (
+                                                <tr key={i} className="break-inside-avoid border-b border-gray-200">
+                                                    <td className="border-r border-gray-300 p-1">{hp.policyName}</td>
+                                                    <td className="border-r border-gray-300 p-1">{hp.policyNumber}</td>
+                                                    <td className="border-r border-gray-300 p-1">{hp.sumAssured ? `Rs. ${hp.sumAssured.toLocaleString('en-IN')}` : 'N/A'}</td>
+                                                    <td className="border-r border-gray-300 p-1">{hp.term || 'N/A'}</td>
+                                                    <td className="border-r border-gray-300 p-1">{hp.premiumPayingTerm || 'N/A'}</td>
+                                                    <td className="p-1">{hp.status}</td>
+                                                </tr>
+                                            ))}
+                                        </Table>
+                                    </div>
+                                )}
                             </>
                         )}
                     </Grid>

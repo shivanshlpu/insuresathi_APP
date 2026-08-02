@@ -12,6 +12,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Printer, Download, Save } from "lucide-react";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
 import { downloadPdf } from "@/lib/pdf-export";
+import { API_BASE_URL } from "@/lib/api";
 
 import Step1PersonalDetails from "./step1-personal-details";
 import Step2OccupationAndBank from "./step2-occupation-and-bank";
@@ -87,7 +88,7 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
 
   useEffect(() => {
     if (editId) {
-      fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${editId}`)
+      fetchWithAuth(`${API_BASE_URL}/api/customers/${editId}`)
         .then(res => res.json())
         .then(data => {
           if (data && data.formData) {
@@ -128,8 +129,8 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
       }
 
       const url = editId 
-        ? `${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${editId}` 
-        : `${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers`;
+        ? `${API_BASE_URL}/api/customers/${editId}` 
+        : `${API_BASE_URL}/api/customers`;
         
       const response = await fetchWithAuth(url, {
         method: editId ? 'PUT' : 'POST',
@@ -237,6 +238,53 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
           </Button>
         )}
       </div>
+
+      {/* Quick Section Navigation Bar */}
+      <div className="sticky top-2 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 p-2 rounded-lg border shadow-sm flex flex-wrap items-center gap-2 text-xs sm:text-sm">
+        <span className="font-semibold text-muted-foreground mr-1">Quick Jump:</span>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => document.getElementById("step-personal")?.scrollIntoView({ behavior: "smooth" })}
+        >
+          1. Personal
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => document.getElementById("step-bank")?.scrollIntoView({ behavior: "smooth" })}
+        >
+          2. Occupation & Bank
+        </Button>
+        <Button
+          type="button"
+          variant="default"
+          size="sm"
+          className="bg-primary/90 text-primary-foreground font-medium"
+          onClick={() => document.getElementById("bank-details-section")?.scrollIntoView({ behavior: "smooth" })}
+        >
+          💳 Bank Details
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => document.getElementById("step-policy")?.scrollIntoView({ behavior: "smooth" })}
+        >
+          3. Policy Details
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={() => document.getElementById("step-medical")?.scrollIntoView({ behavior: "smooth" })}
+        >
+          4. Family & Medical
+        </Button>
+      </div>
+
       <Form {...form}>
       <form onSubmit={(e) => e.preventDefault()} className="space-y-6 sm:space-y-8">
         <fieldset disabled={!isEditMode} className="space-y-6 sm:space-y-8">

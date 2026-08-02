@@ -85,6 +85,7 @@
         "business_month": "Months in Business",
         "yearly_income": "Annual Income",
         "bank_details_header": "III. Bank Details",
+        "bank_mode": "Payment / Mandate Mode",
         "bank_name": "Bank Name",
         "account_number": "Account No.",
         "account_type": "Account Type",
@@ -93,7 +94,9 @@
             "Current": "Current"
         },
         "ifsc_code": "IFSC Code",
-        "bank_address": "Bank Address / Branch"
+        "bank_address": "Bank Address / Branch",
+        "bank1_title": "Primary Bank Account Details (Bank 1)",
+        "bank2_title": "Secondary Bank Account Details (Bank 2)"
     },
     "policy": {
         "title": "IV. Plan Details",
@@ -115,6 +118,7 @@
         "ab_rider": "AB (Accidental Benefit)",
         "term_rider": "Term Rider",
         "cir_rider": "CIR (Critical Illness Rider)",
+        "pwb_rider": "PWB (Payor Waiver Benefit)",
         "answer_yes": "Yes",
         "answer_no": "No",
         "nominees_section_title": "V. Nominee Details",
@@ -122,11 +126,17 @@
         "nominee_relation": "Relation",
         "nominee_age": "Age",
         "nominee_share": "Nominee Share %",
+        "nominee_email": "Mail ID",
+        "nominee_mobile": "Mobile Number",
         "add_nominee": "Add Nominee",
+        "has_previous_policy": "Previous Policy Status",
+        "first_policy": "First Policy",
         "previous_policies_section_title": "VII. Previous Policy Details",
         "policy_name": "Plan Name / Term",
         "policy_number": "Policy Number",
         "policy_sum_assured": "Sum Assured",
+        "policy_term": "Term",
+        "policy_premium_term": "Premium Paying Term",
         "policy_premium_amount": "Premium Amount",
         "policy_doc_date": "Document Date",
         "policy_status": "Is policy active?",
@@ -170,7 +180,8 @@
         "delivery_mode": "Mode of Delivery",
         "delivery_mode_options": {
             "Normal": "Normal",
-            "Cesarean": "Cesarean"
+            "Cesarean": "Cesarean",
+            "No": "No"
         },
         "last_delivery_date": "Last Delivery Date",
         "treatment_details": "Treatment Details (Female related only)",
@@ -178,6 +189,9 @@
         "husband_name": "Husband's Name",
         "husband_occupation": "Husband's Occupation",
         "husband_income": "Husband's Annual Income",
+        "husband_policy_details": "Husband's Policy Details (if any)",
+        "husband_has_policy": "Does Husband Have Previous/Existing Policies?",
+        "add_husband_policy": "Add Husband Policy",
         "remarks_header": "IX. Other Notes / Remarks",
         "remarks_label": "Enter any additional notes or remarks here",
         "references_subheader": "Reference Details",

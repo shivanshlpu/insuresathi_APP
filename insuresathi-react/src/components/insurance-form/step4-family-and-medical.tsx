@@ -121,8 +121,33 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
     form.setValue('policy.familyMembers', standardRoles, { shouldDirty: true });
   };
 
+  const renderHusbandPolicyFields = (index: number) => (
+    <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-6 gap-4 items-end">
+      <FormField control={control} name={`medical.husbandPolicies_mw.${index}.policyName`} render={({ field }) => (
+          <FormItem className="sm:col-span-2"><FormLabel>{t('policy.policy_name')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+      )} />
+      <FormField control={control} name={`medical.husbandPolicies_mw.${index}.policyNumber`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.policy_number')}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+      )} />
+      <FormField control={control} name={`medical.husbandPolicies_mw.${index}.sumAssured`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.policy_sum_assured')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
+      )} />
+      <FormField control={control} name={`medical.husbandPolicies_mw.${index}.term`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.policy_term') || 'Term'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+      )} />
+      <FormField control={control} name={`medical.husbandPolicies_mw.${index}.premiumPayingTerm`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.policy_premium_term') || 'Premium Paying Term'}</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+      )} />
+      <FormField control={control} name={`medical.husbandPolicies_mw.${index}.status`} render={({ field }) => (
+          <FormItem><FormLabel>{t('policy.policy_status')}</FormLabel>
+            <FormControl><Input {...field} placeholder={t('policy.policy_status')} /></FormControl>
+          <FormMessage /></FormItem>
+      )} />
+    </div>
+  );
+
   return (
-    <Card>
+    <Card id="step-medical">
       <CardHeader>
         <CardTitle className="font-headline">{t("family.title")}</CardTitle>
       </CardHeader>
@@ -199,6 +224,7 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
                                                 <option value="" disabled>Select Mode</option>
                                                 <option value="Normal">Normal</option>
                                                 <option value="Cesarean">Cesarean</option>
+                                                <option value="No">No</option>
                                             </select>
                                          </FormControl>
                                     <FormMessage /></FormItem>
@@ -221,6 +247,35 @@ export default function Step4FamilyAndMedical({ form }: Step4Props) {
                                 <FormField control={control} name="medical.husbandIncome_mw" render={({ field }) => (
                                     <FormItem><FormLabel>{t('family.husband_income')}</FormLabel><FormControl><Input type="text" {...field} /></FormControl><FormMessage /></FormItem>
                                 )} />
+                             </div>
+
+                             <div className="pt-4 border-t space-y-4">
+                                <FormField control={control} name="medical.husbandHasPolicy_mw" render={({ field }) => (
+                                  <FormItem className="max-w-md">
+                                    <FormLabel>{t('family.husband_has_policy') || 'Does Husband Have Previous/Existing Policies?'}</FormLabel>
+                                    <FormControl>
+                                      <select {...field} className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+                                        <option value="">Select Option</option>
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes (Have Previous Policies)</option>
+                                      </select>
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )} />
+
+                                {form.watch("medical.husbandHasPolicy_mw") === "Yes" && (
+                                  <div className="pt-2">
+                                    <h5 className="font-medium text-sm mb-3">Husband's Policy Details</h5>
+                                    <DynamicFieldArray
+                                      name="medical.husbandPolicies_mw"
+                                      title={t('family.add_husband_policy') || 'Add Husband Policy'}
+                                      form={form}
+                                      renderFields={renderHusbandPolicyFields}
+                                      defaultValues={{ policyName: '', policyNumber: '', sumAssured: 0, term: '', premiumPayingTerm: '', status: 'Yes' }}
+                                    />
+                                  </div>
+                                )}
                              </div>
                         </div>
                     </div>

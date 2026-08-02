@@ -9,7 +9,8 @@ type FieldArrayName =
   | "policy.nominees"
   | "policy.familyMembers"
   | "policy.previousPolicies"
-  | "policy.references";
+  | "policy.references"
+  | "medical.husbandPolicies_mw";
 
 interface DynamicFieldArrayProps {
   name: FieldArrayName;

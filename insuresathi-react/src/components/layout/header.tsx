@@ -8,6 +8,7 @@ import { useTheme } from "@/components/theme-provider";
 import { Button } from "../ui/button";
 import { ClearDataDialog } from "./clear-data-dialog";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
+import { API_BASE_URL } from "@/lib/api";
 
 export default function Header() {
   const { language, setLanguage } = useLanguage();
@@ -16,7 +17,7 @@ export default function Header() {
   const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
-    fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/unread-count`)
+    fetchWithAuth(`${API_BASE_URL}/api/customers/unread-count`)
       .then(res => res.json())
       .then(data => {
         if (data && typeof data.count === 'number') {

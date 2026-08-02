@@ -12,6 +12,7 @@ import PdfDocument from "@/components/insurance-form/pdf-document";
 import { defaultValues } from "@/hooks/use-local-storage-form";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
 import { downloadPdf } from "@/lib/pdf-export";
+import { API_BASE_URL } from "@/lib/api";
 
 const formatDocDate = (dateVal?: any, fallbackVal?: any) => {
   const val = dateVal || fallbackVal;
@@ -106,7 +107,7 @@ export default function RecordsPage() {
       if (search) params.append('search', search);
       if (yearFilter) params.append('year', yearFilter);
       
-      const res = await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers?${params.toString()}`);
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/customers?${params.toString()}`);
       if (!res.ok) throw new Error("Failed to fetch");
       const data = await res.json();
       setRecords(data);
@@ -122,7 +123,7 @@ export default function RecordsPage() {
     if (!window.confirm("Are you sure you want to completely delete this record? This cannot be undone.")) return;
     
     try {
-      const res = await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${id}`, { method: 'DELETE' });
+      const res = await fetchWithAuth(`${API_BASE_URL}/api/customers/${id}`, { method: 'DELETE' });
       if (!res.ok) throw new Error("Failed to delete");
       toast({ title: "Deleted", description: "Record deleted successfully." });
       fetchRecords(); // Refresh the list
@@ -222,7 +223,7 @@ export default function RecordsPage() {
                                 <Button size="sm" variant="outline" className="gap-2" onClick={async () => {
                                     if (r.status === 'new') {
                                         try {
-                                            await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${r._id}/reviewed`, { method: 'PATCH' });
+                                            await fetchWithAuth(`${API_BASE_URL}/api/customers/${r._id}/reviewed`, { method: 'PATCH' });
                                         } catch (e) {
                                             console.error("Failed to mark as reviewed");
                                         }
@@ -234,7 +235,7 @@ export default function RecordsPage() {
                                 <Button size="sm" variant="default" className="gap-2" onClick={async () => {
                                     try {
                                         toast({ title: "Fetching details..." });
-                                        const res = await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${r._id}`);
+                                        const res = await fetchWithAuth(`${API_BASE_URL}/api/customers/${r._id}`);
                                         if (!res.ok) throw new Error("Failed to fetch full record");
                                         const fullRecord = await res.json();
 
@@ -260,7 +261,7 @@ export default function RecordsPage() {
                                 <Button size="sm" variant="outline" className="gap-2" onClick={async () => {
                                     try {
                                         toast({ title: "Preparing PDF..." });
-                                        const res = await fetchWithAuth(`${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${r._id}`);
+                                        const res = await fetchWithAuth(`${API_BASE_URL}/api/customers/${r._id}`);
                                         if (!res.ok) throw new Error("Failed to fetch record");
                                         const fullRecord = await res.json();
                                         const safeData = {
