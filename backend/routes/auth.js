@@ -1,19 +1,34 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
+const rateLimit = require('express-rate-limit');
 
-router.post('/login', (req, res) => {
+// Rate limiter for login endpoint (max 5 attempts per 15 minutes per IP)
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: 'Too many login attempts from this IP, please try again after 15 minutes.' }
+});
+
+router.post('/login', loginLimiter, (req, res) => {
   const { agencyCode, password } = req.body;
-  const adminAgencyCode = process.env.ADMIN_AGENCY_CODE || 'A05916370';
-  const adminPassword = process.env.ADMIN_PASSWORD || 'Umesh@1972';
-  const jwtSecret = process.env.JWT_SECRET || 'insuresathi_fallback_secret_key_2026';
+  const adminAgencyCode = process.env.ADMIN_AGENCY_CODE;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  const jwtSecret = process.env.JWT_SECRET;
 
-  if (!agencyCode || !password) {
+  if (!adminAgencyCode || !adminPassword || !jwtSecret) {
+    console.error('FATAL: Auth environment variables (ADMIN_AGENCY_CODE, ADMIN_PASSWORD, JWT_SECRET) are missing.');
+    return res.status(500).json({ error: 'Server authentication misconfigured' });
+  }
+
+  if (!agencyCode || typeof agencyCode !== 'string' || !password || typeof password !== 'string') {
     return res.status(400).json({ error: 'Agency code and password are required' });
   }
 
   if (agencyCode === adminAgencyCode && password === adminPassword) {
-    const token = jwt.sign({ id: 'admin', role: 'admin' }, jwtSecret, { expiresIn: '7d' });
+    const token = jwt.sign({ id: 'admin', role: 'admin' }, jwtSecret, { expiresIn: '8h', algorithm: 'HS256' });
     return res.json({ token, message: 'Login successful' });
   } else {
     return res.status(401).json({ error: 'Invalid agency code or password' });
@@ -22,12 +37,15 @@ router.post('/login', (req, res) => {
 
 // Verify token endpoint to check if current token is valid
 router.get('/verify', (req, res) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
-  if (!token) return res.status(401).json({ valid: false });
+  const authHeader = req.header('Authorization');
+  if (!authHeader || !authHeader.startsWith('Bearer ')) return res.status(401).json({ valid: false });
+
+  const token = authHeader.substring(7);
+  const jwtSecret = process.env.JWT_SECRET;
+  if (!jwtSecret) return res.status(500).json({ valid: false });
 
   try {
-    const jwtSecret = process.env.JWT_SECRET || 'insuresathi_fallback_secret_key_2026';
-    jwt.verify(token, jwtSecret);
+    jwt.verify(token, jwtSecret, { algorithms: ['HS256'] });
     return res.json({ valid: true });
   } catch (error) {
     return res.status(401).json({ valid: false });
@@ -35,3 +53,4 @@ router.get('/verify', (req, res) => {
 });
 
 module.exports = router;
+

@@ -11,10 +11,18 @@ const submitLimiter = rateLimit({
   message: { error: 'Too many submissions from this IP, please try again after an hour' }
 });
 
+// Helper function to escape special regex characters to prevent ReDoS
+function escapeRegex(text) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+}
+
 // Create a new customer record (Public with rate limit)
 router.post('/', submitLimiter, async (req, res) => {
   try {
     const { formData } = req.body;
+    if (!formData || typeof formData !== 'object') {
+      return res.status(400).json({ error: 'Invalid form data' });
+    }
     
     // Extract searchable fields
     const name = formData?.personal?.name || 'Unknown';
@@ -22,7 +30,13 @@ router.post('/', submitLimiter, async (req, res) => {
     const mobile = formData?.personal?.mobile || '';
     
     // Determine financial year based on document date (fallback to current date)
-    const docDateStr = formData?.personal?.docDate;
+    const docDateStr = formData?.personal?.docDate || formData?.policy?.docDate;
+    if (docDateStr) {
+      if (!formData.personal) formData.personal = {};
+      if (!formData.policy) formData.policy = {};
+      formData.personal.docDate = docDateStr;
+      formData.policy.docDate = docDateStr;
+    }
     const targetDate = (docDateStr && !isNaN(new Date(docDateStr).getTime())) 
       ? new Date(docDateStr) 
       : new Date();
@@ -35,6 +49,7 @@ router.post('/', submitLimiter, async (req, res) => {
 
     const newCustomer = new Customer({
       financialYear,
+      docDate: targetDate,
       searchable: { name, policyNumber, mobile },
       formData,
       source,
@@ -52,6 +67,67 @@ router.post('/', submitLimiter, async (req, res) => {
 // === PROTECTED ROUTES BELOW ===
 router.use(authMiddleware);
 
+// Bulk import customer records (Protected Admin route)
+router.post('/bulk-import', async (req, res) => {
+  try {
+    const { records } = req.body;
+    if (!Array.isArray(records) || records.length === 0) {
+      return res.status(400).json({ error: 'Invalid or empty records array' });
+    }
+
+    let insertedCount = 0;
+    let updatedCount = 0;
+
+    for (const raw of records) {
+      const personal = raw.formData?.personal || raw.personal || {};
+      const policy = raw.formData?.policy || raw.policy || {};
+      const name = personal.name || raw.searchable?.name || 'Unknown';
+      const policyNumber = policy.policyNumber || policy.docNumber || personal.topPolicyNumber || raw.searchable?.policyNumber || '';
+      const mobile = personal.mobile || raw.searchable?.mobile || '';
+
+      const docDateStr = policy.docDate || personal.docDate || '';
+      const targetDate = (docDateStr && !isNaN(new Date(docDateStr).getTime())) 
+        ? new Date(docDateStr) 
+        : new Date();
+      const month = targetDate.getMonth() + 1;
+      const year = targetDate.getFullYear();
+      const financialYear = raw.financialYear || (month >= 4 ? `${year}-${year + 1}` : `${year - 1}-${year}`);
+
+      const recordData = {
+        financialYear,
+        docDate: targetDate,
+        searchable: { name, policyNumber, mobile },
+        formData: raw.formData || raw,
+        source: raw.source || 'agent',
+        status: raw.status || 'reviewed'
+      };
+
+      let query = {};
+      if (policyNumber && policyNumber !== 'N/A') {
+        query = { 'searchable.policyNumber': policyNumber };
+      } else if (mobile) {
+        query = { 'searchable.name': name, 'searchable.mobile': mobile };
+      } else {
+        query = { 'searchable.name': name };
+      }
+
+      const existing = await Customer.findOne(query);
+      if (existing) {
+        await Customer.updateOne(query, { $set: recordData });
+        updatedCount++;
+      } else {
+        await Customer.create(recordData);
+        insertedCount++;
+      }
+    }
+
+    res.json({ message: 'Bulk import successful', insertedCount, updatedCount, total: insertedCount + updatedCount });
+  } catch (error) {
+    console.error('Error during bulk import:', error);
+    res.status(500).json({ error: 'Failed to perform bulk import' });
+  }
+});
+
 // Get all customers (with optional search/filter)
 router.get('/', async (req, res) => {
   try {
@@ -59,12 +135,13 @@ router.get('/', async (req, res) => {
     let query = {};
 
     if (year) {
-      query.financialYear = year;
+      query.financialYear = String(year);
     }
 
-    if (search) {
-      // Case-insensitive regex search on name, policyNumber, or mobile
-      const regex = new RegExp(search, 'i');
+    if (search && typeof search === 'string') {
+      // Escaped case-insensitive regex search to prevent ReDoS
+      const safeSearch = escapeRegex(search.trim());
+      const regex = new RegExp(safeSearch, 'i');
       query.$or = [
         { 'searchable.name': regex },
         { 'searchable.policyNumber': regex },
@@ -72,11 +149,12 @@ router.get('/', async (req, res) => {
       ];
     }
 
-    // Sort by newest first, exclude heavy base64 photo, limit to 500 records
+
+    // Sort by Document Date (newest first), fallback to updatedAt/createdAt
     const customers = await Customer.find(query)
       .select('-formData.personal.photo')
       .limit(500)
-      .sort({ createdAt: -1 });
+      .sort({ docDate: -1, updatedAt: -1, createdAt: -1 });
     res.json(customers);
   } catch (error) {
     console.error('Error fetching customers:', error);
@@ -126,7 +204,13 @@ router.put('/:id', async (req, res) => {
     const { formData } = req.body;
     
     // Determine financial year based on document date (fallback to current date)
-    const docDateStr = formData?.personal?.docDate;
+    const docDateStr = formData?.personal?.docDate || formData?.policy?.docDate;
+    if (docDateStr) {
+      if (!formData.personal) formData.personal = {};
+      if (!formData.policy) formData.policy = {};
+      formData.personal.docDate = docDateStr;
+      formData.policy.docDate = docDateStr;
+    }
     const targetDate = (docDateStr && !isNaN(new Date(docDateStr).getTime())) 
       ? new Date(docDateStr) 
       : new Date();
@@ -143,6 +227,7 @@ router.put('/:id', async (req, res) => {
       req.params.id,
       {
         financialYear,
+        docDate: targetDate,
         searchable: { name, policyNumber, mobile },
         formData,
         status: 'reviewed' // Always mark as reviewed when updated by agent

@@ -6,6 +6,10 @@ const customerSchema = new mongoose.Schema({
     required: true,
     index: true
   },
+  docDate: {
+    type: Date,
+    index: true
+  },
   searchable: {
     name: { type: String, index: true },
     policyNumber: { type: String, index: true },

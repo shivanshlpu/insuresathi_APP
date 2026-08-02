@@ -25,25 +25,46 @@ interface DateFieldProps {
   yearSelect?: boolean;
 }
 
+const parseToDateObj = (val: any): Date | undefined => {
+  if (!val) return undefined;
+  if (val instanceof Date) return isNaN(val.getTime()) ? undefined : val;
+  if (typeof val === 'string') {
+    const ymdMatch = val.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (ymdMatch) {
+      const y = parseInt(ymdMatch[1], 10);
+      const m = parseInt(ymdMatch[2], 10) - 1;
+      const d = parseInt(ymdMatch[3], 10);
+      return new Date(y, m, d);
+    }
+  }
+  const d = new Date(val);
+  return isNaN(d.getTime()) ? undefined : d;
+};
+
+const formatDateToYYYYMMDD = (d: Date): string => {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
 export function DateField({ name, label, form, yearSelect = false }: DateFieldProps) {
   return (
     <FormField
       control={form.control}
       name={name}
       render={({ field }) => {
-        const dateValue = field.value ? new Date(field.value) : undefined;
+        const dateValue = parseToDateObj(field.value);
         
         const [inputValue, setInputValue] = useState(
-          dateValue && !isNaN(dateValue.getTime())
-            ? format(dateValue, "dd-MM-yyyy")
-            : ""
+          dateValue ? format(dateValue, "dd-MM-yyyy") : ""
         );
 
         // Sync input when field value changes externally (e.g., from the calendar)
         useEffect(() => {
           if (field.value) {
-             const d = new Date(field.value);
-             if (!isNaN(d.getTime())) {
+             const d = parseToDateObj(field.value);
+             if (d) {
                  const formatted = format(d, "dd-MM-yyyy");
                  if (inputValue !== formatted) {
                      setInputValue(formatted);
@@ -76,7 +97,7 @@ export function DateField({ name, label, form, yearSelect = false }: DateFieldPr
           if (formatted.length === 10) {
             const parsedDate = parse(formatted, "dd-MM-yyyy", new Date());
             if (isValid(parsedDate)) {
-               field.onChange(parsedDate);
+               field.onChange(formatDateToYYYYMMDD(parsedDate));
             } else {
                field.onChange(undefined);
             }
@@ -109,7 +130,11 @@ export function DateField({ name, label, form, yearSelect = false }: DateFieldPr
                     mode="single"
                     selected={dateValue}
                     onSelect={(date) => {
-                      field.onChange(date);
+                      if (date) {
+                        field.onChange(formatDateToYYYYMMDD(date));
+                      } else {
+                        field.onChange(undefined);
+                      }
                     }}
                     initialFocus
                     captionLayout="dropdown-buttons"

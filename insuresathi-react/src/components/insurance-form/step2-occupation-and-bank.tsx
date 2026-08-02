@@ -108,6 +108,52 @@ export default function Step2OccupationAndBank({ form }: Step2Props) {
             </div>
           </div>
         )}
+        {(watchedOccupationType === "Other" || watchedOccupationType?.toLowerCase() === "other") && (
+          <div className="p-4 border rounded-md space-y-4">
+            <h3 className="font-medium">Other Occupation Details</h3>
+            <div className="grid sm:grid-cols-3 gap-4">
+              <FormField 
+                control={form.control} 
+                name="occupation.designation" 
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nature of Work / Occupation Details</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g. Freelancer, Driver, Consultant..." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} 
+              />
+              <FormField 
+                control={form.control} 
+                name="occupation.serviceYears" 
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Years of Work / Experience</FormLabel>
+                    <FormControl>
+                      <Input type="text" placeholder={t('occupation.years')} {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} 
+              />
+              <FormField 
+                control={form.control} 
+                name="occupation.serviceMonths" 
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Months of Work / Experience</FormLabel>
+                    <FormControl>
+                      <Input type="text" placeholder={t('occupation.months')} {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )} 
+              />
+            </div>
+          </div>
+        )}
 
         <Separator />
         <h3 className="text-lg font-medium">{t('occupation.bank_details_header')}</h3>

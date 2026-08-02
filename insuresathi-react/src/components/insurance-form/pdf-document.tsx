@@ -126,7 +126,7 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                         <Cell label={t('personal.mother_name')} value={data.personal.motherName} span={6} />
                         
                         <Cell label={t('personal.marital_status')} value={data.personal.maritalStatus} span={3} />
-                        <Cell label={t('personal.spouse_name')} value={data.personal.maritalStatus === 'married' ? data.personal.spouseName : 'N/A'} span={3} />
+                        <Cell label={t('personal.spouse_name')} value={data.personal.maritalStatus?.toLowerCase() === 'married' || data.personal.spouseName ? data.personal.spouseName : 'N/A'} span={3} />
                         <Cell label={t('personal.gender')} value={data.personal.gender} span={3} />
                         <Cell label={t('personal.qualification')} value={data.personal.qualification ? `${data.personal.qualification}${data.personal.qualificationClass ? ` (${data.personal.qualificationClass})` : ''}` : 'N/A'} span={3} />
                         
@@ -158,19 +158,25 @@ const PdfDocument: React.FC<PdfDocumentProps> = ({ data, t }) => {
                         <Cell label={t('occupation.occupation_type')} value={data.occupation.occupationType} span={4} />
                         <Cell label={t('occupation.yearly_income')} value={data.occupation.annualIncome ? `Rs. ${data.occupation.annualIncome.toLocaleString('en-IN')}` : 'N/A'} span={8} />
                         
-                        {data.occupation.occupationType === 'Service' && (
+                        {data.occupation.occupationType?.toLowerCase() === 'service' && (
                             <>
                                 <Cell label={t('occupation.designation')} value={data.occupation.designation} span={4} />
                                 <Cell label={t('occupation.department')} value={data.occupation.department} span={4} />
                                 <Cell label={t('occupation.service_year')} value={serviceLength} span={4} />
                             </>
                         )}
-                        {data.occupation.occupationType === 'Business' && (
+                        {data.occupation.occupationType?.toLowerCase() === 'business' && (
                             <>
                                 <Cell label={t('occupation.business_name')} value={data.occupation.businessName} span={3} />
                                 <Cell label={t('occupation.type_of_business')} value={data.occupation.typeOfBusiness} span={3} />
                                 <Cell label={t('occupation.gst_number') || 'GST Number'} value={data.occupation.gstNumber} span={3} />
                                 <Cell label={t('occupation.business_year')} value={businessLength} span={3} />
+                            </>
+                        )}
+                        {(data.occupation.occupationType?.toLowerCase() === 'other' || (!['service', 'business'].includes(data.occupation.occupationType?.toLowerCase() || '') && (data.occupation.designation || data.occupation.serviceYears || data.occupation.businessName))) && (
+                            <>
+                                <Cell label="Nature of Work / Occupation Details" value={data.occupation.designation || data.occupation.businessName || 'N/A'} span={6} />
+                                <Cell label="Work Experience / Service" value={serviceLength !== 'N/A' ? serviceLength : businessLength} span={6} />
                             </>
                         )}
                         

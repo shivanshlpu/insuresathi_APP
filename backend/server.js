@@ -1,16 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const helmet = require('helmet');
 require('dotenv').config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json({ limit: '50mb' })); // Increase limit if form contains base64 images
-
-// MongoDB Connection
+// Validate critical security environment variables
 const MONGODB_URI = process.env.MONGODB_URI;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 if (!MONGODB_URI) {
   console.warn("WARNING: MONGODB_URI is not set in .env file. Database operations will fail.");
@@ -19,6 +17,31 @@ if (!MONGODB_URI) {
     .then(() => console.log('Connected to MongoDB Atlas'))
     .catch(err => console.error('MongoDB connection error:', err));
 }
+
+if (!JWT_SECRET) {
+  console.warn("SECURITY WARNING: JWT_SECRET is not set in .env file. Auth operations will reject tokens.");
+}
+
+// Security Middleware
+app.use(helmet());
+
+// Restrict CORS origins
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
+  : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    return callback(new Error('CORS policy violation: Origin not allowed'));
+  },
+  credentials: true
+}));
+
+app.use(express.json({ limit: '10mb' })); // Restricted payload limit
 
 // Routes
 const authRoutes = require('./routes/auth');
@@ -36,3 +59,4 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
+

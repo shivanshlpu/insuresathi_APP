@@ -13,6 +13,49 @@ import { defaultValues } from "@/hooks/use-local-storage-form";
 import { fetchWithAuth } from "@/lib/fetchWithAuth";
 import { downloadPdf } from "@/lib/pdf-export";
 
+const formatDocDate = (dateVal?: any, fallbackVal?: any) => {
+  const val = dateVal || fallbackVal;
+  if (!val) return 'N/A';
+  
+  if (typeof val === 'string') {
+    const ymdMatch = val.match(/^(\d{4})-(\d{2})-(\d{2})/);
+    if (ymdMatch) {
+      const [_, y, m, d] = ymdMatch;
+      return `${d}/${m}/${y}`;
+    }
+  }
+  
+  const dObj = new Date(val);
+  if (!isNaN(dObj.getTime())) {
+    const day = String(dObj.getDate()).padStart(2, '0');
+    const month = String(dObj.getMonth() + 1).padStart(2, '0');
+    const year = dObj.getFullYear();
+    return `${day}/${month}/${year}`;
+  }
+  
+  return String(val);
+};
+
+const getRecordTimeMs = (r: any): number => {
+  const docDateVal = r.docDate || r.formData?.personal?.docDate || r.formData?.policy?.docDate;
+  if (docDateVal) {
+    if (typeof docDateVal === 'string') {
+      const ymdMatch = docDateVal.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (ymdMatch) {
+        const [_, y, m, d] = ymdMatch;
+        return new Date(parseInt(y, 10), parseInt(m, 10) - 1, parseInt(d, 10)).getTime();
+      }
+    }
+    const d = new Date(docDateVal);
+    if (!isNaN(d.getTime())) return d.getTime();
+  }
+  if (r.createdAt) {
+    const d = new Date(r.createdAt);
+    if (!isNaN(d.getTime())) return d.getTime();
+  }
+  return 0;
+};
+
 export default function RecordsPage() {
   const [records, setRecords] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +65,17 @@ export default function RecordsPage() {
   const [shouldPrint, setShouldPrint] = useState(false);
   const { toast } = useToast();
   const { t } = useTranslation();
+
+  const sortedRecords = [...records].sort((a, b) => {
+    const timeA = getRecordTimeMs(a);
+    const timeB = getRecordTimeMs(b);
+    if (timeB !== timeA) {
+      return timeB - timeA; // Newest Document Date first
+    }
+    const updatedA = new Date(a.updatedAt || a.createdAt || 0).getTime();
+    const updatedB = new Date(b.updatedAt || b.createdAt || 0).getTime();
+    return updatedB - updatedA;
+  });
 
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
@@ -142,12 +196,12 @@ export default function RecordsPage() {
                       <th className="p-4 font-semibold">Policy Number</th>
                       <th className="p-4 font-semibold">Mobile</th>
                       <th className="p-4 font-semibold">Financial Year</th>
-                      <th className="p-4 font-semibold">Date Registered</th>
+                      <th className="p-4 font-semibold">Document Date</th>
                       <th className="p-4 font-semibold rounded-tr-md text-right">Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {records.map((r, i) => (
+                    {sortedRecords.map((r, i) => (
                       <tr key={r._id} className={`border-b last:border-0 transition-colors ${r.status === 'new' ? 'bg-amber-50 hover:bg-amber-100' : 'hover:bg-slate-50'}`}>
                         <td className="p-4 font-medium">
                           {r.searchable?.name}
@@ -160,10 +214,8 @@ export default function RecordsPage() {
                         <td className="p-4">{r.searchable?.policyNumber || 'N/A'}</td>
                         <td className="p-4">{r.searchable?.mobile || 'N/A'}</td>
                         <td className="p-4"><span className="bg-primary/10 text-primary px-2 py-1 rounded-md text-xs font-semibold">{r.financialYear}</span></td>
-                        <td className="p-4">
-                          {r.formData?.personal?.docDate 
-                            ? new Date(r.formData.personal.docDate).toLocaleDateString() 
-                            : new Date(r.createdAt).toLocaleDateString()}
+                        <td className="p-4 font-medium">
+                          {formatDocDate(r.formData?.personal?.docDate || r.formData?.policy?.docDate, r.createdAt)}
                         </td>
                         <td className="p-4 text-right">
                             <div className="flex justify-end gap-2">

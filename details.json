@@ -1,0 +1,1092 @@
+{
+  "personal": {
+    "name": "Ajay Saraf",
+    "fatherName": "Phool Chand Saraf",
+    "dob": "1971-07-06",
+    "mobile": "7987567418",
+    "email": "ajaysaraf@gsail.com",
+    "address": "S/o Shri Phool Chand Saraf, House No. 95/26, Ward No. 26, Purana Gandhi Chowk, Sindhi Bazar, Shahdol, Madhya Pradesh - 484001",
+    "gender": "Male"
+  },
+  "kyc": {
+    "aadhaarNumber": "XXXXXXXX8932",
+    "panNumber": "ARXPS7201B"
+  },
+  "bank": {
+    "bankName": "HDFC Bank",
+    "accountType": "Savings",
+    "accountNumber": "50100160666225",
+    "ifscCode": "HDFC0001778"
+  },
+  "policy": {
+    "policyNumber": "359447319",
+    "docNumber": "359447319",
+    "docDate": "2025-04-16",
+    "planNumber": "955",
+    "planName": "LIC Jeevan Utsav",
+    "term": 15,
+    "sumAssured": 5000000,
+    "premiumAmount": 19824,
+    "gst": 3568,
+    "totalRequiredAmount": 23392,
+    "premiumMode": "Half Yearly"
+  },
+  "nominee": {
+    "name": "Sheelu Saraf",
+    "relation": "Wife",
+    "age": 47
+  }
+}
+[
+  {
+    "personal": {
+      "name": "Shrimati Saroj Verma",
+      "dob": "1985-12-03",
+      "mobile": "6268323129",
+      "email": "sarojvarmans9@gmail.com",
+      "address": null,
+      "gender": "Female",
+      "maritalStatus": "Married",
+      "fatherName": null,
+      "motherName": "Shrimati Budha Saket",
+      "spouseName": "Shri Ramshiya Saket",
+      "qualification": "12th",
+      "placeOfBirth": "Dharhara, District Shahdol"
+    },
+    "kyc": {
+      "aadhaarNumber": "463874257238",
+      "panNumber": "CRHPC0149Q"
+    },
+    "occupation": {
+      "occupationType": "Business",
+      "annualIncome": 120000,
+      "designation": null,
+      "businessName": "Silai Kadhai"
+    },
+    "bank": {
+      "bankName": "Union Bank of India",
+      "accountNumber": "36430210024688",
+      "ifscCode": "UBIN0536431",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "736",
+      "term": "25/16",
+      "sumAssured": 500000,
+      "premiumAmount": 6643,
+      "premiumMode": "Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Manish Saket",
+        "relation": "Son",
+        "age": 19,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Living",
+        "age": 67
+      },
+      "mother": {
+        "status": "Living",
+        "age": 64
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 59
+      }
+    }
+  }
+  [
+    {
+      "personal": {
+        "name": "Shiv Prasad Vishwakarma",
+        "dob": "1973-07-15",
+        "mobile": "7389670571, 9617653464",
+        "email": "kamlavish0571@gmail.com",
+        "address": "S/o Late Ramkumar Vishwakarma, Ward No. 28, Lavkush Vidyalaya ke paas, Purani Basti, Shahdol, Madhya Pradesh - 484001",
+        "gender": "Male",
+        "maritalStatus": "Married",
+        "fatherName": "Late Ramkumar Vishwakarma",
+        "motherName": "Late Shrimati Rambai Vishwakarma",
+        "spouseName": "Smt. Kamla Vishwakarma",
+        "qualification": "5th",
+        "placeOfBirth": "Shahdol"
+      },
+      "kyc": {
+        "aadhaarNumber": "********8115",
+        "panNumber": "BGTPV8666B"
+      },
+      "occupation": {
+        "occupationType": "Business",
+        "annualIncome": 124000,
+        "designation": null,
+        "businessName": "Mishra Jewellers"
+      },
+      "bank": {
+        "bankName": "Bank of India",
+        "accountNumber": "2020410100009120",
+        "ifscCode": "BKID0ANAMRB",
+        "accountType": "Savings"
+      },
+      "policy": {
+        "planNumber": null,
+        "term": null,
+        "sumAssured": null,
+        "premiumAmount": null,
+        "premiumMode": null
+      },
+      "nominees": [
+        {
+          "name": "Smt. Kamla Vishwakarma",
+          "relation": "Wife",
+          "age": 45,
+          "share": 100
+        }
+      ],
+      "family": {
+        "father": {
+          "status": "Deceased",
+          "age": null
+        },
+        "mother": {
+          "status": "Deceased",
+          "age": null
+        },
+        "spouse": {
+          "status": "Living",
+          "age": 45
+        }
+      }
+    }
+  ]
+]
+[
+  {
+    "personal": {
+      "name": "Sandeep Soni",
+      "dob": "1988-12-27",
+      "mobile": "7999119529",
+      "email": null,
+      "address": "S/o Late Shri Suresh Soni, Ward No. 07, Shankar Talkies Road, Shahdol, Madhya Pradesh - 484001",
+      "gender": "Male",
+      "maritalStatus": "Married",
+      "fatherName": "Late Shri Suresh Soni",
+      "motherName": null,
+      "spouseName": "Rashmi Soni",
+      "qualification": null,
+      "placeOfBirth": null
+    },
+    "kyc": {
+      "aadhaarNumber": null,
+      "panNumber": "GCUPS4165L"
+    },
+    "occupation": {
+      "occupationType": "Business",
+      "annualIncome": 400000,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": null,
+      "accountNumber": "84900100023214",
+      "ifscCode": "BARB0VJSODL",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "715",
+      "term": "21",
+      "sumAssured": 800000,
+      "premiumAmount": 12350,
+      "premiumMode": "Quarterly"
+    },
+    "nominees": [
+      {
+        "name": "Rashmi Soni",
+        "relation": "Wife",
+        "age": 35,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": null,
+        "age": null
+      },
+      "mother": {
+        "status": null,
+        "age": null
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 35
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Vivek Kumar Tandiya",
+      "dob": "2006-11-09",
+      "mobile": "8305261810, 7509550167",
+      "email": "vevektandiya0@gmail.com",
+      "address": null,
+      "gender": "Male",
+      "maritalStatus": "Single",
+      "fatherName": "Shri Ramlakhan Tandiya",
+      "motherName": "Smt. Anita Bai Panika",
+      "spouseName": null,
+      "qualification": "12th",
+      "placeOfBirth": "Burhar"
+    },
+    "kyc": {
+      "aadhaarNumber": "********9709",
+      "panNumber": null
+    },
+    "occupation": {
+      "occupationType": "Student",
+      "annualIncome": 60000,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "Central Bank of India",
+      "accountNumber": null,
+      "ifscCode": null,
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "736",
+      "term": "21/15",
+      "sumAssured": 300000,
+      "premiumAmount": 4541,
+      "premiumMode": "Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Shri Ramlakhan Panika",
+        "relation": "Father",
+        "age": 47,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Living",
+        "age": 47
+      },
+      "mother": {
+        "status": "Living",
+        "age": 40
+      },
+      "spouse": {
+        "status": null,
+        "age": null
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Ankush Kumar Tandiya",
+      "dob": "2001-10-23",
+      "mobile": "9691440371",
+      "email": null,
+      "address": null,
+      "gender": "Male",
+      "maritalStatus": "Single",
+      "fatherName": "Shri Ramlakhan Tandiya",
+      "motherName": "Smt. Anita Bai Panika",
+      "spouseName": null,
+      "qualification": "M.Sc.",
+      "placeOfBirth": "Burhar"
+    },
+    "kyc": {
+      "aadhaarNumber": null,
+      "panNumber": null
+    },
+    "occupation": {
+      "occupationType": "Business",
+      "annualIncome": 600000,
+      "designation": null,
+      "businessName": "Burhar Restaurant"
+    },
+    "bank": {
+      "bankName": "State Bank of India",
+      "accountNumber": null,
+      "ifscCode": null,
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "736",
+      "term": "21/15",
+      "sumAssured": 300000,
+      "premiumAmount": null,
+      "premiumMode": null
+    },
+    "nominees": [
+      {
+        "name": "Shri Ramlakhan Panika",
+        "relation": "Father",
+        "age": 47,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Living",
+        "age": 47
+      },
+      "mother": {
+        "status": "Living",
+        "age": 40
+      },
+      "spouse": {
+        "status": null,
+        "age": null
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Kiran Prajapati",
+      "dob": "1990-01-01",
+      "mobile": "6261506567",
+      "email": "kp233544@gmail.com",
+      "address": "W/o Shri Vikram Prajapati, Ward No. 37, Purani Basti, Tehsil Sohagpur, Shahdol, Madhya Pradesh",
+      "gender": "Female",
+      "maritalStatus": "Married",
+      "fatherName": "Shri Ram Raj Pandey",
+      "motherName": "Late Smt. Kamla Bai",
+      "spouseName": "Vikram Prajapati",
+      "qualification": "8th",
+      "placeOfBirth": "Tarekha"
+    },
+    "kyc": {
+      "aadhaarNumber": "721360245193",
+      "panNumber": "HLOPP6234H"
+    },
+    "occupation": {
+      "occupationType": "Labour",
+      "annualIncome": 84000,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "Union Bank of India",
+      "accountNumber": "3643021200009092",
+      "ifscCode": "UBIN0536431",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "736",
+      "term": "21/15",
+      "sumAssured": 200000,
+      "premiumAmount": 11951,
+      "premiumMode": "Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Vikram Prajapati",
+        "relation": "Husband",
+        "age": 35,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Living",
+        "age": 76
+      },
+      "mother": {
+        "status": "Living",
+        "age": 70
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 35
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Vikram Prajapati",
+      "dob": "1990-04-01",
+      "mobile": "9589579357",
+      "email": "vikramp30@gmail.com",
+      "address": null,
+      "gender": "Male",
+      "maritalStatus": "Married",
+      "fatherName": "Shri Sobhnath Prajapati",
+      "motherName": "Smt. Ganga Bai Prajapati",
+      "spouseName": "Smt. Kiran Prajapati",
+      "qualification": "8th",
+      "placeOfBirth": "Shahdol"
+    },
+    "kyc": {
+      "aadhaarNumber": "992871818773",
+      "panNumber": "CPPPP4689J"
+    },
+    "occupation": {
+      "occupationType": "Business",
+      "annualIncome": 220000,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "Union Bank of India",
+      "accountNumber": "3643021200009094",
+      "ifscCode": "UBIN0536431",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "733",
+      "term": "25/22",
+      "sumAssured": 200000,
+      "premiumAmount": 9755,
+      "premiumMode": "Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Lakshya Prajapati",
+        "relation": "Son",
+        "age": 1,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Living",
+        "age": 61
+      },
+      "mother": {
+        "status": "Living",
+        "age": 58
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 36
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Shri Kiran Verma",
+      "dob": null,
+      "mobile": null,
+      "email": null,
+      "address": "Ward No. 08, Italwari Mohalla, Shahdol, Madhya Pradesh - 484001",
+      "gender": "Male",
+      "maritalStatus": "Married",
+      "fatherName": "Late Shri Ram Milan Verma",
+      "motherName": "Late Shrimati Dhanwati Verma",
+      "spouseName": "Smt. Lakshmi Prasad Verma",
+      "qualification": "5th",
+      "placeOfBirth": "Shahdol"
+    },
+    "kyc": {
+      "aadhaarNumber": "********3790",
+      "panNumber": "HACPB1651P"
+    },
+    "occupation": {
+      "occupationType": "Business",
+      "annualIncome": 84000,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "State Bank of India",
+      "accountNumber": "34674161866",
+      "ifscCode": "SBIN0012188",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "736",
+      "term": "16/10",
+      "sumAssured": 200000,
+      "premiumAmount": 20486,
+      "premiumMode": "Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Lakshmi Prasad Verma",
+        "relation": "Wife",
+        "age": 50,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Deceased",
+        "age": 95
+      },
+      "mother": {
+        "status": "Deceased",
+        "age": 90
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 50
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Lakshmi Verma",
+      "dob": "1975-01-01",
+      "mobile": "6263968511",
+      "email": "pujaverman010693@gmail.com",
+      "address": "S/o Late Shri Kallu Verma, Ward No. 7, Italwari Mohalla, Shahdol, Madhya Pradesh - 484001",
+      "gender": "Female",
+      "maritalStatus": "Married",
+      "fatherName": "Late Shri Kallu Verma",
+      "motherName": "Late Shrimati Mahuli Bai Verma",
+      "spouseName": "Shri Kiran Verma",
+      "qualification": "5th",
+      "placeOfBirth": "Shahdol"
+    },
+    "kyc": {
+      "aadhaarNumber": "907463492266",
+      "panNumber": null
+    },
+    "occupation": {
+      "occupationType": "Labour",
+      "annualIncome": 72000,
+      "designation": null,
+      "businessName": "Hotel Mazdoori"
+    },
+    "bank": {
+      "bankName": "Union Bank of India",
+      "accountNumber": "364302010012287",
+      "ifscCode": "UBIN0536431",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "880",
+      "term": "20/15",
+      "sumAssured": 120000,
+      "premiumAmount": 2070,
+      "premiumMode": null
+    },
+    "nominees": [
+      {
+        "name": "Smt. Kiran Verma",
+        "relation": "Wife",
+        "age": 57,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Deceased",
+        "age": 65
+      },
+      "mother": {
+        "status": "Deceased",
+        "age": 68
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 57
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Smt. Seema Soni",
+      "dob": "1974-09-20",
+      "mobile": "9425891997",
+      "email": "rajeshsoni4101965@gmail.com",
+      "address": "Ward No. 06, Near NCC Office, Pandav Nagar, Shahdol, Madhya Pradesh",
+      "gender": "Female",
+      "maritalStatus": "Married",
+      "fatherName": "Shri Mukesh Chandra Soni",
+      "motherName": "Smt. Shakuntala Soni",
+      "spouseName": "Shri Rajesh Soni",
+      "qualification": "LLB",
+      "placeOfBirth": "Shahdol"
+    },
+    "kyc": {
+      "aadhaarNumber": "********1444",
+      "panNumber": "CFZPS8276L"
+    },
+    "occupation": {
+      "occupationType": "Service",
+      "annualIncome": 200000,
+      "designation": "Legal Assistant",
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "State Bank of India",
+      "accountNumber": "30660918764",
+      "ifscCode": "SBIN0012188",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "880",
+      "term": "19/14",
+      "sumAssured": 100000,
+      "premiumAmount": null,
+      "premiumMode": "Half-Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Shri Rajesh Soni",
+        "relation": "Husband",
+        "age": 60,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Living",
+        "age": 80
+      },
+      "mother": {
+        "status": "Living",
+        "age": 70
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 60
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Jayanta Mondal",
+      "dob": "1975-11-22",
+      "mobile": "9893760860",
+      "email": "mondaljanta288@gmail.com",
+      "address": "Ward No. 07, Mishra Medical, Balpurwa Bus Stand, Shahdol, Madhya Pradesh - 484001",
+      "gender": "Male",
+      "maritalStatus": "Married",
+      "fatherName": "Late Shri Paritosh Mondal",
+      "motherName": "Smt. Kalyani Mondal",
+      "spouseName": "Smt. Rakhi Mondal",
+      "qualification": "B.A., B.Ed.",
+      "placeOfBirth": "Humkura, West Bengal"
+    },
+    "kyc": {
+      "aadhaarNumber": "********4561",
+      "panNumber": "CAOPM2953C"
+    },
+    "occupation": {
+      "occupationType": "Service",
+      "annualIncome": null,
+      "designation": "General Physician",
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "Kotak Mahindra Bank",
+      "accountNumber": "4213162098",
+      "ifscCode": "KKBK0005959",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "955",
+      "term": "20/20",
+      "sumAssured": 4000000,
+      "premiumAmount": 16402,
+      "premiumMode": "Half-Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Smt. Rakhi Mondal",
+        "relation": "Wife",
+        "age": 38,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Deceased",
+        "age": 65
+      },
+      "mother": {
+        "status": "Living",
+        "age": 65
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 38
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Mamta Tiwari",
+      "dob": "1985-07-11",
+      "mobile": "6265842853, 9009202332",
+      "email": "mamtatiwari3893@gmail.com",
+      "address": "Ward No. 32, Vivek Nagar, Shahdol, Tehsil Sohagpur, District Shahdol, Madhya Pradesh",
+      "gender": "Female",
+      "maritalStatus": "Married",
+      "fatherName": "Shri Ram Narayan Tiwari",
+      "motherName": "Smt. Uma Sharma",
+      "spouseName": "Shri Shiv Shankar Tiwari",
+      "qualification": "10th",
+      "placeOfBirth": "Gohani, Satna"
+    },
+    "kyc": {
+      "aadhaarNumber": null,
+      "panNumber": null
+    },
+    "occupation": {
+      "occupationType": "Labour",
+      "annualIncome": null,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "Bank of Maharashtra",
+      "accountNumber": "60203697071",
+      "ifscCode": "MAHB0001981",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "planNumber": "880",
+      "term": "13/08",
+      "sumAssured": 100000,
+      "premiumAmount": 2997,
+      "premiumMode": "Quarterly"
+    },
+    "nominees": [
+      {
+        "name": "Shri Shiv Shankar Tiwari",
+        "relation": "Husband",
+        "age": 55,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Living",
+        "age": 66
+      },
+      "mother": {
+        "status": "Living",
+        "age": 68
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 55
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Sudha Soni",
+      "dob": "1967-07-02",
+      "mobile": "9752532501",
+      "email": null,
+      "address": "W/o Shri Dwarka Prasad Soni, Ward No. 09, Near Panchayati Mandir, District Shahdol, Madhya Pradesh - 484001",
+      "gender": "Female",
+      "maritalStatus": "Married",
+      "fatherName": null,
+      "motherName": null,
+      "spouseName": "Shri Dwarka Prasad Soni",
+      "qualification": null,
+      "placeOfBirth": null
+    },
+    "kyc": {
+      "aadhaarNumber": "********4361",
+      "panNumber": null
+    },
+    "occupation": {
+      "occupationType": "Self Employed",
+      "annualIncome": 300000,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "Bank of India",
+      "accountNumber": "941510510001269",
+      "ifscCode": "BKID0009415",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "policyNumber": "359451622",
+      "planNumber": "911",
+      "term": "Single",
+      "sumAssured": 100000,
+      "premiumAmount": 115095,
+      "premiumMode": "Single"
+    },
+    "nominees": [
+      {
+        "name": "Shri Dwarka Prasad Soni",
+        "relation": "Husband",
+        "age": 60,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": null,
+        "age": null
+      },
+      "mother": {
+        "status": null,
+        "age": null
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 60
+      }
+    }
+  }
+]
+{
+  "personal": {
+    "name": "Swati Singh Yadav",
+    "dob": "1988-09-05",
+    "mobile": "9340486057",
+    "email": "sy193857@gmail.com",
+    "address": "W/o Shri Brijesh Yadav, Ward No. 28, Purani Basti, Tehsil Sohagpur, District Shahdol, Madhya Pradesh - 484001",
+    "gender": "Female",
+    "maritalStatus": "Married",
+    "fatherName": null,
+    "motherName": null,
+    "spouseName": "Shri Brijesh Yadav",
+    "qualification": null,
+    "placeOfBirth": null
+  },
+  "kyc": {
+    "aadhaarNumber": "XXXXXXXX4911",
+    "panNumber": "AGQPY5371A"
+  },
+  "occupation": {
+    "occupationType": "Self Employed",
+    "annualIncome": 240000,
+    "designation": null,
+    "businessName": null
+  },
+  "bank": {
+    "bankName": "Union Bank of India",
+    "accountNumber": "364302010025260",
+    "ifscCode": "UBIN0536431",
+    "accountType": "Savings"
+  },
+  "policy": {
+    "policyNumber": "359451470",
+    "planNumber": "881",
+    "term": "25",
+    "sumAssured": 200000,
+    "premiumAmount": 2958,
+    "premiumMode": "Yearly (NACH)"
+  },
+  "nominees": [
+    {
+      "name": "Shri Brijesh Yadav",
+      "relation": "Husband",
+      "age": 40,
+      "share": 100
+    }
+  ],
+  "family": {
+    "father": {
+      "status": null,
+      "age": null
+    },
+    "mother": {
+      "status": null,
+      "age": null
+    },
+    "spouse": {
+      "status": "Living",
+      "age": 40
+    }
+  }
+}
+[
+  {
+    "personal": {
+      "name": "Shekhar Bharti",
+      "dob": "1984-07-14",
+      "mobile": "9074533022, 9399723366",
+      "email": "bshekhar804@gmail.com",
+      "address": null,
+      "gender": "Male",
+      "maritalStatus": "Married",
+      "fatherName": null,
+      "motherName": "Late Smt. Munraji Devi",
+      "spouseName": "Smt. Sangeeta Bharti",
+      "qualification": "9th",
+      "placeOfBirth": "Makarshan, Uttar Pradesh"
+    },
+    "kyc": {
+      "aadhaarNumber": null,
+      "panNumber": null
+    },
+    "occupation": {
+      "occupationType": "Business",
+      "annualIncome": 180000,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "State Bank of India",
+      "accountNumber": "32519103749",
+      "ifscCode": "SBIN0001428",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "policyNumber": "359449471",
+      "docNumber": "359449471",
+      "docDate": "2025-08-28",
+      "planNumber": "736",
+      "term": "25/16",
+      "sumAssured": 200000,
+      "premiumAmount": 11302,
+      "premiumMode": "Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Smt. Sangeeta Bharti",
+        "relation": "Wife",
+        "age": 40,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Deceased",
+        "age": 60
+      },
+      "mother": {
+        "status": "Deceased",
+        "age": 60
+      },
+      "spouse": {
+        "status": "Living",
+        "age": 40
+      }
+    }
+  }
+]
+[
+  {
+    "personal": {
+      "name": "Himanshu Soni",
+      "dob": "2001-05-29",
+      "mobile": "7999745029",
+      "email": "himanshus.soni@gmail.com",
+      "address": "S/o Shri Mahesh Soni, Ward No. 07/10, Garhi Road, Bhelki Samat, Shahdol, Madhya Pradesh - 484001",
+      "gender": "Male",
+      "maritalStatus": "Single",
+      "fatherName": "Shri Mahesh Soni",
+      "motherName": null,
+      "spouseName": null,
+      "qualification": null,
+      "placeOfBirth": null
+    },
+    "kyc": {
+      "aadhaarNumber": "XXXXXXXX0533",
+      "panNumber": "NWSPS6366R"
+    },
+    "occupation": {
+      "occupationType": "Student",
+      "annualIncome": 0,
+      "designation": null,
+      "businessName": null
+    },
+    "bank": {
+      "bankName": "Union Bank of India",
+      "accountNumber": "364302010028269",
+      "ifscCode": "UBIN0536431",
+      "accountType": "Savings"
+    },
+    "policy": {
+      "policyNumber": "359448458",
+      "docNumber": "359448458",
+      "docDate": "2025-01-11",
+      "planNumber": "736",
+      "term": "23",
+      "sumAssured": 1200000,
+      "premiumAmount": 5783,
+      "premiumMode": "Yearly"
+    },
+    "nominees": [
+      {
+        "name": "Mahesh Soni",
+        "relation": "Father",
+        "age": 61,
+        "share": 100
+      }
+    ],
+    "family": {
+      "father": {
+        "status": "Living",
+        "age": 61
+      },
+      "mother": {
+        "status": null,
+        "age": null
+      },
+      "spouse": {
+        "status": null,
+        "age": null
+      }
+    }
+  }
+]
+{
+  "personal": {
+    "name": "Ajay Saraf",
+    "fatherName": "Phool Chand Saraf",
+    "dob": "1971-07-06",
+    "mobile": "7987567418",
+    "email": "ajaysaraf@gsail.com",
+    "address": "S/o Shri Phool Chand Saraf, House No. 95/26, Ward No. 26, Purana Gandhi Chowk, Sindhi Bazar, Shahdol, Madhya Pradesh - 484001",
+    "gender": "Male"
+  },
+  "kyc": {
+    "aadhaarNumber": "XXXXXXXX8932",
+    "panNumber": "ARXPS7201B"
+  },
+  "bank": {
+    "bankName": "HDFC Bank",
+    "accountType": "Savings",
+    "accountNumber": "50100160666225",
+    "ifscCode": "HDFC0001778"
+  },
+  "policy": {
+    "policyNumber": "359447319",
+    "docNumber": "359447319",
+    "docDate": "2025-04-16",
+    "planNumber": "955",
+    "planName": "LIC Jeevan Utsav",
+    "term": 15,
+    "sumAssured": 5000000,
+    "premiumAmount": 19824,
+    "gst": 3568,
+    "totalRequiredAmount": 23392,
+    "premiumMode": "Half Yearly"
+  },
+  "nominee": {
+    "name": "Sheelu Saraf",
+    "relation": "Wife",
+    "age": 47
+  }
+}

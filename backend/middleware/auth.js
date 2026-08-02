@@ -1,20 +1,28 @@
 const jwt = require('jsonwebtoken');
 
 const authMiddleware = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
+  const authHeader = req.header('Authorization');
 
-  if (!token) {
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'No authentication token, access denied' });
   }
 
+  const token = authHeader.substring(7);
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!jwtSecret) {
+    console.error('FATAL: JWT_SECRET environment variable is not defined.');
+    return res.status(500).json({ error: 'Server authentication configuration error' });
+  }
+
   try {
-    const jwtSecret = process.env.JWT_SECRET || 'insuresathi_fallback_secret_key_2026';
-    const verified = jwt.verify(token, jwtSecret);
+    const verified = jwt.verify(token, jwtSecret, { algorithms: ['HS256'] });
     req.user = verified;
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Token verification failed, authorization denied' });
+    return res.status(401).json({ error: 'Token verification failed, authorization denied' });
   }
 };
 
 module.exports = authMiddleware;
+

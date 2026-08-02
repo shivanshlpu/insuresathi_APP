@@ -91,7 +91,15 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
         .then(res => res.json())
         .then(data => {
           if (data && data.formData) {
-            form.reset(sanitizeNulls(data.formData));
+            const docDate = data.formData?.personal?.docDate || data.formData?.policy?.docDate;
+            const cleaned = sanitizeNulls(data.formData);
+            if (docDate) {
+              if (!cleaned.personal) cleaned.personal = {};
+              if (!cleaned.policy) cleaned.policy = {};
+              cleaned.personal.docDate = docDate;
+              cleaned.policy.docDate = docDate;
+            }
+            form.reset(cleaned);
           }
         })
         .catch(err => console.error("Error fetching record:", err));
@@ -105,11 +113,20 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
   const saveRecordToDb = async (values: any) => {
     setIsSaving(true);
     toast({
-      title: "Saving to Database...",
+      title: editId ? "Updating Database..." : "Saving to Database...",
       description: "Please wait while we secure your record.",
     });
 
     try {
+      // Sync docDate between personal and policy sections
+      const docDate = values?.personal?.docDate || values?.policy?.docDate;
+      if (docDate) {
+        if (!values.personal) values.personal = {};
+        if (!values.policy) values.policy = {};
+        values.personal.docDate = docDate;
+        values.policy.docDate = docDate;
+      }
+
       const url = editId 
         ? `${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers/${editId}` 
         : `${import.meta.env.PROD ? "https://insuresathi-app.onrender.com" : "http://localhost:3001"}/api/customers`;
@@ -138,9 +155,10 @@ export default function InsuranceForm({ isClientMode = false }: InsuranceFormPro
 
       toast({
         title: "Success",
-        description: "Record saved successfully!",
+        description: editId ? "Record updated successfully!" : "Record saved successfully!",
       });
       setIsSaving(false);
+      navigate('/records');
       return true;
     } catch (error) {
       console.error(error);
