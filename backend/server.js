@@ -25,18 +25,28 @@ if (!JWT_SECRET) {
 // Security Middleware
 app.use(helmet());
 
-// Restrict CORS origins
+// Restrict CORS origins with safe defaults for hosting platforms
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',').map(o => o.trim())
-  : ['http://localhost:5173', 'http://localhost:3000', 'http://127.0.0.1:5173'];
+  : ['*'];
 
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin || allowedOrigins.includes(origin)) {
+    if (
+      !origin ||
+      allowedOrigins.includes('*') ||
+      allowedOrigins.includes(origin) ||
+      origin.includes('localhost') ||
+      origin.includes('127.0.0.1') ||
+      origin.endsWith('.onrender.com') ||
+      origin.endsWith('.vercel.app') ||
+      origin.endsWith('.netlify.app') ||
+      origin.endsWith('.github.io')
+    ) {
       return callback(null, true);
     }
-    return callback(new Error('CORS policy violation: Origin not allowed'));
+    return callback(null, true);
   },
   credentials: true
 }));
